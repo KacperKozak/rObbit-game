@@ -1,5 +1,5 @@
 import React from 'react'
-import { createMap } from '../mocks/map'
+import { createMap } from '../mocks/mapMock'
 
 const map = createMap()
 
@@ -17,6 +17,19 @@ export function App() {
                     }}
                 >
                     <tile.Component />
+                </div>
+            ))}
+            {map.props.map(prop => (
+                <div
+                    style={{
+                        position: 'absolute',
+                        left: prop.xyz[0] * 100,
+                        top: prop.xyz[1] * 100,
+                        width: 100,
+                        height: 100,
+                    }}
+                >
+                    <prop.Component />
                 </div>
             ))}
         </div>

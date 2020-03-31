@@ -24,7 +24,11 @@ export interface PropObject extends BaseObject {
 }
 
 export interface PlayerObject extends PropObject {
-    attachments: AttachmentProp[]
+    attachments: Attachment[]
+}
+
+export interface Attachment {
+    type: 'hand' | 'leg'
 }
 
 /*
@@ -49,18 +53,5 @@ export interface RemoveAction {
 export interface GameMap {
     defaultPlayerPos: XYZ
     tiles: BaseObject[]
-    props: MapProp[]
-}
-
-/*
- * Props
- */
-export type MapProp = AttachmentProp | ObstacleProp
-
-export interface AttachmentProp extends PropObject {
-    type: 'hand' | 'leg'
-}
-
-export interface ObstacleProp extends PropObject {
-    type: 'stone' | 'hand'
+    props: AnyObject[]
 }
