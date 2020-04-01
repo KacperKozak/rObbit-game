@@ -25,7 +25,7 @@ export const createMap = (): GameMap => {
         .map((items, y) =>
             items.map((type, x) => {
                 const fn = type ? rock : grass
-                return fn([x, y, 0], [0, 0])
+                return fn([x, y], [0, 0])
             }),
         )
         .flat()
@@ -34,14 +34,13 @@ export const createMap = (): GameMap => {
         .map((items, y) =>
             items.map((type, x) => {
                 const fn = type === 1 ? playerObject : type === 2 ? propObject : undefined
-                return fn && fn([x, y, 0], [0, 0])
+                return fn && fn([x, y], [0, 0])
             }),
         )
         .flat()
         .filter(p => p !== undefined) as AnyObject[]
 
     return {
-        defaultPlayerPos: [1, 1, 0],
         props,
         tiles,
     }

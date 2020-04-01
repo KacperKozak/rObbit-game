@@ -1,35 +1,24 @@
-export type XYZ = [number, number, number]
+export type XY = [number, number]
 export type Vector2 = [number, number]
-export type Vector3 = [number, number, number]
 
 export interface Game {
-    player: PlayerObject
-    playerPos: XYZ
     map: GameMap
+}
+
+export interface PlayerObject extends BaseObject {
+    attachments: any[]
 }
 
 export interface BaseObject {
     id: string
-    xyz: XYZ
-    rotation: Vector2
-    enter(obj: AnyObject, vector: Vector2): Action[]
-    leave(obj: AnyObject, vector: Vector2): Action[]
-    Component: any
+    xy: XY
+    rotation?: Vector2
+    enter?(obj: AnyObject, vector: Vector2): Action[]
+    leave?(obj: AnyObject, vector: Vector2): Action[]
+    Component?: any
 }
 
-export type AnyObject = PropObject | PlayerObject
-
-export interface PropObject extends BaseObject {
-    // move(vector: Vector): Action[] // TODO
-}
-
-export interface PlayerObject extends PropObject {
-    attachments: Attachment[]
-}
-
-export interface Attachment {
-    type: 'hand' | 'leg'
-}
+export type AnyObject = BaseObject | PlayerObject
 
 /*
  * Actions
@@ -51,7 +40,6 @@ export interface RemoveAction {
  * Map
  */
 export interface GameMap {
-    defaultPlayerPos: XYZ
     tiles: BaseObject[]
     props: AnyObject[]
 }

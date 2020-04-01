@@ -1,19 +1,19 @@
 import React from 'react'
 import { reverse } from '../helpers'
-import { BaseObject, Vector2, XYZ } from '../types/types'
+import { BaseObject, Vector2, XY } from '../types/types'
 
-export const grass = (xyz: XYZ, rotation: Vector2): BaseObject => ({
+export const grass = (xyz: XY, rotation: Vector2): BaseObject => ({
     id: Math.random().toString(),
-    xyz,
+    xy: xyz,
     rotation,
     enter: () => [],
     leave: () => [],
     Component: () => <div style={{ width: 100, height: 100, backgroundColor: 'green' }} />,
 })
 
-export const rock = (xyz: XYZ, rotation: Vector2): BaseObject => ({
+export const rock = (xyz: XY, rotation: Vector2): BaseObject => ({
     id: Math.random().toString(),
-    xyz,
+    xy: xyz,
     rotation,
     enter: (obj, vector) => [
         {

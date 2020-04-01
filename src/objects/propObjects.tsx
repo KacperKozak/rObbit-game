@@ -1,9 +1,9 @@
-import { PlayerObject, PropObject, XYZ, Vector2 } from '../types/types'
+import { PlayerObject, BaseObject, XY, Vector2 } from '../types/types'
 import React from 'react'
 
-export const propObject = (xyz: XYZ, rotation: Vector2): PropObject => ({
+export const propObject = (xyz: XY, rotation: Vector2): BaseObject => ({
     id: Math.random().toString(),
-    xyz,
+    xy: xyz,
     rotation,
     enter: () => [],
     leave: () => [],
@@ -20,9 +20,9 @@ export const propObject = (xyz: XYZ, rotation: Vector2): PropObject => ({
     ),
 })
 
-export const playerObject = (xyz: XYZ, rotation: Vector2): PlayerObject => ({
+export const playerObject = (xyz: XY, rotation: Vector2): PlayerObject => ({
     id: Math.random().toString(),
-    xyz,
+    xy: xyz,
     rotation,
     attachments: [],
     enter: () => [],
