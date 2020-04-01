@@ -1,22 +1,46 @@
-import React, { createContext, ReactNode, useContext } from 'react'
+import React, { createContext, ReactNode, useContext, useCallback, useReducer } from 'react'
 import { createMap } from '../mocks/mapMock'
-import { Game } from '../types/types'
+import { GameMap, Action, Vector2 } from '../types/types'
 
-const gameObjMock: Game = {
+interface ContextState {
+    map: GameMap
+}
+
+const initialState: ContextState = {
     map: createMap(),
 }
 
-export const GameContext = createContext<Game>(gameObjMock)
+export const GameStateContext = createContext<ContextState>(initialState)
+export const GameDispatchContext = createContext<(action: Action) => void>(() => {
+    throw new Error('[GameActionContext] Not initialized')
+})
 
 interface GameProviderProps {
     children: ReactNode
 }
 
 export const GameProvider = ({ children }: GameProviderProps) => {
-    return <GameContext.Provider value={gameObjMock}>{children}</GameContext.Provider>
+    const [state, dispatch] = useReducer(reducer, initialState)
+
+    return (
+        <GameDispatchContext.Provider value={dispatch}>
+            <GameStateContext.Provider value={state}>{children}</GameStateContext.Provider>
+        </GameDispatchContext.Provider>
+    )
+}
+
+const reducer = (state: ContextState, action: Action): ContextState => {
+    console.warn('[GameContext] Not handled action', action)
+    return state
 }
 
 export const useGame = () => {
-    const context = useContext(GameContext)
-    return context
+    const state = useContext(GameStateContext)
+    const dispatch = useContext(GameDispatchContext)
+
+    const move = useCallback((id: string, vector: Vector2) => {
+        dispatch({ type: 'move', id, vector })
+    }, [])
+
+    return { ...state, move }
 }
