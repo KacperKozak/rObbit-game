@@ -3,7 +3,8 @@ import { Canvas } from 'react-three-fiber'
 import { DebugView } from './DebugView'
 import { useGame } from '../hooks/useGame'
 import { Tile } from '../objects/Tail'
-import { Vector3 } from 'three'
+import { Color } from 'three'
+
 export const GameInstance = () => {
     const { map } = useGame()
 
@@ -17,17 +18,19 @@ export const GameInstance = () => {
                     camera.lookAt(3, 0, 2)
                 }}
             >
-                <ambientLight />
-                <pointLight position={[5, 5, 5]} />
-                <mesh scale={[1, 1, 1]} position={[2, 5, 5]}>
-                    <sphereBufferGeometry attach="geometry" args={[0.5, 6, 6]} />
-                    <meshStandardMaterial attach="material" color={'orange'} />
-                </mesh>
+                <ambientLight intensity={0.2} />
+                <pointLight position={[6, 7, 8]} intensity={1.2} color={new Color('#3a8dc2')} />
+                <pointLight position={[1, 3, 5]} intensity={1.2} color={new Color('#c86b6f')} />
+                {/* position={[tile.xy[0] * 1.1, 0, tile.xy[1] * 1.1]}  */}
                 {map.tiles.map(tile => (
-                    <Tile position={[tile.xy[0] * 1.1, 0, tile.xy[1] * 1.1]} />
+                    <group position={[tile.xy[0], 0, tile.xy[1]]}>
+                        <tile.Component3d />
+                    </group>
                 ))}
                 {map.props.map(prop => (
-                    <Tile position={[prop.xy[0] * 1.1, 2, prop.xy[1] * 1.1]} />
+                    <group position={[prop.xy[0], 0.1, prop.xy[1]]}>
+                        <prop.Component3d />
+                    </group>
                 ))}
                 }
             </Canvas>

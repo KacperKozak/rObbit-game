@@ -1,6 +1,7 @@
 import { PlayerObject, BaseObject, XY, Vector2 } from '../types/types'
 import { PLAYER_ID } from '../types/consts'
 import React from 'react'
+import { Tile } from './Tail'
 
 export const propObject = (xyz: XY, rotation: Vector2): BaseObject => ({
     id: Math.random().toString(),
@@ -19,6 +20,7 @@ export const propObject = (xyz: XY, rotation: Vector2): BaseObject => ({
             }}
         />
     ),
+    Component3d: () => <Tile color="brown" />,
 })
 
 export const playerObject = (xyz: XY, rotation: Vector2): PlayerObject => ({
@@ -39,4 +41,5 @@ export const playerObject = (xyz: XY, rotation: Vector2): PlayerObject => ({
             }}
         />
     ),
+    Component3d: () => <Tile color="white" />,
 })
