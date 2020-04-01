@@ -8,7 +8,7 @@ export const grass = (xyz: XY, rotation: Vector2): BaseObject => ({
     rotation,
     enter: () => [],
     leave: () => [],
-    Component: () => <div style={{ width: 100, height: 100, backgroundColor: 'green' }} />,
+    Component: () => <div style={{ width: 50, height: 50, backgroundColor: 'green' }} />,
 })
 
 export const rock = (xyz: XY, rotation: Vector2): BaseObject => ({
@@ -23,5 +23,5 @@ export const rock = (xyz: XY, rotation: Vector2): BaseObject => ({
         },
     ],
     leave: (obj, vector) => [],
-    Component: () => <div style={{ width: 100, height: 100, backgroundColor: 'gray' }} />,
+    Component: () => <div style={{ width: 50, height: 50, backgroundColor: 'gray' }} />,
 })

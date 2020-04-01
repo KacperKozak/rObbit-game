@@ -1,46 +1,21 @@
 import React from 'react'
+import { Canvas } from 'react-three-fiber'
+import { DebugView } from './DebugView'
 import { useGame } from './GameContext'
 import { Tile } from '../objects/Tail'
-import { Canvas, useFrame } from 'react-three-fiber'
-
 export const GameInstance = () => {
     const { map } = useGame()
 
     return (
         <>
-            <div style={{ position: 'relative' }}>
-                {map.tiles.map(tile => (
-                    <div
-                        style={{
-                            position: 'absolute',
-                            left: tile.xy[0] * 100,
-                            top: tile.xy[1] * 100,
-                            width: 100,
-                            height: 100,
-                        }}
-                    >
-                        <tile.Component />
-                    </div>
-                ))}
-                }
-                {map.props.map(prop => (
-                    <div
-                        style={{
-                            position: 'absolute',
-                            left: prop.xy[0] * 100,
-                            top: prop.xy[1] * 100,
-                            width: 100,
-                            height: 100,
-                        }}
-                    >
-                        <prop.Component />
-                    </div>
-                ))}
-            </div>
-
-            <Canvas camera={{ fov: 75, position: [10, 10, 10] }}>
+            <DebugView map={map} />
+            <Canvas camera={{ fov: 75, position: [-2, 8, 3] }}>
                 <ambientLight />
-                <pointLight position={[10, 10, 10]} />
+                <pointLight position={[5, 5, 5]} />
+                <mesh scale={[1, 1, 1]} position={[2, 5, 5]}>
+                    <sphereBufferGeometry attach="geometry" args={[0.5, 6, 6]} />
+                    <meshStandardMaterial attach="material" color={'orange'} />
+                </mesh>
                 {map.tiles.map(tile => (
                     <Tile position={[tile.xy[0] * 1.1, 0, tile.xy[1] * 1.1]} />
                 ))}
