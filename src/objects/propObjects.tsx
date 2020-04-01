@@ -1,4 +1,5 @@
 import { PlayerObject, BaseObject, XY, Vector2 } from '../types/types'
+import { PLAYER_ID } from '../types/consts'
 import React from 'react'
 
 export const propObject = (xyz: XY, rotation: Vector2): BaseObject => ({
@@ -13,7 +14,7 @@ export const propObject = (xyz: XY, rotation: Vector2): BaseObject => ({
                 margin: 25 / 2,
                 width: 25,
                 height: 25,
-                backgroundColor: 'red',
+                backgroundColor: 'brown',
                 borderRadius: 5,
             }}
         />
@@ -21,7 +22,7 @@ export const propObject = (xyz: XY, rotation: Vector2): BaseObject => ({
 })
 
 export const playerObject = (xyz: XY, rotation: Vector2): PlayerObject => ({
-    id: Math.random().toString(),
+    id: PLAYER_ID,
     xy: xyz,
     rotation,
     attachments: [],
@@ -33,7 +34,7 @@ export const playerObject = (xyz: XY, rotation: Vector2): PlayerObject => ({
                 margin: 25 / 2,
                 width: 25,
                 height: 25,
-                backgroundColor: 'blue',
+                backgroundColor: 'white',
                 borderRadius: 5,
             }}
         />

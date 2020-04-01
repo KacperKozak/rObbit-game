@@ -1,10 +1,6 @@
 export type XY = [number, number]
 export type Vector2 = [number, number]
 
-export interface Game {
-    map: GameMap
-}
-
 export interface PlayerObject extends BaseObject {
     attachments: any[]
 }
@@ -23,7 +19,7 @@ export type AnyObject = BaseObject | PlayerObject
 /*
  * Actions
  */
-type Action = MoveAction | RemoveAction
+export type Action = MoveAction | RemoveAction
 
 export interface MoveAction {
     type: 'move'
