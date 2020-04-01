@@ -12,6 +12,7 @@ export interface BaseObject {
     enter?(obj: AnyObject, vector: Vector2): Action[]
     leave?(obj: AnyObject, vector: Vector2): Action[]
     Component?: any
+    Component3d?: any
 }
 
 export type AnyObject = BaseObject | PlayerObject

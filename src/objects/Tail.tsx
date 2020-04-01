@@ -2,9 +2,6 @@ import { useFrame } from 'react-three-fiber'
 import React, { useState, useRef } from 'react'
 
 export const Tile = (props: any) => {
-    // This reference will give us direct access to the mesh
-    const mesh = useRef()
-
     // Set up state for the hovered and active state
     const [hovered, setHover] = useState(false)
     const [active, setActive] = useState(false)
@@ -15,7 +12,6 @@ export const Tile = (props: any) => {
     return (
         <mesh
             {...props}
-            ref={mesh}
             scale={active ? [1.5, 1.5, 1.5] : [1, 1, 1]}
             onClick={e => setActive(!active)}
             onPointerOver={e => setHover(true)}

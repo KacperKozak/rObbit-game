@@ -3,13 +3,20 @@ import { Canvas } from 'react-three-fiber'
 import { DebugView } from './DebugView'
 import { useGame } from './GameContext'
 import { Tile } from '../objects/Tail'
+import { Vector3 } from 'three'
 export const GameInstance = () => {
     const { map } = useGame()
 
     return (
         <>
             <DebugView map={map} />
-            <Canvas camera={{ fov: 75, position: [-2, 8, 3] }}>
+            <Canvas
+                orthographic
+                camera={{ zoom: 100, fov: 1075, position: [-3 + 3, 5, 5 + 2] }}
+                onCreated={({ camera }) => {
+                    camera.lookAt(3, 0, 2)
+                }}
+            >
                 <ambientLight />
                 <pointLight position={[5, 5, 5]} />
                 <mesh scale={[1, 1, 1]} position={[2, 5, 5]}>
