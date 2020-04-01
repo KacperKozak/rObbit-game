@@ -1,7 +1,7 @@
 import React from 'react'
 import { DOWN, LEFT, PLAYER_ID, RIGHT, UP } from '../types/consts'
 import { GameMap } from '../types/types'
-import { useGame } from './GameContext'
+import { useGame } from '../hooks/useGame'
 
 interface DebugViewProps {
     map: GameMap

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Canvas } from 'react-three-fiber'
 import { DebugView } from './DebugView'
-import { useGame } from './GameContext'
+import { useGame } from '../hooks/useGame'
 import { Tile } from '../objects/Tail'
 import { Vector3 } from 'three'
 export const GameInstance = () => {
