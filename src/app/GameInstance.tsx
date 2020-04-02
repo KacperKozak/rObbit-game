@@ -34,9 +34,16 @@ export const GameInstance = () => {
                     }
                 >
                     {/* position={[tile.xy[0] * 1.1, 0, tile.xy[1] * 1.1]}  */}
-                    {map.objects.map(({ type, id, xy }) => {
+                    {map.objects.map(({ type, id, xy, elevation, rotation }) => {
                         const { Component3d } = getDefinition(type)
-                        return <Component3d xy={xy} rotation={0} elevation={0} key={id} />
+                        return (
+                            <Component3d
+                                xy={xy}
+                                rotation={rotation}
+                                elevation={elevation}
+                                key={id}
+                            />
+                        )
                     })}
                 </Suspense>
             </Canvas>

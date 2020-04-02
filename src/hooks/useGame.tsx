@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import { GameDispatchContext, GameStateContext } from '../app/GameContext'
-import { applyVector, samePosition } from '../helpers'
+import { applyVector, samePosition, findById, findByXY } from '../helpers'
 import { moveAction } from '../state/actions'
 import { Action, Vector2, XY, ActionEvent } from '../types/types'
 import { getDefinition } from '../objects/definitions'
@@ -61,12 +61,4 @@ export const useGame = () => {
     }
 
     return { ...state, move }
-}
-
-const findById = <T extends { id: string }>(props: T[], id: string) => {
-    return props.find(prop => prop.id === id)
-}
-
-const findByXY = <T extends { xy: XY }>(objects: T[], xy: XY) => {
-    return objects.find(tile => samePosition(tile.xy, xy))
 }

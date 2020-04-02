@@ -1,9 +1,9 @@
-import React, { useState, FC } from 'react'
-import { DOWN, LEFT, PLAYER_ID, RIGHT, UP } from '../types/consts'
-import { GameMap } from '../types/types'
+import React from 'react'
 import { useGame } from '../hooks/useGame'
 import { useKeyboardEvent } from '../hooks/useKeyboardEvent'
 import { getDefinition } from '../objects/definitions'
+import { DOWN, LEFT, PLAYER_ID, RIGHT, UP } from '../types/consts'
+import { GameMap } from '../types/types'
 
 interface DebugViewProps {
     map: GameMap
@@ -54,25 +54,6 @@ export const DebugView = ({ map }: DebugViewProps) => {
                         </div>
                     )
                 })}
-                {/* 
-                {map.props.map(prop => {
-                    const { Component } = getDefinition(prop.type)
-                    return (
-                        <div
-                            key={prop.id}
-                            style={{
-                                position: 'absolute',
-                                left: prop.xy[0] * size,
-                                top: prop.xy[1] * size,
-                                width: size,
-                                height: size,
-                            }}
-                        >
-                            <Label text={prop.id} />
-                            <Component />
-                        </div>
-                    )
-                })} */}
             </div>
         </div>
     )
