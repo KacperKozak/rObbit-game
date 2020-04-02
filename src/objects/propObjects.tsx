@@ -9,6 +9,7 @@ export class PlayerObject implements PlayerObjectInterface {
     id = PLAYER_ID
     attachments = []
     constructor(public xy: XY, public rotation: Vector2) {}
+    canEnter = () => true
     Component = () => (
         <div
             style={{
@@ -26,6 +27,7 @@ export class PlayerObject implements PlayerObjectInterface {
 export class PropObject implements BaseObject {
     id = uniqueId('prop')
     constructor(public xy: XY, public rotation: Vector2) {}
+    canEnter = () => true
     enter = () => [removeAction(this.id)]
     Component = () => (
         <div

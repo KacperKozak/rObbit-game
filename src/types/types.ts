@@ -9,6 +9,8 @@ export interface BaseObject {
     id: string
     xy: XY
     rotation?: Vector2
+    canEnter(obj: AnyObject, vector: Vector2): boolean
+    push?(obj: AnyObject, vector: Vector2): Action[] // triggered when !canEnter
     enter?(obj: AnyObject, vector: Vector2): Action[]
     leave?(obj: AnyObject, vector: Vector2): Action[]
     Component?: any

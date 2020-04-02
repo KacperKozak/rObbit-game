@@ -22,23 +22,25 @@ export const useGame = () => {
         const prevTile = findByXY(state.map.tiles, target.xy)
         const nextTile = findByXY(state.map.tiles, newXY)
 
-        const prevProp = findByXY(state.map.props, target.xy)
-        const nextProp = findByXY(state.map.props, newXY)
-
-        console.log('nextProp', nextProp)
-
         const actions: Action[] = [moveAction(targetId, vector)]
+
+        if (!nextTile?.canEnter(target, vector)) {
+            return
+        }
 
         if (prevTile?.leave) {
             actions.push(...prevTile.leave(target, vector))
         }
 
-        if (prevProp?.leave) {
-            actions.push(...prevProp.leave(target, vector))
-        }
-
         if (nextTile?.enter) {
             actions.push(...nextTile.enter(target, vector))
+        }
+
+        const prevProp = findByXY(state.map.props, target.xy)
+        const nextProp = findByXY(state.map.props, newXY)
+
+        if (prevProp?.leave) {
+            actions.push(...prevProp.leave(target, vector))
         }
 
         if (nextProp?.enter) {
