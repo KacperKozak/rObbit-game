@@ -4,7 +4,7 @@ import { Color } from 'three'
 export const Environment = () => {
     return (
         <group>
-            <ambientLight intensity={0.2} />
+            <ambientLight intensity={0.7} />
             <pointLight
                 position={[6, 7, 8]}
                 intensity={1.2}

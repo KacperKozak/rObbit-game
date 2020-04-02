@@ -3,14 +3,14 @@ import React from 'react'
 import { moveAction, removeAction } from '../state/actions'
 import { PLAYER_ID } from '../types/consts'
 import { ObjectDefinition, ObjectTypes, XY } from '../types/types'
-import { TileFactory } from './models/Items'
+import { Ground, Grass, Button, Ice } from './models/Items'
 
 export const tileTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>> = {
     [ObjectTypes.Grass]: {
         getId: () => uniqueId('grass'),
         canEnter: () => true,
         Component: () => <div style={{ width: 50, height: 50, backgroundColor: 'green' }} />,
-        Component3d: TileFactory('green'),
+        Component3d: Grass,
     },
 
     [ObjectTypes.Ice]: {
@@ -18,14 +18,14 @@ export const tileTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
         canEnter: () => true,
         enter: ({ who, vector }) => [moveAction(who.id, vector)],
         Component: () => <div style={{ width: 50, height: 50, backgroundColor: 'lightblue' }} />,
-        Component3d: TileFactory('lightblue'),
+        Component3d: Ice,
     },
 
     [ObjectTypes.Rock]: {
         getId: () => uniqueId('rock'),
         canEnter: () => false,
         Component: () => <div style={{ width: 50, height: 50, backgroundColor: 'gray' }} />,
-        Component3d: TileFactory('gray'),
+        Component3d: Ground,
     },
 
     [ObjectTypes.Button]: {
@@ -50,6 +50,6 @@ export const tileTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
                 <button style={{ fontSize: 10 }}>btn</button>
             </div>
         ),
-        Component3d: TileFactory('darkgray'),
+        Component3d: Button,
     },
 }

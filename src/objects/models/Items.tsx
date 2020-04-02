@@ -11,38 +11,87 @@ export const Item = (props: RenderComponentProps) => {
     return <Asset {...props} url="rock1.gltf" />
 }
 
-export const TileFactory = (color: string) => (props: RenderComponentProps) => {
+export const Ground = (props: RenderComponentProps) => {
     // Set up state for the hovered and active state]
     // const [active, setActive] = useState(false)
 
     console.log('elevation', props.elevation)
 
     return (
-        // <mesh
-        //     receiveShadow={true}
-        //     // scale={active ? [0.9, 0.9, 0.9] : [1, 1, 1]}
-        //     // onClick={e => {
-        //     //     console.log(e)
-        //     //     play('button', 0.5)
-        //     //     return setActive(!active)
-        //     // }}
-        //     position={[xy[0], -0.5, xy[1]]}
-        // >
-        //     <boxBufferGeometry attach="geometry" args={[1, 1, 1]} />
-        //     <meshStandardMaterial attach="material" color={color} />
-        // </mesh>
-        <Asset {...props} url="ground_002_export_test_1_cube.gltf" color={color} />
+        <Asset
+            {...props}
+            url="ground_002_export_test_1_cube.gltf"
+            castShadow={false}
+            receiveShadow={true}
+        />
+    )
+}
+
+export const Grass = (props: RenderComponentProps) => {
+    // Set up state for the hovered and active state]
+    // const [active, setActive] = useState(false)
+
+    console.log('elevation', props.elevation)
+
+    return (
+        <Asset
+            {...props}
+            url="grass_002_export_test_1_cube.gltf" // INNY model
+            castShadow={false}
+            receiveShadow={true}
+        />
+    )
+}
+
+export const Ice = (props: RenderComponentProps) => {
+    // Set up state for the hovered and active state]
+    // const [active, setActive] = useState(false)
+
+    console.log('elevation', props.elevation)
+
+    return (
+        <Asset
+            {...props}
+            url="ice_002_export_test_1_cube.gltf" // INNY model
+            castShadow={false}
+            receiveShadow={true}
+        />
+    )
+}
+export const Button = (props: RenderComponentProps) => {
+    // Set up state for the hovered and active state]
+    // const [active, setActive] = useState(false)
+
+    console.log('elevation', props.elevation)
+
+    return (
+        <Asset
+            {...props}
+            url="ground_002_export_test_1_cube.gltf" // INNY model
+            castShadow={false}
+            receiveShadow={true}
+        />
     )
 }
 
 interface AssetProps extends RenderComponentProps {
     url: string
     color?: string
+    castShadow?: boolean
+    receiveShadow?: boolean
 }
 
-const Asset = ({ url, xy, elevation, color }: AssetProps) => {
+const Asset = ({
+    url,
+    xy,
+    elevation,
+    rotation,
+    castShadow = true,
+    receiveShadow = false,
+}: AssetProps) => {
     const gltf = useLoader(GLTFLoader, `/assets/${url}`)
-    gltf.scene.children[0].castShadow = true
+    if (castShadow) gltf.scene.children[0].castShadow = true
+    if (receiveShadow) gltf.scene.children[0].receiveShadow = true
     gltf.scene.scale.set(0.5, 0.5, 0.5)
     gltf.scene = gltf.scene.clone()
     return (
@@ -50,7 +99,7 @@ const Asset = ({ url, xy, elevation, color }: AssetProps) => {
             object={gltf.scene}
             dispose={null}
             position={[xy[0], elevation, xy[1]]}
-            color={color ? color : '#ffffff'}
+            rotation={[0, rotation, 0]}
         />
     )
 }
