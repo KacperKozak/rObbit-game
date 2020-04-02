@@ -1,6 +1,6 @@
-import { GameMap, AnyObject } from '../types/types'
-import { grass, rock } from '../objects/baseObjects'
-import { propObject, playerObject } from '../objects/propObjects'
+import { GrassObject, RockObject } from '../objects/baseObjects'
+import { PlayerObject, PropObject } from '../objects/propObjects'
+import { AnyObject, GameMap } from '../types/types'
 
 // prettier-ignore
 const mapBitmap = [
@@ -24,8 +24,8 @@ export const createMap = (): GameMap => {
     const tiles = mapBitmap
         .map((items, y) =>
             items.map((type, x) => {
-                const fn = type ? rock : grass
-                return fn([x, y], [0, 0])
+                const Object = type ? RockObject : GrassObject
+                return new Object([x, y], [0, 0])
             }),
         )
         .flat()
@@ -33,8 +33,8 @@ export const createMap = (): GameMap => {
     const props = propsBitmap
         .map((items, y) =>
             items.map((type, x) => {
-                const fn = type === 1 ? playerObject : type === 2 ? propObject : undefined
-                return fn && fn([x, y], [0, 0])
+                const Object = type === 1 ? PlayerObject : type === 2 ? PropObject : undefined
+                return Object && new Object([x, y], [0, 0])
             }),
         )
         .flat()

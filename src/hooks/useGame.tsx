@@ -11,24 +11,36 @@ export const useGame = () => {
     const actionsRef = useRef<Action[]>([])
 
     const move = (targetId: string, vector: Vector2) => {
-        const target = findPropById(state.map.props, targetId)
+        const target = findById(state.map.props, targetId)
 
         if (!target) {
             return console.warn(`Unknown target ${targetId}`)
         }
 
         const newXY = applyVector(target.xy, vector)
-        const nextTile = findTileByXY(state.map.tiles, newXY)
-        const prevTile = findTileByXY(state.map.tiles, target.xy)
+
+        const prevTile = findByXY(state.map.tiles, target.xy)
+        const nextTile = findByXY(state.map.tiles, newXY)
+
+        const nextProp = findByXY(state.map.props, newXY)
+        const prevProp = findByXY(state.map.props, target.xy)
 
         const actions: Action[] = [moveAction(targetId, vector)]
+
+        if (prevTile?.leave) {
+            actions.push(...prevTile.leave(target, vector))
+        }
+
+        if (prevProp?.leave) {
+            actions.push(...prevProp.leave(target, vector))
+        }
 
         if (nextTile?.enter) {
             actions.push(...nextTile.enter(target, vector))
         }
 
-        if (prevTile?.leave) {
-            actions.push(...prevTile.leave(target, vector))
+        if (nextProp?.enter) {
+            actions.push(...nextProp.enter(target, vector))
         }
 
         actions.forEach(dispatch)
@@ -37,10 +49,10 @@ export const useGame = () => {
     return { ...state, move }
 }
 
-const findPropById = (props: AnyObject[], id: string) => {
+const findById = (props: BaseObject[], id: string) => {
     return props.find(prop => prop.id === id)
 }
 
-const findTileByXY = (tiles: BaseObject[], xy: XY) => {
-    return tiles.find(tile => samePosition(tile.xy, xy))
+const findByXY = (objects: BaseObject[], xy: XY) => {
+    return objects.find(tile => samePosition(tile.xy, xy))
 }

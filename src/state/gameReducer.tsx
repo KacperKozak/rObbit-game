@@ -26,6 +26,16 @@ export const gameReducer = (state: GameState, action: Action): GameState => {
                 },
             }
         }
+
+        case 'remove': {
+            return {
+                ...state,
+                map: {
+                    ...state.map,
+                    props: state.map.props.filter(prop => prop.id !== action.targetId),
+                },
+            }
+        }
     }
 
     console.warn('[gameReducer] Not handled action', action)

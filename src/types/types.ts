@@ -1,7 +1,7 @@
 export type XY = [number, number]
 export type Vector2 = [number, number]
 
-export interface PlayerObject extends BaseObject {
+export interface PlayerObjectInterface extends BaseObject {
     attachments: any[]
 }
 
@@ -15,7 +15,7 @@ export interface BaseObject {
     Component3d?: any
 }
 
-export type AnyObject = BaseObject | PlayerObject
+export type AnyObject = BaseObject | PlayerObjectInterface
 
 /*
  * Actions
