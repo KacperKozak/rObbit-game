@@ -16,7 +16,8 @@ export interface ObjectInstance {
     type: ObjectTypes
     id: string
     xy: XY
-    rotation?: Vector2
+    rotation: number
+    elevation: number
 }
 
 export interface ActionEvent {

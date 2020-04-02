@@ -15,6 +15,8 @@ export const TileFactory = (color: string) => (props: RenderComponentProps) => {
     // Set up state for the hovered and active state]
     // const [active, setActive] = useState(false)
 
+    console.log('elevation', props.elevation)
+
     return (
         // <mesh
         //     receiveShadow={true}
@@ -38,7 +40,7 @@ interface AssetProps extends RenderComponentProps {
     color?: string
 }
 
-const Asset = ({ url, xy, color }: AssetProps) => {
+const Asset = ({ url, xy, elevation, color }: AssetProps) => {
     const gltf = useLoader(GLTFLoader, `/assets/${url}`)
     gltf.scene.children[0].castShadow = true
     gltf.scene.scale.set(0.5, 0.5, 0.5)
@@ -47,7 +49,7 @@ const Asset = ({ url, xy, color }: AssetProps) => {
         <primitive
             object={gltf.scene}
             dispose={null}
-            position={[xy[0], 0, xy[1]]}
+            position={[xy[0], elevation, xy[1]]}
             color={color ? color : '#ffffff'}
         />
     )

@@ -1,6 +1,7 @@
 import { tileTypeDefinitions } from '../objects/tileTypeDefinitions'
 import { propTypeDefinitions } from '../objects/propTypeDefinitions'
 import { GameMap, ObjectInstance, ObjectTypes } from '../types/types'
+import { findByXY } from '../helpers'
 
 const tileDict = {
     0: ObjectTypes.Grass,
@@ -40,6 +41,8 @@ export const createMap = (): GameMap => {
                 type,
                 xy: [x, y],
                 id: tileTypeDefinitions[type]!.getId(),
+                elevation: Math.random() / 4,
+                rotation: 0,
             }
         }),
     )
@@ -53,10 +56,14 @@ export const createMap = (): GameMap => {
                     type,
                     xy: [x, y],
                     id: propTypeDefinitions[type]!.getId(),
+                    elevation: findByXY(tiles, [x, y])?.elevation || 0,
+                    rotation: Math.random(),
                 }
             }),
         )
         .filter(a => a) as ObjectInstance[]
+
+    console.log('tiles', tiles)
 
     return { objects: [...props, ...tiles] }
 }
