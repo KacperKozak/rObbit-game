@@ -12,11 +12,6 @@ export const Item = (props: RenderComponentProps) => {
 }
 
 export const Ground = (props: RenderComponentProps) => {
-    // Set up state for the hovered and active state]
-    // const [active, setActive] = useState(false)
-
-    console.log('elevation', props.elevation)
-
     return (
         <Asset
             {...props}
@@ -28,11 +23,6 @@ export const Ground = (props: RenderComponentProps) => {
 }
 
 export const Grass = (props: RenderComponentProps) => {
-    // Set up state for the hovered and active state]
-    // const [active, setActive] = useState(false)
-
-    console.log('elevation', props.elevation)
-
     return (
         <Asset
             {...props}
@@ -44,11 +34,6 @@ export const Grass = (props: RenderComponentProps) => {
 }
 
 export const Ice = (props: RenderComponentProps) => {
-    // Set up state for the hovered and active state]
-    // const [active, setActive] = useState(false)
-
-    console.log('elevation', props.elevation)
-
     return (
         <Asset
             {...props}
@@ -59,11 +44,6 @@ export const Ice = (props: RenderComponentProps) => {
     )
 }
 export const Button = (props: RenderComponentProps) => {
-    // Set up state for the hovered and active state]
-    // const [active, setActive] = useState(false)
-
-    console.log('elevation', props.elevation)
-
     return (
         <Asset
             {...props}

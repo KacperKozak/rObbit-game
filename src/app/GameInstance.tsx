@@ -19,7 +19,6 @@ export const GameInstance = () => {
                 camera={{ zoom: 100, fov: 1075, position: [-3 + 3, 5, 5 + 2] }}
                 onCreated={scene => {
                     scene.camera.lookAt(3, 0, 2)
-                    console.log(scene)
                     scene.gl.shadowMap.type = PCFSoftShadowMap
                     scene.gl.shadowMap.enabled = true
                 }}

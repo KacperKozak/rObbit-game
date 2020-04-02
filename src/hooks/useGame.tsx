@@ -1,15 +1,15 @@
-import { useContext } from 'react'
-import { GameDispatchContext, GameStateContext } from '../app/GameContext'
-import { applyVector, samePosition, findById, findByXY } from '../helpers'
+import { useDispatch, useSelector } from 'react-redux'
+import { applyVector, findById, findByXY } from '../helpers'
 import { moveAction } from '../state/actions'
-import { Action, Vector2, XY, ActionEvent } from '../types/types'
-import { getDefinition } from '../objects/definitions'
+import { GameStateAware, move } from '../state/gameReducer'
+import { Action, Vector2 } from '../types/types'
+import { uniqueId } from 'lodash'
 
 export const useGame = () => {
-    const state = useContext(GameStateContext)
-    const dispatch = useContext(GameDispatchContext)
+    const state = useSelector((state: GameStateAware) => state.game)
+    const dispatch = useDispatch()
 
-    const move = (targetId: string, vector: Vector2) => {
+    const triggerMove = (targetId: string, vector: Vector2) => {
         const who = findById(state.map.objects, targetId)
 
         if (!who) {
@@ -31,7 +31,7 @@ export const useGame = () => {
         //     return
         // }
 
-        const actions: Action[] = [moveAction(targetId, vector)]
+        const actions = [move({ targetId, vector })]
 
         // const prevTile = findByXY(state.map.tiles, who.xy)
         // const prevTileDef = prevTile && getDefinition(prevTile.type)
@@ -60,5 +60,5 @@ export const useGame = () => {
         actions.forEach(dispatch)
     }
 
-    return { ...state, move }
+    return { ...state, move: triggerMove }
 }

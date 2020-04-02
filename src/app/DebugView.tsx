@@ -14,10 +14,15 @@ const size = 50
 export const DebugView = ({ map }: DebugViewProps) => {
     const { move } = useGame()
 
-    useKeyboardEvent('ArrowLeft', () => move(PLAYER_ID, LEFT))
-    useKeyboardEvent('ArrowUp', () => move(PLAYER_ID, UP))
-    useKeyboardEvent('ArrowDown', () => move(PLAYER_ID, DOWN))
-    useKeyboardEvent('ArrowRight', () => move(PLAYER_ID, RIGHT))
+    const left = () => move(PLAYER_ID, LEFT)
+    const up = () => move(PLAYER_ID, UP)
+    const down = () => move(PLAYER_ID, DOWN)
+    const right = () => move(PLAYER_ID, RIGHT)
+
+    useKeyboardEvent('ArrowLeft', left)
+    useKeyboardEvent('ArrowUp', up)
+    useKeyboardEvent('ArrowDown', down)
+    useKeyboardEvent('ArrowRight', right)
 
     return (
         <div
@@ -30,10 +35,10 @@ export const DebugView = ({ map }: DebugViewProps) => {
                 opacity: 0.8,
             }}
         >
-            <button onClick={() => move(PLAYER_ID, LEFT)}>←</button>
-            <button onClick={() => move(PLAYER_ID, UP)}>↑</button>
-            <button onClick={() => move(PLAYER_ID, DOWN)}>↓</button>
-            <button onClick={() => move(PLAYER_ID, RIGHT)}>→</button>
+            <button onClick={left}>←</button>
+            <button onClick={up}>↑</button>
+            <button onClick={down}>↓</button>
+            <button onClick={right}>→</button>
 
             <div style={{ position: 'relative' }}>
                 {map.objects.map(obj => {

@@ -13,10 +13,17 @@
     "lodash": "^4.17.15",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-redux": "^7.2.0",
     "react-scripts": "3.4.1",
     "react-three-fiber": "^4.0.25",
+    "redux": "^4.0.5",
+    "redux-devtools-extension": "^2.13.8",
+    "redux-observable": "^1.2.0",
+    "rxjs": "^6.5.4",
     "three": "^0.115.0",
-    "typescript": "~3.7.2"
+    "typescript": "~3.7.2",
+    "typescript-fsa": "^3.0.0",
+    "typescript-fsa-reducers": "^1.2.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -40,6 +47,7 @@
     ]
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.149"
+    "@types/lodash": "^4.14.149",
+    "@types/react-redux": "^7.1.7"
   }
 }
