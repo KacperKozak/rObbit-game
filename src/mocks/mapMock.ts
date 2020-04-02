@@ -1,4 +1,9 @@
-import { GrassTileObject, RockTileObject, ButtonTileObject } from '../objects/baseObjects'
+import {
+    ButtonTileObject,
+    GrassTileObject,
+    IceTileObject,
+    RockTileObject,
+} from '../objects/baseObjects'
 import { PlayerObject, PropObject } from '../objects/propObjects'
 import { AnyObject, GameMap } from '../types/types'
 
@@ -6,12 +11,13 @@ const mapDict = {
     0: GrassTileObject,
     1: RockTileObject,
     2: ButtonTileObject,
+    3: IceTileObject,
 }
 
 // prettier-ignore
 const mapBitmap = [
     [1,1,1,1,2,1,1,],
-    [1,0,0,0,0,0,1,],
+    [1,0,0,3,0,0,1,],
     [1,0,0,1,1,0,1,],
     [1,0,0,1,0,0,1,],
     [1,1,1,1,1,1,1,],
