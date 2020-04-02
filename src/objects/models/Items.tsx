@@ -15,8 +15,6 @@ export const TileFactory = (color: string) => ({ xy, elevation }: RenderComponen
     // Set up state for the hovered and active state]
     // const [active, setActive] = useState(false)
 
-    console.log('elevation', elevation)
-
     return (
         <mesh
             receiveShadow={true}
