@@ -3,7 +3,7 @@ import { DOWN, LEFT, PLAYER_ID, RIGHT, UP } from '../types/consts'
 import { GameMap } from '../types/types'
 import { useGame } from '../hooks/useGame'
 import { useKeyboardEvent } from '../hooks/useKeyboardEvent'
-import { getDefinition } from '../objects/objects'
+import { getDefinition } from '../objects/definitions'
 
 interface DebugViewProps {
     map: GameMap
@@ -36,25 +36,25 @@ export const DebugView = ({ map }: DebugViewProps) => {
             <button onClick={() => move(PLAYER_ID, RIGHT)}>→</button>
 
             <div style={{ position: 'relative' }}>
-                {map.tiles.map(tile => {
-                    const { Component } = getDefinition(tile.type)
+                {map.objects.map(obj => {
+                    const { Component } = getDefinition(obj.type)
                     return (
                         <div
-                            key={tile.id}
+                            key={obj.id}
                             style={{
                                 position: 'absolute',
-                                left: tile.xy[0] * size,
-                                top: tile.xy[1] * size,
+                                left: obj.xy[0] * size,
+                                top: obj.xy[1] * size,
                                 width: size,
                                 height: size,
                             }}
                         >
-                            <Label text={tile.id} />
-                            <Component />
+                            <Label text={obj.id} />
+                            <Component xy={obj.xy} rotation={0} elevation={0} />
                         </div>
                     )
                 })}
-
+                {/* 
                 {map.props.map(prop => {
                     const { Component } = getDefinition(prop.type)
                     return (
@@ -68,10 +68,11 @@ export const DebugView = ({ map }: DebugViewProps) => {
                                 height: size,
                             }}
                         >
+                            <Label text={prop.id} />
                             <Component />
                         </div>
                     )
-                })}
+                })} */}
             </div>
         </div>
     )

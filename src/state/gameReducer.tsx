@@ -20,7 +20,7 @@ export const gameReducer = (state: GameState, action: Action): GameState => {
                 ...state,
                 map: {
                     ...state.map,
-                    props: state.map.props.map(prop => {
+                    objects: state.map.objects.map(prop => {
                         play('engineStart', 0.01)
                         if (prop.id !== action.targetId) return prop
                         return { ...prop, xy: applyVector(prop.xy, action.vector) }
@@ -34,7 +34,7 @@ export const gameReducer = (state: GameState, action: Action): GameState => {
                 ...state,
                 map: {
                     ...state.map,
-                    props: state.map.props.filter(prop => prop.id !== action.targetId),
+                    objects: state.map.objects.filter(prop => prop.id !== action.targetId),
                 },
             }
         }

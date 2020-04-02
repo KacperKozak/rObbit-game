@@ -2,27 +2,30 @@ import { useContext } from 'react'
 import { GameDispatchContext, GameStateContext } from '../app/GameContext'
 import { applyVector, samePosition } from '../helpers'
 import { moveAction } from '../state/actions'
-import { Action, Vector2, XY } from '../types/types'
+import { Action, Vector2, XY, ActionEvent } from '../types/types'
+import { getDefinition } from '../objects/definitions'
 
 export const useGame = () => {
     const state = useContext(GameStateContext)
     const dispatch = useContext(GameDispatchContext)
 
     const move = (targetId: string, vector: Vector2) => {
-        const target = findById(state.map.props, targetId)
+        const who = findById(state.map.objects, targetId)
 
-        if (!target) {
+        if (!who) {
             return console.warn(`Unknown target ${targetId}`)
         }
 
-        const newXY = applyVector(target.xy, vector)
+        const newXY = applyVector(who.xy, vector)
+        const nextTile = findByXY(state.map.objects, newXY)
 
-        const prevTile = findByXY(state.map.tiles, target.xy)
-        const nextTile = findByXY(state.map.tiles, newXY)
+        if (!nextTile) return
 
-        // if (!nextTile?.canEnter(target, vector, state)) {
-        //     if (nextTile?.push) {
-        //         const pushActions = nextTile.push(target, vector, state)
+        // const nextTileDef = getDefinition(nextTile.type)
+
+        // if (!nextTileDef?.canEnter({ who, vector, state, self: nextTile })) {
+        //     if (nextTileDef?.push) {
+        //         const pushActions = nextTileDef.push({ who, vector, state, self: nextTile })
         //         pushActions.forEach(dispatch)
         //     }
         //     return
@@ -30,23 +33,28 @@ export const useGame = () => {
 
         const actions: Action[] = [moveAction(targetId, vector)]
 
-        // if (prevTile?.leave) {
-        //     actions.push(...prevTile.leave(target, vector, state))
+        // const prevTile = findByXY(state.map.tiles, who.xy)
+        // const prevTileDef = prevTile && getDefinition(prevTile.type)
+
+        // if (prevTileDef?.leave) {
+        //     actions.push(...prevTileDef.leave({ who, vector, state, self: prevTile! }))
         // }
 
-        // if (nextTile?.enter) {
-        //     actions.push(...nextTile.enter(target, vector, state))
+        // if (nextTileDef?.enter) {
+        //     actions.push(...nextTileDef.enter({ who, vector, state, self: nextTile }))
         // }
 
-        // const prevProp = findByXY(state.map.props, target.xy)
+        // const prevProp = findByXY(state.map.props, who.xy)
+        // const prevPropDef = prevProp && getDefinition(prevProp.type)
         // const nextProp = findByXY(state.map.props, newXY)
+        // const nextPropDef = nextProp && getDefinition(nextProp.type)
 
-        // if (prevProp?.leave) {
-        //     actions.push(...prevProp.leave(target, vector, state))
+        // if (prevPropDef?.leave) {
+        //     actions.push(...prevPropDef.leave({ who, vector, state, self: prevProp! }))
         // }
 
-        // if (nextProp?.enter) {
-        //     actions.push(...nextProp.enter(target, vector, state))
+        // if (nextPropDef?.enter) {
+        //     actions.push(...nextPropDef.enter({ who, vector, state, self: nextProp! }))
         // }
 
         actions.forEach(dispatch)

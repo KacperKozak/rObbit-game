@@ -1,5 +1,5 @@
-import { tileTypeDefinitions } from '../objects/baseObjects'
-import { propTypeDefinitions } from '../objects/propObjects'
+import { tileTypeDefinitions } from '../objects/tileTypeDefinitions'
+import { propTypeDefinitions } from '../objects/propTypeDefinitions'
 import { GameMap, ObjectInstance, ObjectTypes } from '../types/types'
 
 const tileDict = {
@@ -58,8 +58,5 @@ export const createMap = (): GameMap => {
         )
         .filter(a => a) as ObjectInstance[]
 
-    return {
-        props,
-        tiles,
-    }
+    return { objects: [...props, ...tiles] }
 }

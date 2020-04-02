@@ -20,7 +20,7 @@ export const propTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
                 }}
             />
         ),
-        Component3d: () => <Player color="brown" />,
+        Component3d: Player,
     },
     [ObjectTypes.TestProp]: {
         getId: () => uniqueId('test-prop'),
@@ -37,6 +37,6 @@ export const propTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
                 }}
             />
         ),
-        Component3d: () => <Item color="brown" />,
+        Component3d: Item,
     },
 }

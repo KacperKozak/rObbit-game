@@ -13,13 +13,13 @@ export enum ObjectTypes {
 }
 
 export interface ObjectInstance {
-    type: ObjectTypes | ObjectTypes
+    type: ObjectTypes
     id: string
     xy: XY
     rotation?: Vector2
 }
 
-interface ActionEvent {
+export interface ActionEvent {
     who: ObjectInstance // who triggered this @TODO better name!
     self: ObjectInstance
     vector: Vector2
@@ -32,8 +32,14 @@ export interface ObjectDefinition {
     push?(event: ActionEvent): Action[] // triggered when !canEnter
     enter?(event: ActionEvent): Action[]
     leave?(event: ActionEvent): Action[]
-    Component(): any
-    Component3d(): any
+    Component(props: RenderComponentProps): any
+    Component3d(props: RenderComponentProps): any
+}
+
+export interface RenderComponentProps {
+    xy: XY
+    rotation: number
+    elevation: number
 }
 
 /*
@@ -58,6 +64,5 @@ export interface RemoveAction {
  * Map
  */
 export interface GameMap {
-    tiles: ObjectInstance[]
-    props: ObjectInstance[]
+    objects: ObjectInstance[]
 }
