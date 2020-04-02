@@ -16,12 +16,12 @@ export const gameReducer = (state: GameState, action: Action): GameState => {
 
     switch (action.type) {
         case 'move': {
+            play('engineStart', 0.01)
             return {
                 ...state,
                 map: {
                     ...state.map,
                     objects: state.map.objects.map(prop => {
-                        play('engineStart', 0.01)
                         if (prop.id !== action.targetId) return prop
                         return { ...prop, xy: applyVector(prop.xy, action.vector) }
                     }),
