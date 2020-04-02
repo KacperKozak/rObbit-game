@@ -4,6 +4,7 @@ import { Color, PCFSoftShadowMap } from 'three'
 import { useGame } from '../hooks/useGame'
 import { getDefinition } from '../objects/objects'
 import { DebugView } from './DebugView'
+import { play } from '../audio/play'
 
 export const GameInstance = () => {
     const { map } = useGame()
@@ -20,6 +21,9 @@ export const GameInstance = () => {
                     console.log(scene)
                     scene.gl.shadowMap.type = PCFSoftShadowMap
                     scene.gl.shadowMap.enabled = true
+                    setTimeout(() => {
+                        play('music', 0.2)
+                    }, 100)
                 }}
             >
                 <ambientLight intensity={0.2} />
