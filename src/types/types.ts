@@ -23,14 +23,16 @@ export type AnyObject = BaseObject | PlayerObject
 export type Action = MoveAction | RemoveAction
 
 export interface MoveAction {
-    type: 'move'
     id: string
+    type: 'move'
+    targetId: string
     vector: Vector2
 }
 
 export interface RemoveAction {
-    type: 'remove'
     id: string
+    type: 'remove'
+    targetId: string
 }
 
 /*
