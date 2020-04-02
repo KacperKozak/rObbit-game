@@ -1,7 +1,7 @@
 import React from 'react'
 import { reverse } from '../helpers'
 import { BaseObject, Vector2, XY } from '../types/types'
-import { Tile } from './Tail'
+import { Tile } from './models/Tail'
 
 export const grass = (xyz: XY, rotation: Vector2): BaseObject => ({
     id: Math.random().toString(),

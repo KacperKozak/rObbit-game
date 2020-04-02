@@ -10,7 +10,14 @@ export const Tile = (props: { color: string }) => {
     // useFrame(() => (mesh.current.rotation.x = mesh.current.rotation.y += 0.01))
 
     return (
-        <mesh scale={active ? [0.9, 0.9, 0.9] : [1, 1, 1]} onClick={e => setActive(!active)}>
+        <mesh
+            receiveShadow={true}
+            scale={active ? [0.9, 0.9, 0.9] : [1, 1, 1]}
+            onClick={e => {
+                console.log(e)
+                return setActive(!active)
+            }}
+        >
             <boxBufferGeometry attach="geometry" args={[1, 0.1, 1]} />
             <meshStandardMaterial attach="material" color={props.color} />
         </mesh>
