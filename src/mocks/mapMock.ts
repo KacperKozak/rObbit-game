@@ -41,7 +41,7 @@ export const createMap = (): GameMap => {
                 type,
                 xy: [x, y],
                 id: tileTypeDefinitions[type]!.getId(),
-                elevation: Math.random() / 1,
+                elevation: Math.random() / 3,
                 rotation: 0,
             }
         }),
