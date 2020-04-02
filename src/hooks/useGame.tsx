@@ -8,8 +8,6 @@ export const useGame = () => {
     const state = useContext(GameStateContext)
     const dispatch = useContext(GameDispatchContext)
 
-    const actionsRef = useRef<Action[]>([])
-
     const move = (targetId: string, vector: Vector2) => {
         const target = findById(state.map.props, targetId)
 
@@ -22,29 +20,33 @@ export const useGame = () => {
         const prevTile = findByXY(state.map.tiles, target.xy)
         const nextTile = findByXY(state.map.tiles, newXY)
 
-        const actions: Action[] = [moveAction(targetId, vector)]
-
-        if (!nextTile?.canEnter(target, vector)) {
+        if (!nextTile?.canEnter(target, vector, state)) {
+            if (nextTile?.push) {
+                const pushActions = nextTile.push(target, vector, state)
+                pushActions.forEach(dispatch)
+            }
             return
         }
 
+        const actions: Action[] = [moveAction(targetId, vector)]
+
         if (prevTile?.leave) {
-            actions.push(...prevTile.leave(target, vector))
+            actions.push(...prevTile.leave(target, vector, state))
         }
 
         if (nextTile?.enter) {
-            actions.push(...nextTile.enter(target, vector))
+            actions.push(...nextTile.enter(target, vector, state))
         }
 
         const prevProp = findByXY(state.map.props, target.xy)
         const nextProp = findByXY(state.map.props, newXY)
 
         if (prevProp?.leave) {
-            actions.push(...prevProp.leave(target, vector))
+            actions.push(...prevProp.leave(target, vector, state))
         }
 
         if (nextProp?.enter) {
-            actions.push(...nextProp.enter(target, vector))
+            actions.push(...nextProp.enter(target, vector, state))
         }
 
         actions.forEach(dispatch)

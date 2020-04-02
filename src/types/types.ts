@@ -1,3 +1,5 @@
+import { GameState } from '../state/gameReducer'
+
 export type XY = [number, number]
 export type Vector2 = [number, number]
 
@@ -9,10 +11,10 @@ export interface BaseObject {
     id: string
     xy: XY
     rotation?: Vector2
-    canEnter(obj: AnyObject, vector: Vector2): boolean
-    push?(obj: AnyObject, vector: Vector2): Action[] // triggered when !canEnter
-    enter?(obj: AnyObject, vector: Vector2): Action[]
-    leave?(obj: AnyObject, vector: Vector2): Action[]
+    canEnter(obj: AnyObject, vector: Vector2, state: GameState): boolean
+    push?(obj: AnyObject, vector: Vector2, state: GameState): Action[] // triggered when !canEnter
+    enter?(obj: AnyObject, vector: Vector2, state: GameState): Action[]
+    leave?(obj: AnyObject, vector: Vector2, state: GameState): Action[]
     Component?: any
     Component3d?: any
 }
