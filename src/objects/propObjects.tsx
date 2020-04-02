@@ -1,41 +1,16 @@
-import { PlayerObject, BaseObject, XY, Vector2 } from '../types/types'
+import { PlayerObjectInterface, BaseObject, XY, Vector2 } from '../types/types'
 import { PLAYER_ID } from '../types/consts'
 import React from 'react'
-import { Player } from './models/Items'
+import { Player, Item } from './models/Items'
+import { uniqueId } from 'lodash'
+import { removeAction } from '../state/actions'
 
-export const propObject = (xyz: XY, rotation: Vector2): BaseObject => ({
-    id: Math.random().toString(),
-    xy: xyz,
-    rotation,
-    enter: () => [],
-    leave: () => [],
-    Component: () => (
-        <div
-            style={{
-                margin: 25 / 2,
-                width: 25,
-                height: 25,
-                backgroundColor: 'brown',
-                borderRadius: 5,
-            }}
-        />
-    ),
-    Component3d: () => (
-        <mesh castShadow>
-            <boxBufferGeometry attach="geometry" args={[0.5, 0.5, 0.5]} />
-            <meshStandardMaterial attach="material" color="brown" />
-        </mesh>
-    ),
-})
-
-export const playerObject = (xyz: XY, rotation: Vector2): PlayerObject => ({
-    id: PLAYER_ID,
-    xy: xyz,
-    rotation,
-    attachments: [],
-    enter: () => [],
-    leave: () => [],
-    Component: () => (
+export class PlayerObject implements PlayerObjectInterface {
+    id = PLAYER_ID
+    attachments = []
+    constructor(public xy: XY, public rotation: Vector2) {}
+    canEnter = () => true
+    Component = () => (
         <div
             style={{
                 margin: 25 / 2,
@@ -45,6 +20,25 @@ export const playerObject = (xyz: XY, rotation: Vector2): PlayerObject => ({
                 borderRadius: 5,
             }}
         />
-    ),
-    Component3d: () => <Player color="white" />,
-})
+    )
+    Component3d = () => <Player color="brown" />
+}
+
+export class PropObject implements BaseObject {
+    id = uniqueId('prop')
+    constructor(public xy: XY, public rotation: Vector2) {}
+    canEnter = () => true
+    enter = () => [removeAction(this.id)]
+    Component = () => (
+        <div
+            style={{
+                margin: 25 / 2,
+                width: 25,
+                height: 25,
+                backgroundColor: 'brown',
+                borderRadius: 5,
+            }}
+        />
+    )
+    Component3d = () => <Item color="brown" />
+}

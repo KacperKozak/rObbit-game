@@ -1,6 +1,6 @@
-import { createMap } from '../mocks/mapMock'
-import { GameMap, Action, XY, Vector2 } from '../types/types'
 import { applyVector } from '../helpers'
+import { createMap } from '../mocks/mapMock'
+import { Action, GameMap } from '../types/types'
 
 export interface GameState {
     map: GameMap
@@ -11,6 +11,8 @@ export const initialState: GameState = {
 }
 
 export const gameReducer = (state: GameState, action: Action): GameState => {
+    console.log('[gameReducer] action', action, state)
+
     switch (action.type) {
         case 'move': {
             return {
@@ -18,13 +20,24 @@ export const gameReducer = (state: GameState, action: Action): GameState => {
                 map: {
                     ...state.map,
                     props: state.map.props.map(prop => {
-                        if (prop.id !== action.id) return prop
+                        if (prop.id !== action.targetId) return prop
                         return { ...prop, xy: applyVector(prop.xy, action.vector) }
                     }),
                 },
             }
         }
+
+        case 'remove': {
+            return {
+                ...state,
+                map: {
+                    ...state.map,
+                    props: state.map.props.filter(prop => prop.id !== action.targetId),
+                },
+            }
+        }
     }
-    console.warn('[GameContext] Not handled action', action)
+
+    console.warn('[gameReducer] Not handled action', action)
     return state
 }

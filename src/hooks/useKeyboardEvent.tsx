@@ -9,5 +9,5 @@ export const useKeyboardEvent = (key: string, callback: Function) => {
         window.addEventListener('keydown', handler)
 
         return () => window.removeEventListener('keydown', handler)
-    }, [])
+    })
 }

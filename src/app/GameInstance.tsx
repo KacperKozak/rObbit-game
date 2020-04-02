@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import { Canvas, useThree } from 'react-three-fiber'
 import { DebugView } from './DebugView'
 import { useGame } from '../hooks/useGame'
@@ -35,18 +35,26 @@ export const GameInstance = () => {
                     color={new Color('#c86b6f')}
                     castShadow
                 />
-                {/* position={[tile.xy[0] * 1.1, 0, tile.xy[1] * 1.1]}  */}
-                {map.tiles.map(tile => (
-                    <group position={[tile.xy[0], 0, tile.xy[1]]} key={tile.id}>
-                        <tile.Component3d />
-                    </group>
-                ))}
-                {map.props.map(prop => (
-                    <group position={[prop.xy[0], 0, prop.xy[1]]} key={prop.id}>
-                        <prop.Component3d />
-                    </group>
-                ))}
-                }
+                <Suspense
+                    fallback={
+                        <mesh>
+                            <boxBufferGeometry attach="geometry" args={[0.5, 0.5, 0.5]} />
+                            <meshStandardMaterial attach="material" color="red" />
+                        </mesh>
+                    }
+                >
+                    {/* position={[tile.xy[0] * 1.1, 0, tile.xy[1] * 1.1]}  */}
+                    {map.tiles.map(tile => (
+                        <group position={[tile.xy[0], 0, tile.xy[1]]} key={tile.id}>
+                            <tile.Component3d />
+                        </group>
+                    ))}
+                    {map.props.map(prop => (
+                        <group position={[prop.xy[0], 0, prop.xy[1]]} key={prop.id}>
+                            <prop.Component3d />
+                        </group>
+                    ))}
+                </Suspense>
             </Canvas>
         </>
     )

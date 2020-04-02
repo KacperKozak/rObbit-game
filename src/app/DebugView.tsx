@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, FC } from 'react'
 import { DOWN, LEFT, PLAYER_ID, RIGHT, UP } from '../types/consts'
 import { GameMap } from '../types/types'
 import { useGame } from '../hooks/useGame'
@@ -19,7 +19,16 @@ export const DebugView = ({ map }: DebugViewProps) => {
     useKeyboardEvent('ArrowRight', () => move(PLAYER_ID, RIGHT))
 
     return (
-        <div style={{ position: 'absolute', zIndex: 100, top: 0, right: 0, width: size * 8 }}>
+        <div
+            style={{
+                position: 'absolute',
+                zIndex: 100,
+                top: 0,
+                right: 0,
+                width: size * 8,
+                opacity: 0.8,
+            }}
+        >
             <button onClick={() => move(PLAYER_ID, LEFT)}>←</button>
             <button onClick={() => move(PLAYER_ID, UP)}>↑</button>
             <button onClick={() => move(PLAYER_ID, DOWN)}>↓</button>
@@ -37,6 +46,7 @@ export const DebugView = ({ map }: DebugViewProps) => {
                             height: size,
                         }}
                     >
+                        <Label text={tile.id} />
                         <tile.Component />
                     </div>
                 ))}
@@ -59,3 +69,11 @@ export const DebugView = ({ map }: DebugViewProps) => {
         </div>
     )
 }
+
+interface LabelProps {
+    text: string
+}
+
+export const Label = ({ text }: LabelProps) => (
+    <div style={{ position: 'absolute', left: 0, top: 0, fontSize: 10 }}>{text}</div>
+)
