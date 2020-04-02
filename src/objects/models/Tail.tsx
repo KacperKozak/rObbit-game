@@ -1,13 +1,11 @@
 import { useFrame } from 'react-three-fiber'
 import React, { useState, useRef } from 'react'
 import { Vector3 } from 'three'
+import { play } from '../../audio/play'
 
 export const Tile = (props: { color: string }) => {
     // Set up state for the hovered and active state]
     const [active, setActive] = useState(false)
-
-    // Rotate mesh every frame, this is outside of React without overhead
-    // useFrame(() => (mesh.current.rotation.x = mesh.current.rotation.y += 0.01))
 
     return (
         <mesh
@@ -15,6 +13,7 @@ export const Tile = (props: { color: string }) => {
             scale={active ? [0.9, 0.9, 0.9] : [1, 1, 1]}
             onClick={e => {
                 console.log(e)
+                play('button', 0.5)
                 return setActive(!active)
             }}
         >
