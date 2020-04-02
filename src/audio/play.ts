@@ -1,5 +1,6 @@
 const soundList = {
     equip3: '/sounds/Equip_3.mp3',
+    engineStart: '/sounds/Engine_start.mp3',
     button: '/sounds/Button_gameplay.mp3',
     music: '/sounds/elementary1.mp3',
 }

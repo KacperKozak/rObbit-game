@@ -1,6 +1,7 @@
 import { applyVector } from '../helpers'
 import { createMap } from '../mocks/mapMock'
 import { Action, GameMap } from '../types/types'
+import { play } from '../audio/play'
 
 export interface GameState {
     map: GameMap
@@ -20,6 +21,7 @@ export const gameReducer = (state: GameState, action: Action): GameState => {
                 map: {
                     ...state.map,
                     props: state.map.props.map(prop => {
+                        play('engineStart', 0.01)
                         if (prop.id !== action.targetId) return prop
                         return { ...prop, xy: applyVector(prop.xy, action.vector) }
                     }),

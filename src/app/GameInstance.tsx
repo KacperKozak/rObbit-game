@@ -5,6 +5,7 @@ import { useGame } from '../hooks/useGame'
 import { getDefinition } from '../objects/objects'
 import { DebugView } from './DebugView'
 import { play } from '../audio/play'
+import { Environment } from './Environment'
 
 export const GameInstance = () => {
     const { map } = useGame()
@@ -21,24 +22,9 @@ export const GameInstance = () => {
                     console.log(scene)
                     scene.gl.shadowMap.type = PCFSoftShadowMap
                     scene.gl.shadowMap.enabled = true
-                    setTimeout(() => {
-                        play('music', 0.2)
-                    }, 100)
                 }}
             >
-                <ambientLight intensity={0.2} />
-                <pointLight
-                    position={[6, 7, 8]}
-                    intensity={1.2}
-                    color={new Color('#3a8dc2')}
-                    castShadow
-                />
-                <pointLight
-                    position={[1, 3, 5]}
-                    intensity={1.2}
-                    color={new Color('#c86b6f')}
-                    castShadow
-                />
+                <Environment />
                 <Suspense
                     fallback={
                         <mesh>
