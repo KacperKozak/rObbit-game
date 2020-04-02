@@ -41,7 +41,7 @@ export const createMap = (): GameMap => {
                 type,
                 xy: [x, y],
                 id: tileTypeDefinitions[type]!.getId(),
-                elevation: Math.random() / 4,
+                elevation: Math.random() / 2,
                 rotation: 0,
             }
         }),
@@ -62,8 +62,6 @@ export const createMap = (): GameMap => {
             }),
         )
         .filter(a => a) as ObjectInstance[]
-
-    console.log('tiles', tiles)
 
     return { objects: [...props, ...tiles] }
 }
