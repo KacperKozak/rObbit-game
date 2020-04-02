@@ -1,9 +1,9 @@
 import React, { Suspense } from 'react'
 import { Canvas, useThree } from 'react-three-fiber'
-import { DebugView } from './DebugView'
-import { useGame } from '../hooks/useGame'
-import { Tile } from '../objects/models/Tail'
 import { Color, PCFSoftShadowMap } from 'three'
+import { useGame } from '../hooks/useGame'
+import { getDefinition } from '../objects/objects'
+import { DebugView } from './DebugView'
 
 export const GameInstance = () => {
     const { map } = useGame()
@@ -44,16 +44,22 @@ export const GameInstance = () => {
                     }
                 >
                     {/* position={[tile.xy[0] * 1.1, 0, tile.xy[1] * 1.1]}  */}
-                    {map.tiles.map(tile => (
-                        <group position={[tile.xy[0], 0, tile.xy[1]]} key={tile.id}>
-                            <tile.Component3d />
-                        </group>
-                    ))}
-                    {map.props.map(prop => (
-                        <group position={[prop.xy[0], 0, prop.xy[1]]} key={prop.id}>
-                            <prop.Component3d />
-                        </group>
-                    ))}
+                    {map.tiles.map(tile => {
+                        const { Component3d } = getDefinition(tile.type)
+                        return (
+                            <group position={[tile.xy[0], 0, tile.xy[1]]} key={tile.id}>
+                                <Component3d />
+                            </group>
+                        )
+                    })}
+                    {map.props.map(prop => {
+                        const { Component3d } = getDefinition(prop.type)
+                        return (
+                            <group position={[prop.xy[0], 0, prop.xy[1]]} key={prop.id}>
+                                <Component3d />
+                            </group>
+                        )
+                    })}
                 </Suspense>
             </Canvas>
         </>

@@ -1,17 +1,12 @@
-import {
-    ButtonTileObject,
-    GrassTileObject,
-    IceTileObject,
-    RockTileObject,
-} from '../objects/baseObjects'
-import { PlayerObject, PropObject } from '../objects/propObjects'
-import { AnyObject, GameMap } from '../types/types'
+import { tileTypeDefinitions } from '../objects/baseObjects'
+import { propTypeDefinitions } from '../objects/propObjects'
+import { GameMap, ObjectInstance, ObjectTypes } from '../types/types'
 
-const mapDict = {
-    0: GrassTileObject,
-    1: RockTileObject,
-    2: ButtonTileObject,
-    3: IceTileObject,
+const tileDict = {
+    0: ObjectTypes.Grass,
+    1: ObjectTypes.Rock,
+    2: ObjectTypes.Button,
+    3: ObjectTypes.Ice,
 }
 
 // prettier-ignore
@@ -24,8 +19,8 @@ const mapBitmap = [
 ]
 
 const propDict = {
-    1: PlayerObject,
-    2: PropObject,
+    1: ObjectTypes.Player,
+    2: ObjectTypes.TestProp,
 }
 
 // prettier-ignore
@@ -38,24 +33,30 @@ const propsBitmap = [
 ]
 
 export const createMap = (): GameMap => {
-    const tiles = mapBitmap
-        .map((items, y) =>
-            items.map((type, x) => {
-                const Object = mapDict[type as keyof typeof mapDict]
-                return Object && new Object([x, y], [0, 0])
-            }),
-        )
-        .flat()
+    const tiles: ObjectInstance[] = mapBitmap.flatMap((items, y) =>
+        items.map((typeNumber, x) => {
+            const type = tileDict[typeNumber as keyof typeof tileDict]
+            return {
+                type,
+                xy: [x, y],
+                id: tileTypeDefinitions[type]!.getId(),
+            }
+        }),
+    )
 
     const props = propsBitmap
-        .map((items, y) =>
-            items.map((type, x) => {
-                const Object = propDict[type as keyof typeof propDict]
-                return Object && new Object([x, y], [0, 0])
+        .flatMap((items, y) =>
+            items.map((typeNumber, x) => {
+                const type = propDict[typeNumber as keyof typeof propDict]
+                if (!type) return
+                return {
+                    type,
+                    xy: [x, y],
+                    id: propTypeDefinitions[type]!.getId(),
+                }
             }),
         )
-        .flat()
-        .filter(p => p !== undefined) as AnyObject[]
+        .filter(a => a) as ObjectInstance[]
 
     return {
         props,
