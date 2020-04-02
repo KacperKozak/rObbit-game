@@ -3,7 +3,7 @@ import React from 'react'
 import { BaseObject, Vector2, XY, AnyObject } from '../types/types'
 import { Tile } from './models/Tail'
 import { GameState } from '../state/gameReducer'
-import { removeAction } from '../state/actions'
+import { removeAction, moveAction } from '../state/actions'
 import { PLAYER_ID } from '../types/consts'
 
 export class GrassTileObject implements BaseObject {
@@ -12,6 +12,15 @@ export class GrassTileObject implements BaseObject {
     canEnter = () => true
     Component = () => <div style={{ width: 50, height: 50, backgroundColor: 'green' }} />
     Component3d = () => <Tile color="green" />
+}
+
+export class IceTileObject implements BaseObject {
+    id = uniqueId('ice')
+    constructor(public xy: XY, public rotation: Vector2) {}
+    canEnter = () => true
+    enter = (obj: AnyObject, vector: Vector2, state: GameState) => [moveAction(obj.id, vector)]
+    Component = () => <div style={{ width: 50, height: 50, backgroundColor: 'lightblue' }} />
+    Component3d = () => <Tile color="lightblue" />
 }
 
 export class RockTileObject implements BaseObject {
