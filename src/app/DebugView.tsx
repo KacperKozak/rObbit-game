@@ -3,6 +3,7 @@ import { DOWN, LEFT, PLAYER_ID, RIGHT, UP } from '../types/consts'
 import { GameMap } from '../types/types'
 import { useGame } from '../hooks/useGame'
 import { useKeyboardEvent } from '../hooks/useKeyboardEvent'
+import { getDefinition } from '../objects/objects'
 
 interface DebugViewProps {
     map: GameMap
@@ -35,36 +36,42 @@ export const DebugView = ({ map }: DebugViewProps) => {
             <button onClick={() => move(PLAYER_ID, RIGHT)}>→</button>
 
             <div style={{ position: 'relative' }}>
-                {map.tiles.map(tile => (
-                    <div
-                        key={tile.id}
-                        style={{
-                            position: 'absolute',
-                            left: tile.xy[0] * size,
-                            top: tile.xy[1] * size,
-                            width: size,
-                            height: size,
-                        }}
-                    >
-                        <Label text={tile.id} />
-                        <tile.Component />
-                    </div>
-                ))}
+                {map.tiles.map(tile => {
+                    const { Component } = getDefinition(tile.type)
+                    return (
+                        <div
+                            key={tile.id}
+                            style={{
+                                position: 'absolute',
+                                left: tile.xy[0] * size,
+                                top: tile.xy[1] * size,
+                                width: size,
+                                height: size,
+                            }}
+                        >
+                            <Label text={tile.id} />
+                            <Component />
+                        </div>
+                    )
+                })}
 
-                {map.props.map(prop => (
-                    <div
-                        key={prop.id}
-                        style={{
-                            position: 'absolute',
-                            left: prop.xy[0] * size,
-                            top: prop.xy[1] * size,
-                            width: size,
-                            height: size,
-                        }}
-                    >
-                        <prop.Component />
-                    </div>
-                ))}
+                {map.props.map(prop => {
+                    const { Component } = getDefinition(prop.type)
+                    return (
+                        <div
+                            key={prop.id}
+                            style={{
+                                position: 'absolute',
+                                left: prop.xy[0] * size,
+                                top: prop.xy[1] * size,
+                                width: size,
+                                height: size,
+                            }}
+                        >
+                            <Component />
+                        </div>
+                    )
+                })}
             </div>
         </div>
     )

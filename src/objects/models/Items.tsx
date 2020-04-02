@@ -5,7 +5,6 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 
 export const Asset = (props: { color: string; url: string }) => {
     const gltf = useLoader(GLTFLoader, `/assets/${props.url}`)
-    console.log('gltf', gltf.scene)
     gltf.scene.children[0].castShadow = true
     gltf.scene.scale.set(0.5, 0.5, 0.5)
     gltf.scene = gltf.scene.clone()

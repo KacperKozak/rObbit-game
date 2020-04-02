@@ -3,23 +3,38 @@ import { GameState } from '../state/gameReducer'
 export type XY = [number, number]
 export type Vector2 = [number, number]
 
-export interface PlayerObjectInterface extends BaseObject {
-    attachments: any[]
+export enum ObjectTypes {
+    Grass,
+    Ice,
+    Rock,
+    Button,
+    Player,
+    TestProp,
 }
 
-export interface BaseObject {
+export interface ObjectInstance {
+    type: ObjectTypes | ObjectTypes
     id: string
     xy: XY
     rotation?: Vector2
-    canEnter(obj: AnyObject, vector: Vector2, state: GameState): boolean
-    push?(obj: AnyObject, vector: Vector2, state: GameState): Action[] // triggered when !canEnter
-    enter?(obj: AnyObject, vector: Vector2, state: GameState): Action[]
-    leave?(obj: AnyObject, vector: Vector2, state: GameState): Action[]
-    Component?: any
-    Component3d?: any
 }
 
-export type AnyObject = BaseObject | PlayerObjectInterface
+interface ActionEvent {
+    who: ObjectInstance // who triggered this @TODO better name!
+    self: ObjectInstance
+    vector: Vector2
+    state: GameState
+}
+
+export interface ObjectDefinition {
+    getId(): string
+    canEnter(event: ActionEvent): boolean
+    push?(event: ActionEvent): Action[] // triggered when !canEnter
+    enter?(event: ActionEvent): Action[]
+    leave?(event: ActionEvent): Action[]
+    Component(): any
+    Component3d(): any
+}
 
 /*
  * Actions
@@ -43,6 +58,6 @@ export interface RemoveAction {
  * Map
  */
 export interface GameMap {
-    tiles: BaseObject[]
-    props: AnyObject[]
+    tiles: ObjectInstance[]
+    props: ObjectInstance[]
 }
