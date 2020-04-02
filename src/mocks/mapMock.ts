@@ -1,11 +1,11 @@
-import { GrassObject, RockObject, ButtonObject } from '../objects/baseObjects'
+import { GrassTileObject, RockTileObject, ButtonTileObject } from '../objects/baseObjects'
 import { PlayerObject, PropObject } from '../objects/propObjects'
 import { AnyObject, GameMap } from '../types/types'
 
 const mapDict = {
-    0: GrassObject,
-    1: RockObject,
-    2: ButtonObject,
+    0: GrassTileObject,
+    1: RockTileObject,
+    2: ButtonTileObject,
 }
 
 // prettier-ignore

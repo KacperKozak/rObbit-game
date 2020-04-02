@@ -6,7 +6,7 @@ import { GameState } from '../state/gameReducer'
 import { removeAction } from '../state/actions'
 import { PLAYER_ID } from '../types/consts'
 
-export class GrassObject implements BaseObject {
+export class GrassTileObject implements BaseObject {
     id = uniqueId('grass')
     constructor(public xy: XY, public rotation: Vector2) {}
     canEnter = () => true
@@ -14,7 +14,7 @@ export class GrassObject implements BaseObject {
     Component3d = () => <Tile color="green" />
 }
 
-export class RockObject implements BaseObject {
+export class RockTileObject implements BaseObject {
     id = uniqueId('rock')
     constructor(public xy: XY, public rotation: Vector2) {}
     canEnter = () => false
@@ -22,7 +22,7 @@ export class RockObject implements BaseObject {
     Component3d = () => <Tile color="gray" />
 }
 
-export class ButtonObject implements BaseObject {
+export class ButtonTileObject implements BaseObject {
     id = uniqueId('rock')
     constructor(public xy: XY, public rotation: Vector2) {}
     canEnter = () => false
