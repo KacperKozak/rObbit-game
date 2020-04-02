@@ -22,8 +22,10 @@ export const useGame = () => {
         const prevTile = findByXY(state.map.tiles, target.xy)
         const nextTile = findByXY(state.map.tiles, newXY)
 
-        const nextProp = findByXY(state.map.props, newXY)
         const prevProp = findByXY(state.map.props, target.xy)
+        const nextProp = findByXY(state.map.props, newXY)
+
+        console.log('nextProp', nextProp)
 
         const actions: Action[] = [moveAction(targetId, vector)]
 
