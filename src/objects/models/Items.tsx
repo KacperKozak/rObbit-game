@@ -11,37 +11,46 @@ export const Item = (props: RenderComponentProps) => {
     return <Asset {...props} url="rock1.gltf" />
 }
 
-export const TileFactory = (color: string) => ({ xy }: RenderComponentProps) => {
+export const TileFactory = (color: string) => (props: RenderComponentProps) => {
     // Set up state for the hovered and active state]
     // const [active, setActive] = useState(false)
 
     return (
-        <mesh
-            receiveShadow={true}
-            // scale={active ? [0.9, 0.9, 0.9] : [1, 1, 1]}
-            // onClick={e => {
-            //     console.log(e)
-            //     play('button', 0.5)
-            //     return setActive(!active)
-            // }}
-            position={[xy[0], 0, xy[1]]}
-        >
-            <boxBufferGeometry attach="geometry" args={[1, 0.1, 1]} />
-            <meshStandardMaterial attach="material" color={color} />
-        </mesh>
+        // <mesh
+        //     receiveShadow={true}
+        //     // scale={active ? [0.9, 0.9, 0.9] : [1, 1, 1]}
+        //     // onClick={e => {
+        //     //     console.log(e)
+        //     //     play('button', 0.5)
+        //     //     return setActive(!active)
+        //     // }}
+        //     position={[xy[0], -0.5, xy[1]]}
+        // >
+        //     <boxBufferGeometry attach="geometry" args={[1, 1, 1]} />
+        //     <meshStandardMaterial attach="material" color={color} />
+        // </mesh>
+        <Asset {...props} url="ground_002_export_test_1_cube.gltf" color={color} />
     )
 }
 
 interface AssetProps extends RenderComponentProps {
     url: string
+    color?: string
 }
 
-const Asset = ({ url, xy }: AssetProps) => {
+const Asset = ({ url, xy, color }: AssetProps) => {
     const gltf = useLoader(GLTFLoader, `/assets/${url}`)
     gltf.scene.children[0].castShadow = true
     gltf.scene.scale.set(0.5, 0.5, 0.5)
     gltf.scene = gltf.scene.clone()
-    return <primitive object={gltf.scene} dispose={null} position={[xy[0], 0, xy[1]]} />
+    return (
+        <primitive
+            object={gltf.scene}
+            dispose={null}
+            position={[xy[0], 0, xy[1]]}
+            color={color ? color : '#ffffff'}
+        />
+    )
 }
 
 // export const box = (props: RenderComponentProps) => {
