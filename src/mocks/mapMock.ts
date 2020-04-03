@@ -1,6 +1,6 @@
 import { tileTypeDefinitions } from '../objects/tileTypeDefinitions'
 import { propTypeDefinitions } from '../objects/propTypeDefinitions'
-import { GameMap, ObjectInstance, ObjectTypes } from '../types/types'
+import { ObjectInstance, ObjectTypes } from '../types/types'
 import { findByXY } from '../helpers'
 
 const tileDict = {
@@ -13,7 +13,7 @@ const tileDict = {
 // prettier-ignore
 const mapBitmap = [
     [1,1,1,1,2,1,1,],
-    [1,0,0,3,0,0,1,],
+    [1,0,3,3,0,0,1,],
     [1,0,0,1,1,0,1,],
     [1,0,0,1,0,0,1,],
     [1,1,1,1,1,1,1,],
@@ -37,7 +37,7 @@ const randomRotation = () => {
     return (Math.PI / 2) * Math.round(Math.random() * 4)
 }
 
-export const createMap = (): GameMap => {
+export const createMap = (): ObjectInstance[] => {
     const tiles: ObjectInstance[] = mapBitmap.flatMap((items, y) =>
         items.map((typeNumber, x) => {
             const type = tileDict[typeNumber as keyof typeof tileDict]
@@ -62,7 +62,7 @@ export const createMap = (): GameMap => {
                     type,
                     xy: [x, y],
                     id: propTypeDefinitions[type]!.getId(),
-                    elevation: findByXY(tiles, [x, y])?.elevation || 0,
+                    elevation: findByXY(tiles, [x, y])[0]?.elevation || 0,
                     rotation: randomRotation(),
                     zIndex: 2,
                     aIndex: 10,
@@ -71,5 +71,5 @@ export const createMap = (): GameMap => {
         )
         .filter(a => a) as ObjectInstance[]
 
-    return { objects: [...props, ...tiles] }
+    return [...props, ...tiles]
 }

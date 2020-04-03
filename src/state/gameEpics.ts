@@ -43,7 +43,7 @@ const nextActionEpic = (
 ): Observable<Action> =>
     actions$.pipe(
         filter(nextAction.match),
-        flatMap(action => concat(of(action.payload), of(tryNextAction()).pipe(delay(200)))),
+        flatMap(action => concat(of(action.payload), of(tryNextAction()).pipe(delay(150)))),
     )
 
 export const gameEpics = combineEpics(enqueueEpic, tryNextEpic, nextActionEpic)

@@ -1,10 +1,13 @@
-import { uniqueId } from 'lodash'
+import { uniqueId, sample } from 'lodash'
 import React from 'react'
 import { ObjectDefinition, ObjectTypes } from '../types/types'
 import { Button, Grass, Ground, Ice } from './models/Items'
+import { remove, move } from '../state/gameReducer'
+import { PLAYER_ID } from '../types/consts'
 
 export const tileTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>> = {
     [ObjectTypes.Grass]: {
+        name: 'Grass',
         getId: () => uniqueId('grass'),
         canEnter: () => true,
         Component: () => <div style={{ width: 50, height: 50, backgroundColor: 'green' }} />,
@@ -12,14 +15,16 @@ export const tileTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
     },
 
     [ObjectTypes.Ice]: {
+        name: 'Ice',
         getId: () => uniqueId('ice'),
         canEnter: () => true,
-        enter: ({ who, vector }) => [], // TODO [moveAction(who.id, vector)]
+        enter: ({ who, vector }) => [move({ targetId: who.id, vector })],
         Component: () => <div style={{ width: 50, height: 50, backgroundColor: 'lightblue' }} />,
         Component3d: Ice,
     },
 
     [ObjectTypes.Rock]: {
+        name: 'Rock',
         getId: () => uniqueId('rock'),
         canEnter: () => false,
         Component: () => <div style={{ width: 50, height: 50, backgroundColor: 'gray' }} />,
@@ -27,14 +32,13 @@ export const tileTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
     },
 
     [ObjectTypes.Button]: {
-        getId: () => uniqueId('rock'),
+        name: 'Button',
+        getId: () => uniqueId('button'),
         canEnter: () => false,
         push: ({ state }) => {
-            return []
-            // TODO
-            // const randomProp = sample(state.map.objects.filter(p => p.id !== PLAYER_ID))
-            // if (!randomProp) return []
-            // return [removeAction(randomProp.id)]
+            const randomProp = sample(state.objects.filter(p => p.id !== PLAYER_ID))
+            if (!randomProp) return []
+            return [remove(randomProp.id)]
         },
         Component: () => (
             <div

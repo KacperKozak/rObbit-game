@@ -10,16 +10,16 @@ export const useGame = () => {
     const triggerMove = (targetId: string, vector: Vector2) => {
         if (state.queueStared) return
 
-        const who = findById(state.map.objects, targetId)
+        // const who = findById(state.map.objects, targetId)
 
-        if (!who) {
-            return console.warn(`Unknown target ${targetId}`)
-        }
+        // if (!who) {
+        //     return console.warn(`Unknown target ${targetId}`)
+        // }
 
-        const newXY = applyVector(who.xy, vector)
-        const nextTile = findByXY(state.map.objects, newXY)
+        // const newXY = applyVector(who.xy, vector)
+        // const nextTile = findByXY(state.map.objects, newXY)
 
-        if (!nextTile) return
+        // if (!nextTile) return
 
         // const nextTileDef = getDefinition(nextTile.type)
 

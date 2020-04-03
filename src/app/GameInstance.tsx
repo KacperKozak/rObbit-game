@@ -8,12 +8,12 @@ import { play } from '../audio/play'
 import { Environment } from './Environment'
 
 export const GameInstance = () => {
-    const { map } = useGame()
+    const { objects } = useGame()
     const { gl } = useThree()
 
     return (
         <>
-            <DebugView map={map} />
+            <DebugView objects={objects} />
             {/* <Canvas
                 orthographic
                 camera={{ zoom: 100, fov: 1075, position: [-3 + 3, 5, 5 + 2] }}
@@ -32,7 +32,7 @@ export const GameInstance = () => {
                         </mesh>
                     }
                 >
-                    {map.objects.map(({ type, id, xy, elevation, rotation }) => {
+                    {objects.map(({ type, id, xy, elevation, rotation }) => {
                         const { Component3d } = getDefinition(type)
                         return (
                             <Component3d

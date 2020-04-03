@@ -31,6 +31,7 @@ export interface ActionEvent {
 }
 
 export interface ObjectDefinition {
+    name: string
     getId(): string
     canEnter(event: ActionEvent): boolean
     push?(event: ActionEvent): Action[] // triggered when !canEnter
@@ -44,11 +45,4 @@ export interface RenderComponentProps {
     xy: XY
     rotation: number
     elevation: number
-}
-
-/*
- * Map
- */
-export interface GameMap {
-    objects: ObjectInstance[]
 }
