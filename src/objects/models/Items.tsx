@@ -71,7 +71,7 @@ const Asset = ({
     castShadow = true,
     receiveShadow = true,
 }: AssetProps) => {
-    const gltf = useLoader(GLTFLoader, `/assets/${url}`)
+    const gltf = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/${url}`)
     if (castShadow) gltf.scene.children[0].castShadow = true
     if (receiveShadow) gltf.scene.children[0].receiveShadow = true
     gltf.scene.scale.set(0.5, 0.5, 0.5)
@@ -81,7 +81,7 @@ const Asset = ({
             object={gltf.scene}
             dispose={null}
             position={[xy[0], elevation, xy[1]]}
-            rotation={[0, rotateToThree(rotation), 0]}
+            rotation={[0, vectorToThree(rotation), 0]}
         />
     )
 }
@@ -94,10 +94,13 @@ const AnimatieAsset = ({
     castShadow = true,
     receiveShadow = true,
 }: AssetProps) => {
-    const gltf = useLoader(GLTFLoader, `/assets/${url}`)
+    const gltf = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/${url}`)
     // const gltfanimation = useLoader(GLTFLoader, `/assets/animations/jump.gltf`)
     // const gltfanimation = useLoader(GLTFLoader, `/assets/animations/move.gltf`)
-    const gltfanimation = useLoader(GLTFLoader, `/assets/animations/boring.gltf`)
+    const gltfanimation = useLoader(
+        GLTFLoader,
+        `${process.env.PUBLIC_URL}/assets/animations/boring.gltf`,
+    )
     if (castShadow) gltf.scene.children[0].castShadow = true
     if (receiveShadow) gltf.scene.children[0].receiveShadow = true
     gltf.scene.scale.set(0.5, 0.5, 0.5)
@@ -116,19 +119,17 @@ const AnimatieAsset = ({
     })
     // useFrame(() => (mixer.existingAction))
 
-    console.log('rotation', rotation)
     return (
         <primitive
             object={gltf.scene}
             dispose={null}
             position={[xy[0], elevation, xy[1]]}
-            rotation={[0, rotateToThree(rotation), 0]}
+            rotation={[0, vectorToThree(rotation), 0]}
         />
     )
 }
 
-const rotateToThree = (vector: Vector2) => {
-    console.log(vector)
+const vectorToThree = (vector: Vector2) => {
     if (vector[0] === 1 && vector[1] === 0) return Math.PI / 2
     if (vector[0] === 0 && vector[1] === -1) return (Math.PI / 2) * 2
     if (vector[0] === -1 && vector[1] === 0) return (Math.PI / 2) * 3
