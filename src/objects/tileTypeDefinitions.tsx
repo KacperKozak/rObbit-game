@@ -33,7 +33,7 @@ export const tileTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
     [ObjectTypes.RockFloor]: {
         name: 'Rock floor',
         getId: () => uniqueId('rock-floor'),
-        canEnter: () => false,
+        canEnter: () => true,
         Component: tileDebugComponent('gray'),
         Component3d: Ground,
     },
