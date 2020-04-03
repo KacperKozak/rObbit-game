@@ -1,10 +1,11 @@
 import actionCreatorFactory from 'typescript-fsa'
 import { reducerWithInitialState } from 'typescript-fsa-reducers'
-import { applyVector, asArray, findById, findByXY, arrMerge } from '../helpers'
+import { arrMerge } from '../helpers'
 import { createMap } from '../mocks/mapMock'
-import { Vector2, ObjectInstance, ActionEvent } from '../types/types'
+import { Vector2, ObjectInstance } from '../types/types'
 import { Action } from 'redux'
-import { getDefinition } from '../objects/definitions'
+import { rotateResolver } from './resolvers/rotateResolver'
+import { moveResolver } from './resolvers/moveResolver'
 
 export interface GameState {
     queueStared: boolean
@@ -71,65 +72,3 @@ export const gameReducer = reducerWithInitialState(initialState)
             objects: state.objects.filter(obj => obj.id !== targetId),
         }),
     )
-
-interface ResolverResults {
-    objects: ObjectInstance[]
-    actions: Action[]
-}
-
-const rotateResolver = (
-    { objects }: GameState,
-    targetId: string,
-    rotation: Vector2,
-): ResolverResults => {
-    const target = findById(objects, targetId)
-
-    return {
-        objects: objects.map(obj => {
-            if (obj !== target) return obj
-            return { ...obj, rotation }
-        }),
-        actions: [],
-    }
-}
-
-const moveResolver = (state: GameState, targetId: string, vector: Vector2): ResolverResults => {
-    let objects = state.objects
-    const actions: Action[] = []
-    const addActions = (a: Action | Action[] = []) => actions.push(...asArray(a))
-    const abortResults = { objects, actions }
-
-    const target = findById(objects, targetId)
-
-    if (!target) {
-        console.warn(`[move] Target ${targetId} not found`)
-        return abortResults
-    }
-
-    const newXY = applyVector(target.xy, vector)
-    const newXYObjects = findByXY(objects, newXY).sort((a, b) => b.aIndex - a.aIndex)
-
-    // Can enter to this region?
-    for (const obj of newXYObjects) {
-        const objDef = getDefinition(obj.type)
-        const event: ActionEvent = { who: target, vector, state, self: obj }
-        if (!objDef.canEnter(event)) {
-            addActions(objDef.push?.(event))
-            return { objects, actions }
-        }
-    }
-
-    // Post enter events
-    for (const obj of newXYObjects) {
-        const objDef = getDefinition(obj.type)
-        const event: ActionEvent = { who: target, vector, state, self: obj }
-        addActions(objDef.enter?.(event))
-    }
-
-    objects = objects.map(obj => {
-        if (obj !== target) return obj
-        return { ...obj, xy: newXY }
-    })
-
-    return { objects, actions }
-}
