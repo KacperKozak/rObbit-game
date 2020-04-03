@@ -1,9 +1,8 @@
-import { applyVector } from '../helpers'
-import { createMap } from '../mocks/mapMock'
-import { Action, GameMap, MoveAction, Vector2 } from '../types/types'
-import { play } from '../audio/play'
 import actionCreatorFactory from 'typescript-fsa'
 import { reducerWithInitialState } from 'typescript-fsa-reducers'
+import { applyVector } from '../helpers'
+import { createMap } from '../mocks/mapMock'
+import { GameMap, Vector2 } from '../types/types'
 
 export interface GameState {
     map: GameMap

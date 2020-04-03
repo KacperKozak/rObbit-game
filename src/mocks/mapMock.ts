@@ -47,6 +47,8 @@ export const createMap = (): GameMap => {
                 id: tileTypeDefinitions[type]!.getId(),
                 elevation: Math.random() / 7,
                 rotation: randomRotation(),
+                zIndex: 1,
+                aIndex: 100,
             }
         }),
     )
@@ -62,6 +64,8 @@ export const createMap = (): GameMap => {
                     id: propTypeDefinitions[type]!.getId(),
                     elevation: findByXY(tiles, [x, y])?.elevation || 0,
                     rotation: randomRotation(),
+                    zIndex: 2,
+                    aIndex: 10,
                 }
             }),
         )

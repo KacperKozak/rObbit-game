@@ -1,9 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { applyVector, findById, findByXY } from '../helpers'
-import { moveAction } from '../state/actions'
 import { GameStateAware, move } from '../state/gameReducer'
-import { Action, Vector2 } from '../types/types'
-import { uniqueId } from 'lodash'
+import { Vector2 } from '../types/types'
 
 export const useGame = () => {
     const state = useSelector((state: GameStateAware) => state.game)

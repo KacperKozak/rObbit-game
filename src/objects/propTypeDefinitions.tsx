@@ -1,6 +1,5 @@
 import { uniqueId } from 'lodash'
 import React from 'react'
-import { removeAction } from '../state/actions'
 import { PLAYER_ID } from '../types/consts'
 import { ObjectDefinition, ObjectTypes } from '../types/types'
 import { Item, Player } from './models/Items'
@@ -25,7 +24,7 @@ export const propTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
     [ObjectTypes.TestProp]: {
         getId: () => uniqueId('test-prop'),
         canEnter: () => true,
-        enter: ({ self }) => [removeAction(self.id)],
+        enter: ({ self }) => [], // TODO [removeAction(self.id)],
         Component: () => (
             <div
                 style={{

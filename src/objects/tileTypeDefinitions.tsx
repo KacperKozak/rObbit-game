@@ -1,9 +1,7 @@
-import { sample, uniqueId } from 'lodash'
+import { uniqueId } from 'lodash'
 import React from 'react'
-import { moveAction, removeAction } from '../state/actions'
-import { PLAYER_ID } from '../types/consts'
-import { ObjectDefinition, ObjectTypes, XY } from '../types/types'
-import { Ground, Grass, Button, Ice } from './models/Items'
+import { ObjectDefinition, ObjectTypes } from '../types/types'
+import { Button, Grass, Ground, Ice } from './models/Items'
 
 export const tileTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>> = {
     [ObjectTypes.Grass]: {
@@ -16,7 +14,7 @@ export const tileTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
     [ObjectTypes.Ice]: {
         getId: () => uniqueId('ice'),
         canEnter: () => true,
-        enter: ({ who, vector }) => [moveAction(who.id, vector)],
+        enter: ({ who, vector }) => [], // TODO [moveAction(who.id, vector)]
         Component: () => <div style={{ width: 50, height: 50, backgroundColor: 'lightblue' }} />,
         Component3d: Ice,
     },
@@ -32,9 +30,11 @@ export const tileTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
         getId: () => uniqueId('rock'),
         canEnter: () => false,
         push: ({ state }) => {
-            const randomProp = sample(state.map.objects.filter(p => p.id !== PLAYER_ID))
-            if (!randomProp) return []
-            return [removeAction(randomProp.id)]
+            return []
+            // TODO
+            // const randomProp = sample(state.map.objects.filter(p => p.id !== PLAYER_ID))
+            // if (!randomProp) return []
+            // return [removeAction(randomProp.id)]
         },
         Component: () => (
             <div

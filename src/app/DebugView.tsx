@@ -41,21 +41,22 @@ export const DebugView = ({ map }: DebugViewProps) => {
             <button onClick={right}>→</button>
 
             <div style={{ position: 'relative' }}>
-                {map.objects.map(obj => {
-                    const { Component } = getDefinition(obj.type)
+                {map.objects.map(({ type, id, xy, zIndex }) => {
+                    const { Component } = getDefinition(type)
                     return (
                         <div
-                            key={obj.id}
+                            key={id}
                             style={{
                                 position: 'absolute',
-                                left: obj.xy[0] * size,
-                                top: obj.xy[1] * size,
+                                left: xy[0] * size,
+                                top: xy[1] * size,
                                 width: size,
                                 height: size,
+                                zIndex,
                             }}
                         >
-                            <Label text={obj.id} />
-                            <Component xy={obj.xy} rotation={0} elevation={0} />
+                            <Label text={id} />
+                            <Component xy={xy} rotation={0} elevation={0} />
                         </div>
                     )
                 })}
