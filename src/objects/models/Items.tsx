@@ -81,7 +81,7 @@ const Asset = ({
             object={gltf.scene}
             dispose={null}
             position={[xy[0], elevation, xy[1]]}
-            rotation={[0, vectorToThree(rotation), 0]}
+            rotation={[0, rotateToThree(rotation), 0]}
         />
     )
 }
@@ -122,12 +122,12 @@ const AnimatieAsset = ({
             object={gltf.scene}
             dispose={null}
             position={[xy[0], elevation, xy[1]]}
-            rotation={[0, vectorToThree(rotation), 0]}
+            rotation={[0, rotateToThree(rotation), 0]}
         />
     )
 }
 
-const vectorToThree = (vector: Vector2) => {
+const rotateToThree = (vector: Vector2) => {
     console.log(vector)
     if (vector[0] === 1 && vector[1] === 0) return Math.PI / 2
     if (vector[0] === 0 && vector[1] === -1) return (Math.PI / 2) * 2
