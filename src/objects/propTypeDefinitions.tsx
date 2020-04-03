@@ -1,44 +1,55 @@
 import { uniqueId } from 'lodash'
 import React from 'react'
+import { remove, setObjectData } from '../state/gameReducer'
 import { PLAYER_ID } from '../types/consts'
 import { ObjectDefinition, ObjectTypes } from '../types/types'
 import { Item, Player } from './models/Items'
-import { remove } from '../state/gameReducer'
+
+const propDebugComponent = (color: string) => ({ instance, children }: any) => {
+    return (
+        <div
+            style={{
+                margin: '20%',
+                width: '60%',
+                height: '60%',
+                borderRadius: instance.type === ObjectTypes.Player ? 100 : 5,
+                backgroundColor: color,
+                color: 'black',
+                opacity: 0.7,
+            }}
+        >
+            <pre style={{ padding: 2, fontSize: 8 }}>{children}</pre>
+        </div>
+    )
+}
 
 export const propTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>> = {
     [ObjectTypes.Player]: {
         name: 'Player',
         getId: () => PLAYER_ID,
         canEnter: () => true,
-        Component: () => (
-            <div
-                style={{
-                    margin: 25 / 2,
-                    width: 25,
-                    height: 25,
-                    backgroundColor: 'white',
-                    borderRadius: 5,
-                }}
-            />
-        ),
+        Component: propDebugComponent('white'),
         Component3d: Player,
     },
-    [ObjectTypes.TestProp]: {
-        name: 'TestProp',
-        getId: () => uniqueId('test-prop'),
+    [ObjectTypes.BigRock]: {
+        name: 'Big rock',
+        getId: () => uniqueId('big-rock'),
+        canEnter: () => false,
+        push: ({ self }) => [
+            setObjectData({ targetId: self.id, data: { info: uniqueId('Too big! ') } }),
+        ],
+        Component: propDebugComponent('brown'),
+        Component3d: Item,
+    },
+    [ObjectTypes.Cannon]: {
+        name: 'Cannon',
+        getId: () => uniqueId('cannon'),
         canEnter: () => true,
-        enter: ({ self }) => [remove(self.id)],
-        Component: () => (
-            <div
-                style={{
-                    margin: 25 / 2,
-                    width: 25,
-                    height: 25,
-                    backgroundColor: 'brown',
-                    borderRadius: 5,
-                }}
-            />
-        ),
+        equip: ({ who, self }) => [
+            setObjectData({ targetId: who.id, data: { gun: 'cannon' } }),
+            remove(self.id),
+        ],
+        Component: propDebugComponent('red'),
         Component3d: Item,
     },
 }

@@ -1,16 +1,23 @@
 import { uniqueId, sample } from 'lodash'
-import React from 'react'
+import React, { FC } from 'react'
 import { ObjectDefinition, ObjectTypes } from '../types/types'
 import { Button, Grass, Ground, Ice } from './models/Items'
 import { remove, move } from '../state/gameReducer'
 import { PLAYER_ID } from '../types/consts'
+
+const tileDebugComponent = (color: string) => (props: any) => (
+    <div
+        style={{ width: '100%', height: '100%', backgroundColor: color, fontSize: 9 }}
+        {...props}
+    />
+)
 
 export const tileTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>> = {
     [ObjectTypes.Grass]: {
         name: 'Grass',
         getId: () => uniqueId('grass'),
         canEnter: () => true,
-        Component: () => <div style={{ width: 50, height: 50, backgroundColor: 'green' }} />,
+        Component: tileDebugComponent('green'),
         Component3d: Grass,
     },
 
@@ -19,15 +26,15 @@ export const tileTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
         getId: () => uniqueId('ice'),
         canEnter: () => true,
         enter: ({ who, vector }) => [move({ targetId: who.id, vector })],
-        Component: () => <div style={{ width: 50, height: 50, backgroundColor: 'lightblue' }} />,
+        Component: tileDebugComponent('lightblue'),
         Component3d: Ice,
     },
 
-    [ObjectTypes.Rock]: {
-        name: 'Rock',
-        getId: () => uniqueId('rock'),
-        canEnter: () => false,
-        Component: () => <div style={{ width: 50, height: 50, backgroundColor: 'gray' }} />,
+    [ObjectTypes.RockFloor]: {
+        name: 'Rock floor',
+        getId: () => uniqueId('rock-floor'),
+        canEnter: () => true,
+        Component: tileDebugComponent('gray'),
         Component3d: Ground,
     },
 
@@ -40,20 +47,7 @@ export const tileTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
             if (!randomProp) return []
             return [remove(randomProp.id)]
         },
-        Component: () => (
-            <div
-                style={{
-                    width: 50,
-                    height: 50,
-                    backgroundColor: 'gray',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                }}
-            >
-                <button style={{ fontSize: 10 }}>btn</button>
-            </div>
-        ),
+        Component: tileDebugComponent('blue'),
         Component3d: Button,
     },
 }

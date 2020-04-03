@@ -59,9 +59,7 @@ interface AssetProps extends RenderComponentProps {
 
 const Asset = ({
     url,
-    xy,
-    elevation,
-    rotation,
+    instance: { xy, elevation, rotation },
     castShadow = true,
     receiveShadow = true,
 }: AssetProps) => {
@@ -82,9 +80,7 @@ const Asset = ({
 
 const AnimatieAsset = ({
     url,
-    xy,
-    elevation,
-    rotation,
+    instance: { xy, elevation, rotation },
     castShadow = true,
     receiveShadow = true,
 }: AssetProps) => {

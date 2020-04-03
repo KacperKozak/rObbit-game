@@ -1,16 +1,18 @@
 import { GameState } from '../state/gameReducer'
 import { Action } from 'redux'
+import { FC, ReactNode } from 'react'
 
 export type XY = [number, number]
 export type Vector2 = [number, number]
 
 export enum ObjectTypes {
-    Grass,
-    Ice,
-    Rock,
-    Button,
-    Player,
-    TestProp,
+    Grass = 'Grass',
+    Ice = 'Ice',
+    RockFloor = 'RockFloor',
+    Button = 'Button',
+    Player = 'Player',
+    BigRock = 'BigRock',
+    Cannon = 'Cannon',
 }
 
 export interface ObjectInstance {
@@ -21,6 +23,12 @@ export interface ObjectInstance {
     elevation: number
     zIndex: number
     aIndex: number
+    data: Partial<ObjectInstanceData>
+}
+
+export interface ObjectInstanceData {
+    gun: 'cannon'
+    info: string
 }
 
 export interface ActionEvent {
@@ -37,12 +45,11 @@ export interface ObjectDefinition {
     push?(event: ActionEvent): Action[] // triggered when !canEnter
     enter?(event: ActionEvent): Action[]
     leave?(event: ActionEvent): Action[]
-    Component(props: RenderComponentProps): any
+    equip?(event: ActionEvent): Action[]
+    Component(props: RenderComponentProps & { children: ReactNode }): any
     Component3d(props: RenderComponentProps): any
 }
 
 export interface RenderComponentProps {
-    xy: XY
-    rotation: Vector2
-    elevation: number
+    instance: ObjectInstance
 }

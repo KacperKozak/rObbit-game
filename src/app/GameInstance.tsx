@@ -32,16 +32,9 @@ export const GameInstance = () => {
                         </mesh>
                     }
                 >
-                    {objects.map(({ type, id, xy, elevation, rotation }) => {
-                        const { Component3d } = getDefinition(type)
-                        return (
-                            <Component3d
-                                xy={xy}
-                                rotation={rotation}
-                                elevation={elevation}
-                                key={id}
-                            />
-                        )
+                    {objects.map(obj => {
+                        const { Component3d } = getDefinition(obj.type)
+                        return <Component3d key={obj.id} instance={obj} />
                     })}
                 </Suspense>
             </Canvas>

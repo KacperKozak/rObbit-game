@@ -1,32 +1,39 @@
-import { useDispatch, useSelector } from 'react-redux'
-import { applyVector, findById, findByXY } from '../helpers'
-import { GameStateAware, move, enqueue, rotate } from '../state/gameReducer'
-import { Vector2 } from '../types/types'
 import { isEqual } from 'lodash'
+import { useDispatch, useSelector } from 'react-redux'
 import { Action } from 'redux'
+import { findById } from '../helpers'
+import { enqueue, equip, GameStateAware, move, rotate } from '../state/gameReducer'
+import { PLAYER_ID } from '../types/consts'
+import { Vector2 } from '../types/types'
+
+const targetId = PLAYER_ID
 
 export const useGame = () => {
     const state = useSelector((state: GameStateAware) => state.game)
     const dispatch = useDispatch()
 
-    const triggerMove = (targetId: string, vector: Vector2) => {
+    const triggerMove = (vector: Vector2) => {
         if (state.queueStared) return
 
         const actions: Action[] = []
-        const who = findById(state.objects, targetId)
+        const who = findById(state.objects, PLAYER_ID)
 
         if (!who) {
-            return console.warn(`Unknown target ${targetId}`)
+            return console.warn(`Player don't exists [${PLAYER_ID}]`)
         }
 
         if (!isEqual(who.rotation, vector)) {
-            actions.push(rotate({ targetId, rotation: vector }))
+            actions.push(rotate({ targetId: PLAYER_ID, rotation: vector }))
         } else {
-            actions.push(move({ targetId, vector }))
+            actions.push(move({ targetId: PLAYER_ID, vector }))
         }
 
         dispatch(enqueue(actions))
     }
 
-    return { ...state, move: triggerMove }
+    const triggerEquip = () => {
+        dispatch(enqueue(equip({ targetId: PLAYER_ID })))
+    }
+
+    return { ...state, move: triggerMove, equip: triggerEquip }
 }
