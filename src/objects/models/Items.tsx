@@ -1,7 +1,7 @@
 import React from 'react'
 import { useLoader, useFrame } from 'react-three-fiber'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
-import { RenderComponentProps } from '../../types/types'
+import { RenderComponentProps, Vector2 } from '../../types/types'
 import { AnimationMixer } from 'three'
 import { setInterval } from 'timers'
 
@@ -81,7 +81,7 @@ const Asset = ({
             object={gltf.scene}
             dispose={null}
             position={[xy[0], elevation, xy[1]]}
-            rotation={[0, 0, 0]}
+            rotation={[0, vectorToThree(rotation), 0]}
         />
     )
 }
@@ -116,15 +116,26 @@ const AnimatieAsset = ({
     })
     // useFrame(() => (mixer.existingAction))
 
+    console.log('rotation', rotation)
     return (
         <primitive
             object={gltf.scene}
             dispose={null}
             position={[xy[0], elevation, xy[1]]}
-            rotation={[0, 0, 0]}
+            rotation={[0, vectorToThree(rotation), 0]}
         />
     )
 }
+
+const vectorToThree = (vector: Vector2) => {
+    console.log(vector)
+    if (vector[0] === 1 && vector[1] === 0) return Math.PI / 2
+    if (vector[0] === 0 && vector[1] === -1) return (Math.PI / 2) * 2
+    if (vector[0] === -1 && vector[1] === 0) return (Math.PI / 2) * 3
+    if (vector[0] === 0 && vector[1] === 1) return (Math.PI / 2) * 4
+    return 0
+}
+
 // export const box = (props: RenderComponentProps) => {
 //     return (
 //         <mesh>
