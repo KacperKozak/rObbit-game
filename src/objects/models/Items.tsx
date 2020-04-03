@@ -4,6 +4,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { RenderComponentProps, Vector2 } from '../../types/types'
 import { AnimationMixer } from 'three'
 import { setInterval } from 'timers'
+import { useSpring, animated } from 'react-spring/three'
 
 export const Player = (props: RenderComponentProps) => {
     return <AnimatieAsset {...props} url="robot_model.gltf" />
@@ -94,6 +95,11 @@ const AnimatieAsset = ({
     castShadow = true,
     receiveShadow = true,
 }: AssetProps) => {
+    const anim = useSpring({
+        pos: [xy[0], elevation, xy[1]],
+        rot: [0, vectorToThree(rotation), 0],
+    })
+
     const gltf = useLoader(GLTFLoader, `/assets/${url}`)
     // const gltfanimation = useLoader(GLTFLoader, `/assets/animations/jump.gltf`)
     // const gltfanimation = useLoader(GLTFLoader, `/assets/animations/move.gltf`)
@@ -117,11 +123,11 @@ const AnimatieAsset = ({
     // useFrame(() => (mixer.existingAction))
 
     return (
-        <primitive
+        <animated.primitive
             object={gltf.scene}
             dispose={null}
-            position={[xy[0], elevation, xy[1]]}
-            rotation={[0, vectorToThree(rotation), 0]}
+            position={anim.pos}
+            rotation={anim.rot}
         />
     )
 }
