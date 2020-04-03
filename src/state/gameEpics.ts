@@ -13,9 +13,11 @@ import {
     switchMap,
     switchMapTo,
     flatMap,
+    tap,
 } from 'rxjs/operators'
-import { enqueue, GameStateAware, nextAction, tryNextAction, queueEnd } from './gameReducer'
+import { enqueue, GameStateAware, nextAction, tryNextAction, queueEnd, equip } from './gameReducer'
 import { first } from 'lodash'
+import { play } from '../audio/play'
 
 const enqueueEpic = (
     actions$: Observable<Action>,
