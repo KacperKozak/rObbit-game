@@ -106,7 +106,7 @@ const AnimatieAsset = ({
     gltfanimation.animations.forEach(clip => {
         // console.log(clip, mixer)
         mixer.clipAction(clip, gltf.scene.children[0]).play()
-        mixer.setTime(0.5)
+        // mixer.setTime(0.5)
     })
 
     useFrame(() => {
