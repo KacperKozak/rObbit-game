@@ -34,14 +34,15 @@ export const playEquip = (volume?: number) => {
     play(list[Math.round(Math.random() * 4)] as SoundName, volume)
 }
 
-const engineStart = new Audio(soundList['Engine_start'])
+const engineStart = new Audio(soundList['Engine_LOOP_128'])
 
 export const playEngine = (volume?: number) => {
     if (volume) engineStart.volume = volume
-    const playEnd = () => {
-        play('Engine_stop', volume)
-        engineStart.removeEventListener('ended', playEnd)
-    }
+    // const playEnd = () => {
+    //     play('Engine_stop', volume)
+    //     engineStart.removeEventListener('ended', playEnd)
+    // }
     engineStart.play()
-    engineStart.addEventListener('ended', playEnd)
+    // engineStart.removeEventListener('ended', playEnd)
+    // engineStart.addEventListener('ended', playEnd)
 }
