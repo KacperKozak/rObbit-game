@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { applyVector, findById, findByXY } from '../helpers'
-import { GameStateAware, move } from '../state/gameReducer'
+import { GameStateAware, move, enqueue } from '../state/gameReducer'
 import { Vector2 } from '../types/types'
 
 export const useGame = () => {
@@ -8,6 +8,8 @@ export const useGame = () => {
     const dispatch = useDispatch()
 
     const triggerMove = (targetId: string, vector: Vector2) => {
+        if (state.queueStared) return
+
         const who = findById(state.map.objects, targetId)
 
         if (!who) {
@@ -55,7 +57,7 @@ export const useGame = () => {
         //     actions.push(...nextPropDef.enter({ who, vector, state, self: nextProp! }))
         // }
 
-        actions.forEach(dispatch)
+        dispatch(enqueue(actions))
     }
 
     return { ...state, move: triggerMove }

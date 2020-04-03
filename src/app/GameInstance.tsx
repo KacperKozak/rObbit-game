@@ -14,7 +14,7 @@ export const GameInstance = () => {
     return (
         <>
             <DebugView map={map} />
-            <Canvas
+            {/* <Canvas
                 orthographic
                 camera={{ zoom: 100, fov: 1075, position: [-3 + 3, 5, 5 + 2] }}
                 onCreated={scene => {
@@ -32,7 +32,6 @@ export const GameInstance = () => {
                         </mesh>
                     }
                 >
-                    {/* position={[tile.xy[0] * 1.1, 0, tile.xy[1] * 1.1]}  */}
                     {map.objects.map(({ type, id, xy, elevation, rotation }) => {
                         const { Component3d } = getDefinition(type)
                         return (
@@ -45,7 +44,7 @@ export const GameInstance = () => {
                         )
                     })}
                 </Suspense>
-            </Canvas>
+            </Canvas> */}
         </>
     )
 }

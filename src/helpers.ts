@@ -13,3 +13,5 @@ export const findById = <T extends { id: string }>(props: T[], id: string) => {
 export const findByXY = <T extends { xy: XY }>(objects: T[], xy: XY) => {
     return objects.find(tile => samePosition(tile.xy, xy))
 }
+
+export const asArray = <T>(item: T | T[]): T[] => (Array.isArray(item) ? item : [item])
