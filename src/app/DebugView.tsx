@@ -1,10 +1,9 @@
-import React from 'react'
-import { useGame } from '../hooks/useGame'
-import { useKeyboardEvent } from '../hooks/useKeyboardEvent'
-import { getDefinition } from '../objects/definitions'
-import { DOWN, LEFT, PLAYER_ID, RIGHT, UP } from '../types/consts'
-import { ObjectInstance, ObjectTypes } from '../types/types'
 import { isEmpty } from 'lodash'
+import React, { useState } from 'react'
+import { findById } from '../helpers'
+import { useEditor } from '../hooks/useEditor'
+import { getDefinition, objectDefinitions } from '../objects/definitions'
+import { ObjectInstance, ObjectTypes } from '../types/types'
 
 interface DebugViewProps {
     objects: ObjectInstance[]
@@ -13,18 +12,12 @@ interface DebugViewProps {
 const size = 60
 
 export const DebugView = ({ objects }: DebugViewProps) => {
-    const { move, equip } = useGame()
-
-    const left = () => move(LEFT)
-    const up = () => move(UP)
-    const down = () => move(DOWN)
-    const right = () => move(RIGHT)
-
-    useKeyboardEvent('ArrowLeft', left)
-    useKeyboardEvent('ArrowUp', up)
-    useKeyboardEvent('ArrowDown', down)
-    useKeyboardEvent('ArrowRight', right)
-    useKeyboardEvent('Enter', equip)
+    const [editId, setEditId] = useState<string>()
+    const { edit } = useEditor()
+    const obj = editId && findById(objects, editId)
+    const update = (value: Partial<ObjectInstance>) => {
+        if (obj) edit(obj.id, value)
+    }
 
     return (
         <div
@@ -37,12 +30,26 @@ export const DebugView = ({ objects }: DebugViewProps) => {
                 opacity: 0.8,
             }}
         >
-            <button onClick={left}>←</button>
-            <button onClick={up}>↑</button>
-            <button onClick={down}>↓</button>
-            <button onClick={right}>→</button>
-            <button onClick={equip}>equip</button>
-
+            {obj && (
+                <>
+                    <input
+                        type="range"
+                        min={-1}
+                        max={5}
+                        step={0.01}
+                        value={obj.elevation}
+                        onChange={event => update({ elevation: parseInt(event.target.value, 10) })}
+                    />
+                    <select
+                        value={obj.type}
+                        onChange={event => update({ type: event.target.value as ObjectTypes })}
+                    >
+                        {Object.keys(objectDefinitions).map(item => (
+                            <option>{item}</option>
+                        ))}
+                    </select>
+                </>
+            )}
             <div style={{ position: 'relative' }}>
                 {objects.map(obj => {
                     const { type, id, xy, rotation, elevation, zIndex, data } = obj
@@ -58,6 +65,7 @@ export const DebugView = ({ objects }: DebugViewProps) => {
                                 height: size,
                                 zIndex,
                             }}
+                            onClick={() => setEditId(id)}
                         >
                             <Component instance={obj}>
                                 {type} <br />

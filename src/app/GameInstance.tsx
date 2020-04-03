@@ -1,19 +1,37 @@
 import React, { Suspense } from 'react'
-import { Canvas, useThree } from 'react-three-fiber'
-import { Color, PCFSoftShadowMap } from 'three'
+import { Canvas } from 'react-three-fiber'
+import { PCFSoftShadowMap } from 'three'
 import { useGame } from '../hooks/useGame'
+import { useKeyboardEvent } from '../hooks/useKeyboardEvent'
 import { getDefinition } from '../objects/definitions'
+import { DOWN, LEFT, RIGHT, UP } from '../types/consts'
 import { DebugView } from './DebugView'
-import { play } from '../audio/play'
 import { Environment } from './Environment'
 
 export const GameInstance = () => {
-    const { objects } = useGame()
-    const { gl } = useThree()
+    const { objects, move, equip } = useGame()
+
+    const left = () => move(LEFT)
+    const up = () => move(UP)
+    const down = () => move(DOWN)
+    const right = () => move(RIGHT)
+
+    useKeyboardEvent('ArrowLeft', left)
+    useKeyboardEvent('ArrowUp', up)
+    useKeyboardEvent('ArrowDown', down)
+    useKeyboardEvent('ArrowRight', right)
+    useKeyboardEvent('Enter', equip)
 
     return (
         <>
             <DebugView objects={objects} />
+            <div style={{ position: 'absolute' }}>
+                <button onClick={left}>←</button>
+                <button onClick={up}>↑</button>
+                <button onClick={down}>↓</button>
+                <button onClick={right}>→</button>
+                <button onClick={equip}>equip</button>
+            </div>
             <Canvas
                 orthographic
                 camera={{ zoom: 100, fov: 1075, position: [-2 + 3, 7, 5 + 2] }}

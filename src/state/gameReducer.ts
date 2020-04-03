@@ -32,6 +32,10 @@ export const tryNextAction = action('TRY_NEXT_ACTION')
 export const nextAction = action<Action>('NEXT_ACTION')
 export const queueEnd = action('QUEUE_END')
 
+export const updateObject = action<{ targetId: string; objectValues: Partial<ObjectInstance> }>(
+    'UPDATE_OBJECT',
+)
+
 export const move = action<{ targetId: string; vector: Vector2 }>('MOVE')
 export const rotate = action<{ targetId: string; rotation: Vector2 }>('ROTATE')
 export const remove = action<string>('REMOVE')
@@ -90,6 +94,17 @@ export const gameReducer = reducerWithInitialState(initialState)
         (state, { targetId, data }): GameState => {
             const { actions, objects } = setObjectDataResolver(state, targetId, data)
             return { ...state, objects, queue: arrMerge(state.queue, actions) }
+        },
+    )
+    .case(
+        updateObject,
+        (state, { targetId, objectValues }): GameState => {
+            return {
+                ...state,
+                objects: state.objects.map(obj =>
+                    obj.id === targetId ? { ...obj, ...objectValues } : obj,
+                ),
+            }
         },
     )
 
