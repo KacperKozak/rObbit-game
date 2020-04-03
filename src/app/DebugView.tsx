@@ -4,25 +4,27 @@ import { useKeyboardEvent } from '../hooks/useKeyboardEvent'
 import { getDefinition } from '../objects/definitions'
 import { DOWN, LEFT, PLAYER_ID, RIGHT, UP } from '../types/consts'
 import { ObjectInstance, ObjectTypes } from '../types/types'
+import { isEmpty } from 'lodash'
 
 interface DebugViewProps {
     objects: ObjectInstance[]
 }
 
-const size = 50
+const size = 100
 
 export const DebugView = ({ objects }: DebugViewProps) => {
-    const { move } = useGame()
+    const { move, equip } = useGame()
 
-    const left = () => move(PLAYER_ID, LEFT)
-    const up = () => move(PLAYER_ID, UP)
-    const down = () => move(PLAYER_ID, DOWN)
-    const right = () => move(PLAYER_ID, RIGHT)
+    const left = () => move(LEFT)
+    const up = () => move(UP)
+    const down = () => move(DOWN)
+    const right = () => move(RIGHT)
 
     useKeyboardEvent('ArrowLeft', left)
     useKeyboardEvent('ArrowUp', up)
     useKeyboardEvent('ArrowDown', down)
     useKeyboardEvent('ArrowRight', right)
+    useKeyboardEvent(' ', equip)
 
     return (
         <div
@@ -39,9 +41,11 @@ export const DebugView = ({ objects }: DebugViewProps) => {
             <button onClick={up}>↑</button>
             <button onClick={down}>↓</button>
             <button onClick={right}>→</button>
+            <button onClick={equip}>equip</button>
 
             <div style={{ position: 'relative' }}>
-                {objects.map(({ type, id, xy, rotation, elevation, zIndex }) => {
+                {objects.map(obj => {
+                    const { type, id, xy, rotation, elevation, zIndex, data } = obj
                     const { Component } = getDefinition(type)
                     return (
                         <div
@@ -55,11 +59,10 @@ export const DebugView = ({ objects }: DebugViewProps) => {
                                 zIndex,
                             }}
                         >
-                            <Label text={id + rotation.toString()} />
-                            {type === ObjectTypes.Player && (
-                                <Label text={rotation.toString()} bottom />
-                            )}
-                            <Component xy={xy} rotation={rotation} elevation={elevation} />
+                            <Component instance={obj}>
+                                {type} <br />
+                                {isEmpty(data) ? '' : JSON.stringify(data, null, 1)}
+                            </Component>
                         </div>
                     )
                 })}

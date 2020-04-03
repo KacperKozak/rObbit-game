@@ -5,7 +5,7 @@ import { findByXY } from '../helpers'
 
 const tileDict = {
     0: ObjectTypes.Grass,
-    1: ObjectTypes.Rock,
+    1: ObjectTypes.RockFloor,
     2: ObjectTypes.Button,
     3: ObjectTypes.Ice,
 }
@@ -21,7 +21,8 @@ const mapBitmap = [
 
 const propDict = {
     1: ObjectTypes.Player,
-    2: ObjectTypes.TestProp,
+    2: ObjectTypes.BigRock,
+    3: ObjectTypes.Cannon,
 }
 
 // prettier-ignore
@@ -29,7 +30,7 @@ const propsBitmap = [
     [0,0,0,0,0,0,0,],
     [0,1,0,0,0,0,0,],
     [0,0,0,0,0,0,0,],
-    [0,2,0,0,2,0,2,],
+    [0,2,0,0,3,0,2,],
     [0,0,0,0,0,0,0,],
 ]
 
@@ -50,6 +51,7 @@ export const createMap = (): ObjectInstance[] => {
                 rotation: [0, 0],
                 zIndex: 1,
                 aIndex: 100,
+                data: {},
             }
         }),
     )
@@ -67,6 +69,7 @@ export const createMap = (): ObjectInstance[] => {
                     rotation: [0, 0],
                     zIndex: 2,
                     aIndex: 10,
+                    data: {},
                 }
             }),
         )
