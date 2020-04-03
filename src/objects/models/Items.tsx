@@ -15,14 +15,7 @@ export const Item = (props: RenderComponentProps) => {
 }
 
 export const Ground = (props: RenderComponentProps) => {
-    return (
-        <Asset
-            {...props}
-            url="ground_002_export_test_1_cube.gltf"
-            castShadow={false}
-            receiveShadow={true}
-        />
-    )
+    return <Asset {...props} url="rock.gltf" castShadow={false} receiveShadow={true} />
 }
 
 export const Grass = (props: RenderComponentProps) => {
