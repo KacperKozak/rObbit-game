@@ -4,6 +4,7 @@ import { remove, setObjectData, move } from '../state/gameReducer'
 import { PLAYER_ID } from '../types/consts'
 import { ObjectDefinition, ObjectTypes } from '../types/types'
 import { Item, Player } from './models/Items'
+import { play } from '../audio/play'
 
 const propDebugComponent = (color: string) => ({ instance, children }: any) => {
     return (
@@ -43,10 +44,10 @@ export const propTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
         name: 'Cannon',
         getId: () => uniqueId('cannon'),
         canEnter: () => true,
-        equip: ({ who, self }) => [
-            setObjectData({ targetId: who.id, data: { gun: 'cannon' } }),
-            remove(self.id),
-        ],
+        equip: ({ who, self }) => {
+            play('equip3')
+            return [setObjectData({ targetId: who.id, data: { gun: 'cannon' } }), remove(self.id)]
+        },
         Component: propDebugComponent('red'),
         Component3d: Item,
     },

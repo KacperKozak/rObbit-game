@@ -24,7 +24,7 @@ export const DebugView = ({ objects }: DebugViewProps) => {
     useKeyboardEvent('ArrowUp', up)
     useKeyboardEvent('ArrowDown', down)
     useKeyboardEvent('ArrowRight', right)
-    useKeyboardEvent(' ', equip)
+    useKeyboardEvent('Enter', equip)
 
     return (
         <div
