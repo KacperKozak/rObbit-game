@@ -17,7 +17,7 @@ const moveSoundEpic = (actions$: Observable<Action>): Observable<Action> =>
 const equipSoundEpic = (actions$: Observable<Action>): Observable<Action> =>
     actions$.pipe(
         filter(equip.match),
-        tap(() => play('Hero_2', 0.7)),
+        tap(target => play('Hero_2', 0.7)),
         ignoreElements(),
     )
 

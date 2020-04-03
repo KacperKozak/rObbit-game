@@ -3,7 +3,7 @@ import React from 'react'
 import { remove, setObjectData, move } from '../state/gameReducer'
 import { PLAYER_ID } from '../types/consts'
 import { ObjectDefinition, ObjectTypes } from '../types/types'
-import { Item, Player } from './models/Items'
+import { Rock, Player, Cannon } from './models/Items'
 import { play, playEquip } from '../audio/play'
 
 const propDebugComponent = (color: string) => ({ instance, children }: any) => {
@@ -39,7 +39,7 @@ export const propTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
         getId: () => uniqueId('big-rock'),
         push: ({ self, vector }) => [move({ targetId: self.id, vector })],
         Component: propDebugComponent('brown'),
-        Component3d: Item,
+        Component3d: Rock,
     },
 
     [ObjectTypes.Cannon]: {
@@ -51,6 +51,6 @@ export const propTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
             return [setObjectData({ targetId: who.id, data: { gun: 'cannon' } }), remove(self.id)]
         },
         Component: propDebugComponent('red'),
-        Component3d: Item,
+        Component3d: Cannon,
     },
 }
