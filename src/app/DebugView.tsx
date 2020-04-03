@@ -10,7 +10,7 @@ interface DebugViewProps {
     objects: ObjectInstance[]
 }
 
-const size = 100
+const size = 60
 
 export const DebugView = ({ objects }: DebugViewProps) => {
     const { move, equip } = useGame()
