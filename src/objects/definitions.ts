@@ -2,7 +2,7 @@ import { ObjectDefinition, ObjectTypes } from '../types/types'
 import { tileTypeDefinitions } from './tileTypeDefinitions'
 import { propTypeDefinitions } from './propTypeDefinitions'
 
-const objectDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>> = {
+export const objectDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>> = {
     ...tileTypeDefinitions,
     ...propTypeDefinitions,
 }
