@@ -1,0 +1,84 @@
+{
+    "asset" : {
+        "generator" : "Khronos glTF Blender I/O v1.1.22",
+        "version" : "2.0"
+    },
+    "scene" : 0,
+    "scenes" : [
+        {
+            "name" : "Scene",
+            "nodes" : [
+                0
+            ]
+        }
+    ],
+    "nodes" : [
+        {
+            "name" : "Empty",
+            "translation" : [
+                0,
+                0,
+                -2
+            ]
+        }
+    ],
+    "animations" : [
+        {
+            "channels" : [
+                {
+                    "sampler" : 0,
+                    "target" : {
+                        "node" : 0,
+                        "path" : "translation"
+                    }
+                }
+            ],
+            "name" : "EmptyAction.002",
+            "samplers" : [
+                {
+                    "input" : 0,
+                    "interpolation" : "LINEAR",
+                    "output" : 1
+                }
+            ]
+        }
+    ],
+    "accessors" : [
+        {
+            "bufferView" : 0,
+            "componentType" : 5126,
+            "count" : 20,
+            "max" : [
+                0.8333333333333334
+            ],
+            "min" : [
+                0.041666666666666664
+            ],
+            "type" : "SCALAR"
+        },
+        {
+            "bufferView" : 1,
+            "componentType" : 5126,
+            "count" : 20,
+            "type" : "VEC3"
+        }
+    ],
+    "bufferViews" : [
+        {
+            "buffer" : 0,
+            "byteLength" : 80,
+            "byteOffset" : 0
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 240,
+            "byteOffset" : 80
+        }
+    ],
+    "buffers" : [
+        {
+            "byteLength" : 320,
+            "uri" : "data:application/octet-stream;base64,q6oqPauqqj0AAAA+q6oqPlVVVT4AAIA+VVWVPquqqj4AAMA+VVXVPquq6j4AAAA/q6oKP1VVFT8AACA/q6oqP1VVNT8AAEA/q6pKP1VVVT8AAAAAAAAAAAAAAMAAAAAAAAAAAH3y/b8AAAAAAAAAAGUW+L8AAAAAAAAAAF/e7r8AAAAAAAAAABS94r8AAAAAAAAAACwl1L8AAAAAAAAAAFCJw78AAAAAAAAAACZcsb8AAAAAAAAAAFgQnr8AAAAAAAAAAI8Yir8AAAAAAAAAAODOa78AAAAAAAAAAEvfQ78AAAAAAAAAALJHHb8AAAAAAAAAAMDa8b4AAAAAAAAAAERrr74AAAAAAAAAAGAXar4AAAAAAAAAAPAMCb4AAAAAAAAAAEAzfb0AAAAAAAAAAIBgg7wAAAAAAAAAAAAAAIA="
+        }
+    ]
+}
