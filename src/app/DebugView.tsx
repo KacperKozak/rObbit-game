@@ -3,7 +3,7 @@ import { useGame } from '../hooks/useGame'
 import { useKeyboardEvent } from '../hooks/useKeyboardEvent'
 import { getDefinition } from '../objects/definitions'
 import { DOWN, LEFT, PLAYER_ID, RIGHT, UP } from '../types/consts'
-import { ObjectInstance } from '../types/types'
+import { ObjectInstance, ObjectTypes } from '../types/types'
 
 interface DebugViewProps {
     objects: ObjectInstance[]
@@ -41,7 +41,7 @@ export const DebugView = ({ objects }: DebugViewProps) => {
             <button onClick={right}>→</button>
 
             <div style={{ position: 'relative' }}>
-                {objects.map(({ type, id, xy, zIndex }) => {
+                {objects.map(({ type, id, xy, rotation, elevation, zIndex }) => {
                     const { Component } = getDefinition(type)
                     return (
                         <div
@@ -55,8 +55,11 @@ export const DebugView = ({ objects }: DebugViewProps) => {
                                 zIndex,
                             }}
                         >
-                            <Label text={id} />
-                            <Component xy={xy} rotation={0} elevation={0} />
+                            <Label text={id + rotation.toString()} />
+                            {type === ObjectTypes.Player && (
+                                <Label text={rotation.toString()} bottom />
+                            )}
+                            <Component xy={xy} rotation={rotation} elevation={elevation} />
                         </div>
                     )
                 })}
@@ -67,8 +70,19 @@ export const DebugView = ({ objects }: DebugViewProps) => {
 
 interface LabelProps {
     text: string
+    bottom?: boolean
 }
 
-export const Label = ({ text }: LabelProps) => (
-    <div style={{ position: 'absolute', left: 0, top: 0, fontSize: 10 }}>{text}</div>
+export const Label = ({ text, bottom }: LabelProps) => (
+    <div
+        style={{
+            position: 'absolute',
+            left: 0,
+            top: bottom ? '80%' : 0,
+            fontSize: 10,
+            color: 'black',
+        }}
+    >
+        {text}
+    </div>
 )

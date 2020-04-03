@@ -81,7 +81,7 @@ const Asset = ({
             object={gltf.scene}
             dispose={null}
             position={[xy[0], elevation, xy[1]]}
-            rotation={[0, rotation, 0]}
+            rotation={[0, 0, 0]}
         />
     )
 }
@@ -121,7 +121,7 @@ const AnimatieAsset = ({
             object={gltf.scene}
             dispose={null}
             position={[xy[0], elevation, xy[1]]}
-            rotation={[0, rotation, 0]}
+            rotation={[0, 0, 0]}
         />
     )
 }

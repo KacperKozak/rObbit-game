@@ -17,7 +17,7 @@ export interface ObjectInstance {
     type: ObjectTypes
     id: string
     xy: XY
-    rotation: number
+    rotation: Vector2
     elevation: number
     zIndex: number
     aIndex: number
@@ -43,6 +43,6 @@ export interface ObjectDefinition {
 
 export interface RenderComponentProps {
     xy: XY
-    rotation: number
+    rotation: Vector2
     elevation: number
 }

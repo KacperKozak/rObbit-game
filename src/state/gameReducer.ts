@@ -30,6 +30,7 @@ export const nextAction = action<Action>('NEXT_ACTION')
 export const queueEnd = action('QUEUE_END')
 
 export const move = action<{ targetId: string; vector: Vector2 }>('MOVE')
+export const rotate = action<{ targetId: string; rotation: Vector2 }>('ROTATE')
 export const remove = action<string>('REMOVE')
 
 export const gameReducer = reducerWithInitialState(initialState)
@@ -53,11 +54,14 @@ export const gameReducer = reducerWithInitialState(initialState)
         move,
         (state, { targetId, vector }): GameState => {
             const { actions, objects } = moveResolver(state, targetId, vector)
-            return {
-                ...state,
-                queue: arrMerge(state.queue, actions),
-                objects,
-            }
+            return { ...state, queue: arrMerge(state.queue, actions), objects }
+        },
+    )
+    .case(
+        rotate,
+        (state, { targetId, rotation }): GameState => {
+            const { actions, objects } = rotateResolver(state, targetId, rotation)
+            return { ...state, queue: arrMerge(state.queue, actions), objects }
         },
     )
     .case(
@@ -71,6 +75,22 @@ export const gameReducer = reducerWithInitialState(initialState)
 interface ResolverResults {
     objects: ObjectInstance[]
     actions: Action[]
+}
+
+const rotateResolver = (
+    { objects }: GameState,
+    targetId: string,
+    rotation: Vector2,
+): ResolverResults => {
+    const target = findById(objects, targetId)
+
+    return {
+        objects: objects.map(obj => {
+            if (obj !== target) return obj
+            return { ...obj, rotation }
+        }),
+        actions: [],
+    }
 }
 
 const moveResolver = (state: GameState, targetId: string, vector: Vector2): ResolverResults => {
