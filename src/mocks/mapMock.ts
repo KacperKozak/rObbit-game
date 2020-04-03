@@ -47,7 +47,7 @@ export const createMap = (): ObjectInstance[] => {
                 type,
                 xy: [x, y],
                 id: tileTypeDefinitions[type]!.getId(),
-                elevation: Math.random() / 7,
+                elevation: Math.random() / 2,
                 rotation: [0, 0],
                 zIndex: 1,
                 aIndex: 100,

@@ -40,6 +40,7 @@ export interface ActionEvent {
 
 export interface ObjectDefinition {
     name: string
+    isGround?: boolean
     getId(): string
     canEnter(event: ActionEvent): boolean
     push?(event: ActionEvent): Action[] // triggered when !canEnter

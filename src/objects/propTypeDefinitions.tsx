@@ -1,6 +1,6 @@
 import { uniqueId } from 'lodash'
 import React from 'react'
-import { remove, setObjectData } from '../state/gameReducer'
+import { remove, setObjectData, move } from '../state/gameReducer'
 import { PLAYER_ID } from '../types/consts'
 import { ObjectDefinition, ObjectTypes } from '../types/types'
 import { Item, Player } from './models/Items'
@@ -35,9 +35,7 @@ export const propTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
         name: 'Big rock',
         getId: () => uniqueId('big-rock'),
         canEnter: () => false,
-        push: ({ self }) => [
-            setObjectData({ targetId: self.id, data: { info: uniqueId('Too big! ') } }),
-        ],
+        push: ({ self, vector }) => [move({ targetId: self.id, vector })],
         Component: propDebugComponent('brown'),
         Component3d: Item,
     },

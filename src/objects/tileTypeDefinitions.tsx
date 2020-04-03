@@ -2,7 +2,7 @@ import { uniqueId, sample } from 'lodash'
 import React, { FC } from 'react'
 import { ObjectDefinition, ObjectTypes } from '../types/types'
 import { Button, Grass, Ground, Ice } from './models/Items'
-import { remove, move } from '../state/gameReducer'
+import { remove, move, setObjectData } from '../state/gameReducer'
 import { PLAYER_ID } from '../types/consts'
 
 const tileDebugComponent = (color: string) => (props: any) => (
@@ -15,6 +15,7 @@ const tileDebugComponent = (color: string) => (props: any) => (
 export const tileTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>> = {
     [ObjectTypes.Grass]: {
         name: 'Grass',
+        isGround: true,
         getId: () => uniqueId('grass'),
         canEnter: () => true,
         Component: tileDebugComponent('green'),
@@ -23,6 +24,7 @@ export const tileTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
 
     [ObjectTypes.Ice]: {
         name: 'Ice',
+        isGround: true,
         getId: () => uniqueId('ice'),
         canEnter: () => true,
         enter: ({ who, vector }) => [move({ targetId: who.id, vector })],
@@ -32,6 +34,7 @@ export const tileTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
 
     [ObjectTypes.RockFloor]: {
         name: 'Rock floor',
+        isGround: true,
         getId: () => uniqueId('rock-floor'),
         canEnter: () => true,
         Component: tileDebugComponent('gray'),
@@ -40,12 +43,16 @@ export const tileTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
 
     [ObjectTypes.Button]: {
         name: 'Button',
+        isGround: true,
         getId: () => uniqueId('button'),
         canEnter: () => false,
-        push: ({ state }) => {
+        push: ({ state, self }) => {
             const randomProp = sample(state.objects.filter(p => p.id !== PLAYER_ID))
             if (!randomProp) return []
-            return [remove(randomProp.id)]
+            return [
+                remove(randomProp.id),
+                setObjectData({ targetId: self.id, data: { info: uniqueId('Ups!') } }),
+            ]
         },
         Component: tileDebugComponent('blue'),
         Component3d: Button,
