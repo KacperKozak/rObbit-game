@@ -14,7 +14,7 @@ export const GameInstance = () => {
     return (
         <>
             <DebugView objects={objects} />
-            {/* <Canvas
+            <Canvas
                 orthographic
                 camera={{ zoom: 100, fov: 1075, position: [-3 + 3, 5, 5 + 2] }}
                 onCreated={scene => {
@@ -44,7 +44,7 @@ export const GameInstance = () => {
                         )
                     })}
                 </Suspense>
-            </Canvas> */}
+            </Canvas>
         </>
     )
 }
