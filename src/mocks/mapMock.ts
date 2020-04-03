@@ -33,7 +33,7 @@ const propsBitmap = [
     [0,0,0,0,0,0,0,],
 ]
 
-// TODO? yep
+// TODO?
 const randomRotation = () => {
     return (Math.PI / 2) * Math.round(Math.random() * 4)
 }
@@ -46,7 +46,7 @@ export const createMap = (): ObjectInstance[] => {
                 type,
                 xy: [x, y],
                 id: tileTypeDefinitions[type]!.getId(),
-                elevation: (type == ObjectTypes.Rock ? 0.4 : 0) + Math.random() / 7,
+                elevation: (type == ObjectTypes.Rock ? 1 : 0) + Math.random() / 7,
                 rotation: [0, 0],
                 zIndex: 1,
                 aIndex: 100,
