@@ -1,25 +1,25 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { applyVector, findById, findByXY } from '../helpers'
-import { moveAction } from '../state/actions'
-import { GameStateAware, move } from '../state/gameReducer'
-import { Action, Vector2 } from '../types/types'
-import { uniqueId } from 'lodash'
+import { GameStateAware, move, enqueue } from '../state/gameReducer'
+import { Vector2 } from '../types/types'
 
 export const useGame = () => {
     const state = useSelector((state: GameStateAware) => state.game)
     const dispatch = useDispatch()
 
     const triggerMove = (targetId: string, vector: Vector2) => {
-        const who = findById(state.map.objects, targetId)
+        if (state.queueStared) return
 
-        if (!who) {
-            return console.warn(`Unknown target ${targetId}`)
-        }
+        // const who = findById(state.map.objects, targetId)
 
-        const newXY = applyVector(who.xy, vector)
-        const nextTile = findByXY(state.map.objects, newXY)
+        // if (!who) {
+        //     return console.warn(`Unknown target ${targetId}`)
+        // }
 
-        if (!nextTile) return
+        // const newXY = applyVector(who.xy, vector)
+        // const nextTile = findByXY(state.map.objects, newXY)
+
+        // if (!nextTile) return
 
         // const nextTileDef = getDefinition(nextTile.type)
 
@@ -57,7 +57,7 @@ export const useGame = () => {
         //     actions.push(...nextPropDef.enter({ who, vector, state, self: nextProp! }))
         // }
 
-        actions.forEach(dispatch)
+        dispatch(enqueue(actions))
     }
 
     return { ...state, move: triggerMove }

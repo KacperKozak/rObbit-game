@@ -3,15 +3,15 @@ import { useGame } from '../hooks/useGame'
 import { useKeyboardEvent } from '../hooks/useKeyboardEvent'
 import { getDefinition } from '../objects/definitions'
 import { DOWN, LEFT, PLAYER_ID, RIGHT, UP } from '../types/consts'
-import { GameMap } from '../types/types'
+import { ObjectInstance } from '../types/types'
 
 interface DebugViewProps {
-    map: GameMap
+    objects: ObjectInstance[]
 }
 
 const size = 50
 
-export const DebugView = ({ map }: DebugViewProps) => {
+export const DebugView = ({ objects }: DebugViewProps) => {
     const { move } = useGame()
 
     const left = () => move(PLAYER_ID, LEFT)
@@ -41,21 +41,22 @@ export const DebugView = ({ map }: DebugViewProps) => {
             <button onClick={right}>→</button>
 
             <div style={{ position: 'relative' }}>
-                {map.objects.map(obj => {
-                    const { Component } = getDefinition(obj.type)
+                {objects.map(({ type, id, xy, zIndex }) => {
+                    const { Component } = getDefinition(type)
                     return (
                         <div
-                            key={obj.id}
+                            key={id}
                             style={{
                                 position: 'absolute',
-                                left: obj.xy[0] * size,
-                                top: obj.xy[1] * size,
+                                left: xy[0] * size,
+                                top: xy[1] * size,
                                 width: size,
                                 height: size,
+                                zIndex,
                             }}
                         >
-                            <Label text={obj.id} />
-                            <Component xy={obj.xy} rotation={0} elevation={0} />
+                            <Label text={id} />
+                            <Component xy={xy} rotation={0} elevation={0} />
                         </div>
                     )
                 })}

@@ -1,4 +1,5 @@
 import { GameState } from '../state/gameReducer'
+import { Action } from 'redux'
 
 export type XY = [number, number]
 export type Vector2 = [number, number]
@@ -18,6 +19,8 @@ export interface ObjectInstance {
     xy: XY
     rotation: number
     elevation: number
+    zIndex: number
+    aIndex: number
 }
 
 export interface ActionEvent {
@@ -28,6 +31,7 @@ export interface ActionEvent {
 }
 
 export interface ObjectDefinition {
+    name: string
     getId(): string
     canEnter(event: ActionEvent): boolean
     push?(event: ActionEvent): Action[] // triggered when !canEnter
@@ -41,29 +45,4 @@ export interface RenderComponentProps {
     xy: XY
     rotation: number
     elevation: number
-}
-
-/*
- * Actions
- */
-export type Action = MoveAction | RemoveAction
-
-export interface MoveAction {
-    id: string
-    type: 'move'
-    targetId: string
-    vector: Vector2
-}
-
-export interface RemoveAction {
-    id: string
-    type: 'remove'
-    targetId: string
-}
-
-/*
- * Map
- */
-export interface GameMap {
-    objects: ObjectInstance[]
 }
