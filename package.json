@@ -2,7 +2,7 @@
   "name": "alpha-mechanical",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://kacperkozak.github.io/alpha-mechanical/",
+  "homepage": "https://kacperkozak.github.io/alpha-mechanical",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

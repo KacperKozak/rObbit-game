@@ -116,7 +116,6 @@ const AnimatieAsset = ({
     })
     // useFrame(() => (mixer.existingAction))
 
-    console.log('rotation', rotation)
     return (
         <primitive
             object={gltf.scene}
@@ -128,7 +127,6 @@ const AnimatieAsset = ({
 }
 
 const vectorToThree = (vector: Vector2) => {
-    console.log(vector)
     if (vector[0] === 1 && vector[1] === 0) return Math.PI / 2
     if (vector[0] === 0 && vector[1] === -1) return (Math.PI / 2) * 2
     if (vector[0] === -1 && vector[1] === 0) return (Math.PI / 2) * 3
