@@ -4,6 +4,7 @@ import { ObjectDefinition, ObjectTypes } from '../types/types'
 import { Button, Grass, Ground, Ice } from './models/Items'
 import { remove, move, setObjectData } from '../state/gameReducer'
 import { PLAYER_ID } from '../types/consts'
+import { play } from '../audio/play'
 
 const tileDebugComponent = (color: string) => (props: any) => (
     <div
@@ -48,6 +49,7 @@ export const tileTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
         canEnter: () => false,
         push: ({ state, self }) => {
             const randomProp = sample(state.objects.filter(p => p.id !== PLAYER_ID))
+            play('button')
             if (!randomProp) return []
             return [
                 remove(randomProp.id),
