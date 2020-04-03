@@ -16,7 +16,7 @@ export const GameInstance = () => {
             <DebugView objects={objects} />
             <Canvas
                 orthographic
-                camera={{ zoom: 100, fov: 1075, position: [-3 + 3, 5, 5 + 2] }}
+                camera={{ zoom: 100, fov: 1075, position: [-2 + 3, 7, 5 + 2] }}
                 onCreated={scene => {
                     scene.camera.lookAt(3, 1, 2)
                     scene.gl.shadowMap.type = PCFSoftShadowMap
