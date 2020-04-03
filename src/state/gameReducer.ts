@@ -6,7 +6,7 @@ import { Vector2, ObjectInstance, ObjectInstanceData, ActionEvent } from '../typ
 import { Action } from 'redux'
 import { rotateResolver } from './resolvers/rotateResolver'
 import { moveResolver } from './resolvers/moveResolver'
-import { ResolverResults } from './types'
+import { ResolverResults } from './resolvers/types'
 import { getDefinition } from '../objects/definitions'
 
 export interface GameState {

@@ -1,6 +1,6 @@
 import { findById } from '../../helpers'
 import { Vector2 } from '../../types/types'
-import { ResolverResults } from '../types'
+import { ResolverResults } from './types'
 import { GameState } from '../gameReducer'
 
 export const rotateResolver = (

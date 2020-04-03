@@ -40,10 +40,9 @@ export interface ActionEvent {
 
 export interface ObjectDefinition {
     name: string
-    isGround?: boolean
+    height: number
     getId(): string
-    canEnter(event: ActionEvent): boolean
-    push?(event: ActionEvent): Action[] // triggered when !canEnter
+    push?(event: ActionEvent): Action[] // triggered when elevation is to big
     enter?(event: ActionEvent): Action[]
     leave?(event: ActionEvent): Action[]
     equip?(event: ActionEvent): Action[]

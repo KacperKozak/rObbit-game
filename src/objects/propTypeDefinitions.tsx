@@ -27,23 +27,25 @@ const propDebugComponent = (color: string) => ({ instance, children }: any) => {
 export const propTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>> = {
     [ObjectTypes.Player]: {
         name: 'Player',
+        height: 2,
         getId: () => PLAYER_ID,
-        canEnter: () => true,
         Component: propDebugComponent('white'),
         Component3d: Player,
     },
+
     [ObjectTypes.BigRock]: {
         name: 'Big rock',
+        height: 0.5,
         getId: () => uniqueId('big-rock'),
-        canEnter: () => false,
         push: ({ self, vector }) => [move({ targetId: self.id, vector })],
         Component: propDebugComponent('brown'),
         Component3d: Item,
     },
+
     [ObjectTypes.Cannon]: {
         name: 'Cannon',
+        height: 0,
         getId: () => uniqueId('cannon'),
-        canEnter: () => true,
         equip: ({ who, self }) => {
             playEquip(0.8)
             return [setObjectData({ targetId: who.id, data: { gun: 'cannon' } }), remove(self.id)]
