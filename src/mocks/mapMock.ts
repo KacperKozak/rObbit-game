@@ -33,6 +33,10 @@ const propsBitmap = [
     [0,0,0,0,0,0,0,],
 ]
 
+const randomRotation = () => {
+    return (Math.PI / 2) * Math.round(Math.random() * 4)
+}
+
 export const createMap = (): GameMap => {
     const tiles: ObjectInstance[] = mapBitmap.flatMap((items, y) =>
         items.map((typeNumber, x) => {
@@ -41,8 +45,8 @@ export const createMap = (): GameMap => {
                 type,
                 xy: [x, y],
                 id: tileTypeDefinitions[type]!.getId(),
-                elevation: Math.random() / 8,
-                rotation: (Math.PI / 2) * Math.round(Math.random() * 4),
+                elevation: Math.random() / 7,
+                rotation: randomRotation(),
             }
         }),
     )
@@ -57,7 +61,7 @@ export const createMap = (): GameMap => {
                     xy: [x, y],
                     id: propTypeDefinitions[type]!.getId(),
                     elevation: findByXY(tiles, [x, y])?.elevation || 0,
-                    rotation: Math.random(),
+                    rotation: randomRotation(),
                 }
             }),
         )

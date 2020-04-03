@@ -1,10 +1,12 @@
 import React from 'react'
-import { useLoader } from 'react-three-fiber'
+import { useLoader, useFrame } from 'react-three-fiber'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { RenderComponentProps } from '../../types/types'
+import { AnimationMixer } from 'three'
+import { setInterval } from 'timers'
 
 export const Player = (props: RenderComponentProps) => {
-    return <Asset {...props} url="robot_modeling_test012_gl.gltf" />
+    return <AnimatieAsset {...props} url="robot_model.gltf" />
 }
 
 export const Item = (props: RenderComponentProps) => {
@@ -67,7 +69,7 @@ const Asset = ({
     elevation,
     rotation,
     castShadow = true,
-    receiveShadow = false,
+    receiveShadow = true,
 }: AssetProps) => {
     const gltf = useLoader(GLTFLoader, `/assets/${url}`)
     if (castShadow) gltf.scene.children[0].castShadow = true
@@ -84,6 +86,45 @@ const Asset = ({
     )
 }
 
+const AnimatieAsset = ({
+    url,
+    xy,
+    elevation,
+    rotation,
+    castShadow = true,
+    receiveShadow = true,
+}: AssetProps) => {
+    const gltf = useLoader(GLTFLoader, `/assets/${url}`)
+    // const gltfanimation = useLoader(GLTFLoader, `/assets/animations/jump.gltf`)
+    // const gltfanimation = useLoader(GLTFLoader, `/assets/animations/move.gltf`)
+    const gltfanimation = useLoader(GLTFLoader, `/assets/animations/boring.gltf`)
+    if (castShadow) gltf.scene.children[0].castShadow = true
+    if (receiveShadow) gltf.scene.children[0].receiveShadow = true
+    gltf.scene.scale.set(0.5, 0.5, 0.5)
+    gltf.scene = gltf.scene.clone()
+    const mixer = new AnimationMixer(gltfanimation.scene)
+    gltfanimation.animations.forEach(clip => {
+        // console.log(clip, mixer)
+        mixer.clipAction(clip, gltf.scene.children[0]).play()
+        mixer.setTime(0.5)
+    })
+
+    useFrame(() => {
+        // console.log(mixer)
+        mixer.update(0.02)
+        // mixer.time = 5
+    })
+    // useFrame(() => (mixer.existingAction))
+
+    return (
+        <primitive
+            object={gltf.scene}
+            dispose={null}
+            position={[xy[0], elevation, xy[1]]}
+            rotation={[0, rotation, 0]}
+        />
+    )
+}
 // export const box = (props: RenderComponentProps) => {
 //     return (
 //         <mesh>

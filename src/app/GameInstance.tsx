@@ -18,7 +18,7 @@ export const GameInstance = () => {
                 orthographic
                 camera={{ zoom: 100, fov: 1075, position: [-3 + 3, 5, 5 + 2] }}
                 onCreated={scene => {
-                    scene.camera.lookAt(3, 0, 2)
+                    scene.camera.lookAt(3, 1, 2)
                     scene.gl.shadowMap.type = PCFSoftShadowMap
                     scene.gl.shadowMap.enabled = true
                 }}
