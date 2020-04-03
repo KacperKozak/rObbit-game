@@ -15,18 +15,16 @@ const tileDebugComponent = (color: string) => (props: any) => (
 export const tileTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>> = {
     [ObjectTypes.Grass]: {
         name: 'Grass',
-        isGround: true,
+        height: 0,
         getId: () => uniqueId('grass'),
-        canEnter: () => true,
         Component: tileDebugComponent('green'),
         Component3d: Grass,
     },
 
     [ObjectTypes.Ice]: {
         name: 'Ice',
-        isGround: true,
+        height: 0,
         getId: () => uniqueId('ice'),
-        canEnter: () => true,
         enter: ({ who, vector }) => [move({ targetId: who.id, vector })],
         Component: tileDebugComponent('lightblue'),
         Component3d: Ice,
@@ -34,18 +32,16 @@ export const tileTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
 
     [ObjectTypes.RockFloor]: {
         name: 'Rock floor',
-        isGround: true,
+        height: 0,
         getId: () => uniqueId('rock-floor'),
-        canEnter: () => true,
         Component: tileDebugComponent('gray'),
         Component3d: Ground,
     },
 
     [ObjectTypes.Button]: {
         name: 'Button',
-        isGround: true,
+        height: 0,
         getId: () => uniqueId('button'),
-        canEnter: () => false,
         push: ({ state, self }) => {
             const randomProp = sample(state.objects.filter(p => p.id !== PLAYER_ID))
             if (!randomProp) return []
