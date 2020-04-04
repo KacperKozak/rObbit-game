@@ -61,11 +61,11 @@ const maxElevation = (objects: ObjectInstance[]): number =>
     Math.max(
         ...objects.map(obj => {
             const objDef = getDefinition(obj.type)
-            return objDef.height + obj.elevation
+            return objDef.height(obj) + obj.elevation
         }),
     )
 
 const isTooHight = (ontoObj: ObjectInstance, who: ObjectInstance) => {
     const objDef = getDefinition(ontoObj.type)
-    return ontoObj.elevation + objDef.height - who.elevation > MAX_ELEVATION_DIFF
+    return ontoObj.elevation + objDef.height(ontoObj) - who.elevation > MAX_ELEVATION_DIFF
 }
