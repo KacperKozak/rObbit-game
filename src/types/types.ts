@@ -19,7 +19,9 @@ export enum ObjectTypes {
     Crossbow = 'Crossbow',
     Cannon = 'Cannon',
     Boom = 'Boom',
-    Projectile = 'Projectile',
+
+    CrossbowProjectile = 'CrossbowProjectile', // TODO remove
+    RocketProjectile = 'RocketProjectile',
 }
 
 export interface ObjectInstance {

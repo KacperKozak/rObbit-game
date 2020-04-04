@@ -2,7 +2,7 @@ import React from 'react'
 import { playEquip, play } from '../audio/play'
 import { move, remove, setObjectData, tmpSpawn } from '../state/gameReducer'
 import { ObjectDefinition, ObjectTypes } from '../types/types'
-import { Cannon, Crossbow, Player, Rock, Rocket, Boom } from './models/Items'
+import { Cannon, Crossbow, Player, Rock, Rocket, Boom, Arrow } from './models/Items'
 import { reverseVector } from '../helpers'
 import { uniqueId } from 'lodash'
 
@@ -69,26 +69,20 @@ export const propTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
         Component3d: Crossbow,
     },
 
-    [ObjectTypes.Projectile]: {
-        name: 'Projectile',
+    [ObjectTypes.RocketProjectile]: {
+        name: 'RocketProjectile',
         height: 0,
         projectileLaunch: ({ who }) => {
-            const isCannon = who.data?.gun === 'cannon'
-            play(isCannon ? 'Bazooka' : 'Crossbow')
+            play('Bazooka')
             return [
                 move(
-                    { targetId: who.id, vector: isCannon ? reverseVector(who.rotation) : [0, 0] },
+                    { targetId: who.id, vector: reverseVector(who.rotation) },
                     { delay: 250 }, // delay remove from projectileHit
                 ),
             ]
         },
         projectileHit: ({ self, what, who }) => {
             if (!what) {
-                return [remove(self.id)]
-            }
-
-            if (self.data.gun === 'crossbow') {
-                play('Alert_YES') // TODO Hit!
                 return [remove(self.id)]
             }
 
@@ -111,5 +105,27 @@ export const propTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
         },
         Component: propDebugComponent('yellow'),
         Component3d: Rocket,
+    },
+
+    [ObjectTypes.CrossbowProjectile]: {
+        name: 'Projectile',
+        height: 0,
+        projectileLaunch: ({ who }) => {
+            play('Crossbow')
+            return [
+                move(
+                    { targetId: who.id, vector: [0, 0] },
+                    { delay: 250 }, // delay remove from projectileHit
+                ),
+            ]
+        },
+        projectileHit: ({ self, what, who }) => {
+            if (what) {
+                play('Alert_YES') // TODO Hit!
+            }
+            return [remove(self.id)]
+        },
+        Component: propDebugComponent('pink'),
+        Component3d: Arrow,
     },
 }

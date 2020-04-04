@@ -46,13 +46,7 @@ export const move = action<{ targetId: string; vector: Vector2 }>('MOVE')
 export const rotate = action<{ targetId: string; rotation: Vector2 }>('ROTATE')
 export const equip = action<{ targetId: string }>('EQUIP')
 
-export const projectile = action<{
-    byId: string
-    xy: XY
-    vector: Vector2
-    elevation: number
-    data: Partial<ObjectInstanceData>
-}>('PROJECTILE')
+export const projectile = action<{ instance: ObjectInstance; byId: string }>('PROJECTILE')
 export const fly = action<{ targetId: string }>('FLY')
 export const flyEnd = action<{ targetId: string; hitTargetId?: string }>('FLY_END')
 
@@ -118,25 +112,15 @@ export const gameReducer = reducerWithInitialState(initialState)
      */
     .case(
         projectile,
-        (state, { xy, vector, elevation, byId, data }): GameState => {
-            const type = ObjectTypes.Projectile
-            const objDef = getDefinition(type)
-            const obj: ObjectInstance = {
-                type,
-                id: uniqueId(type),
-                xy,
-                rotation: vector,
-                elevation: elevation + PROJECTILE_ELEVATION,
-                aIndex: 100,
-                zIndex: 10,
-                data,
-            }
-            const objects = [...state.objects, obj]
-            const actions: Action[] = [fly({ targetId: obj.id })]
+        (state, { instance, byId }): GameState => {
+            const objDef = getDefinition(instance.type)
+            const objects = [...state.objects, instance]
+
             const who = findById(state.objects, byId)!
-            const event: ActionEvent = { who, vector: obj.rotation, state, self: obj }
+            const event: ActionEvent = { who, vector: instance.rotation, state, self: instance }
+
             const launchActions = objDef.projectileLaunch?.(event) || []
-            actions.push(...launchActions)
+            const actions = [fly({ targetId: instance.id }), ...launchActions]
 
             return { ...state, objects, queue: arrMerge(state.queue, actions) }
         },
