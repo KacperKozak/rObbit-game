@@ -71,3 +71,9 @@ export interface ObjectDefinition {
 export interface RenderComponentProps {
     instance: ObjectInstance
 }
+
+export interface MapData {
+    id: string
+    name: string
+    objects: ObjectInstance[]
+}

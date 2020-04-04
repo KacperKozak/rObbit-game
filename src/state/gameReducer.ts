@@ -13,6 +13,7 @@ import {
     ObjectTypes,
     Vector2,
     XY,
+    MapData,
 } from '../types/types'
 import { flyResolver } from './resolvers/flyResolver'
 import { moveResolver } from './resolvers/moveResolver'
@@ -22,6 +23,8 @@ import { ResolverResults } from './resolvers/types'
 export interface GameState {
     queueStared: boolean
     queue: Action[]
+    mapId: string | null
+    mapName: string | null
     objects: ObjectInstance[]
     cleanObjectsState: ObjectInstance[]
 }
@@ -30,18 +33,20 @@ export interface GameStateAware {
     game: GameState
 }
 
-const mockObjects = createMap()
+// const mockObjects = createMap()
 
 export const initialState: GameState = {
     queueStared: false,
     queue: [],
-    objects: mockObjects,
-    cleanObjectsState: mockObjects,
+    mapId: null,
+    mapName: null,
+    objects: [],
+    cleanObjectsState: [],
 }
 
 const action = actionCreatorFactory('GAME')
 
-export const loadMap = action<ObjectInstance[]>('LOAD_MAP')
+export const loadMap = action<MapData>('LOAD_MAP')
 export const reset = action('RESET')
 export const win = action('WIN')
 export const lose = action('LOSE')
@@ -78,8 +83,10 @@ export const gameReducer = reducerWithInitialState(initialState)
      */
     .case(
         loadMap,
-        (state, objects): GameState => ({
+        (state, { id, name, objects }): GameState => ({
             ...initialState,
+            mapId: id,
+            mapName: name,
             objects,
         }),
     )

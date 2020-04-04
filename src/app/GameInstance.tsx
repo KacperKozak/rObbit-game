@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react'
+import React, { Suspense, useEffect } from 'react'
 import { Canvas } from 'react-three-fiber'
 import { PCFSoftShadowMap } from 'three'
 import { useEditor } from '../hooks/useEditor'
@@ -8,12 +8,10 @@ import { getDefinition } from '../objects/definitions'
 import { DOWN, LEFT, RIGHT, UP } from '../types/consts'
 import { DebugView } from './DebugView'
 import { Environment } from './Environment'
-import map1 from '../data/map1.json'
-import map2 from '../data/map2.json'
-import { ObjectInstance } from '../types/types'
+import { maps } from '../data/maps'
 
 export const GameInstance = () => {
-    const { objects, move, equip, fire, loadMap, reset } = useGame()
+    const { objects, mapName, move, equip, fire, loadMap, reset } = useGame()
 
     const { editMode, toggleEditMode } = useEditor()
     useKeyboardEvent('e', toggleEditMode)
@@ -23,11 +21,6 @@ export const GameInstance = () => {
     const down = () => move(DOWN)
     const right = () => move(RIGHT)
 
-    const loadMap1 = () => loadMap(map1 as ObjectInstance[])
-    const loadMap2 = () => loadMap(map2 as ObjectInstance[])
-
-    useKeyboardEvent('1', loadMap1)
-    useKeyboardEvent('2', loadMap2)
     useKeyboardEvent('r', reset)
 
     useKeyboardEvent('ArrowLeft', left)
@@ -37,9 +30,40 @@ export const GameInstance = () => {
     useKeyboardEvent('Enter', equip)
     useKeyboardEvent(' ', fire)
 
+    // TODO remove when menu will be added
+    useEffect(() => {
+        loadMap(maps[0])
+    }, [])
+
     return (
         <>
             {editMode && <DebugView objects={objects} />}
+            <div
+                style={{
+                    position: 'absolute',
+                    zIndex: 5,
+                    top: 0,
+                    left: 0,
+                }}
+            >
+                {maps.map(map => (
+                    <button key={map.id} onClick={() => loadMap(map)}>
+                        Map {map.name}
+                    </button>
+                ))}
+            </div>
+            {mapName && (
+                <div
+                    style={{
+                        position: 'absolute',
+                        zIndex: 5,
+                        top: 0,
+                        right: 10,
+                    }}
+                >
+                    <h1>Map: {mapName}</h1>
+                </div>
+            )}
             <div
                 style={{
                     position: 'absolute',
@@ -70,12 +94,6 @@ export const GameInstance = () => {
                 </button>
                 <button onClick={reset}>
                     Restart <small>{`[R]`}</small>
-                </button>
-                <button onClick={loadMap1}>
-                    Map 1 <small>{`[1]`}</small>
-                </button>
-                <button onClick={loadMap2}>
-                    Map 2 <small>{`[2]`}</small>
                 </button>
             </div>
             <Canvas
