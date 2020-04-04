@@ -16,3 +16,11 @@ export const findByXY = <T extends { xy: XY }>(objects: T[], xy: XY) => {
 
 export const asArray = <T>(item: T | T[]): T[] => (Array.isArray(item) ? item : [item])
 export const arrMerge = <T>(a: T[], b: T | T[] = []): T[] => [...a, ...asArray(b)]
+
+export const limit = (value: number, min: number, max: number) =>
+    Math.min(max, Math.max(min, value))
+
+export const limitVector = (vector: Vector2, min: number, max: number) =>
+    vector.map(v => limit(v, min, max)) as Vector2
+
+export const vectorDiff = (v1: Vector2, v2: Vector2) => v1.map((v, i) => v2[i] - v) as Vector2

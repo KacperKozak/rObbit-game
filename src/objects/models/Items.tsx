@@ -11,38 +11,65 @@ const useMyLoader = () => {
     const rocket = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/rocket.gltf`)
     const cannon = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/cannon.gltf`)
     const boom = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/boom.gltf`)
-    // robot_model: `${process.env.PUBLIC_URL}/assets/robot_model.gltf`,
-    // box: `${process.env.PUBLIC_URL}/assets/box.gltf`,
-    // rock1: `${process.env.PUBLIC_URL}/assets/rock1.gltf`,
-    // fence: `${process.env.PUBLIC_URL}/assets/fence.gltf`,
-    // arrow: `${process.env.PUBLIC_URL}/assets/arrow.gltf`,
-    // rakietnica_srednia: `${process.env.PUBLIC_URL}/assets/rakietnica_srednia.gltf`,
-    // rocket: `${process.env.PUBLIC_URL}/assets/rocket.gltf`,
-    // kusza: `${process.env.PUBLIC_URL}/assets/kusza.gltf`,
-    // wall: `${process.env.PUBLIC_URL}/assets/wall.gltf`,
-    // }
-
-    return { rocket: rocket.scene.clone(), cannon: cannon.scene.clone(), boom: boom.scene.clone() }
+    const box = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/box.gltf`)
+    const rock = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/rock1.gltf`)
+    const fence = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/fence.gltf`)
+    const arrow = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/arrow.gltf`)
+    const crossbow = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/crossbow.gltf`)
+    const graund = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/graund.gltf`)
+    const wall = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/wall.gltf`)
+    const grass = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/grass.gltf`)
+    const ice = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/ice.gltf`)
+    const button = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/box.gltf`) //TODO MODEL
+    return {
+        rocket: rocket.scene.clone(),
+        cannon: cannon.scene.clone(),
+        boom: boom.scene.clone(),
+        box: box.scene.clone(),
+        rock: rock.scene.clone(),
+        fence: fence.scene.clone(),
+        arrow: arrow.scene.clone(),
+        crossbow: crossbow.scene.clone(),
+        graund: graund.scene.clone(),
+        wall: wall.scene.clone(),
+        grass: grass.scene.clone(),
+        ice: ice.scene.clone(),
+        button: button.scene.clone(),
+    }
 }
+const useAnimationLoader = () => {
+    // const jump = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/animations/jump.gltf`)
+    const boring = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/animations/boring.gltf`)
+    // const push = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/animations/move.gltf`)
 
+    return {
+        // jump,
+        boring,
+        // push,
+    }
+}
 export const Player = (props: RenderComponentProps) => {
     return <AnimatieAsset {...props} url="robot_model.gltf" />
 }
 
 export const Box = (props: RenderComponentProps) => {
-    return <Asset {...props} url="box.gltf" />
+    const { box } = useMyLoader()
+    return <AssetPreload {...props} model={box} />
 }
 
 export const Rock = (props: RenderComponentProps) => {
-    return <Asset {...props} url="rock1.gltf" />
+    const { rock } = useMyLoader()
+    return <AssetPreload {...props} model={rock} />
 }
 
 export const Fence = (props: RenderComponentProps) => {
-    return <Asset {...props} url="fence.gltf" />
+    const { fence } = useMyLoader()
+    return <AssetPreload {...props} model={fence} />
 }
 
 export const Arrow = (props: RenderComponentProps) => {
-    return <Asset {...props} url="arrow.gltf" />
+    const { arrow } = useMyLoader()
+    return <AssetPreload {...props} model={arrow} />
 }
 
 export const Boom = (props: RenderComponentProps) => {
@@ -53,12 +80,8 @@ export const Cannon = (props: RenderComponentProps) => {
     // return <Asset {...props} url="rakietnica_srednia.gltf" elevationFix={-0.8} />
 
     const { cannon } = useMyLoader()
-    return <AssetPreload {...props} model={cannon} />
+    return <AssetPreload {...props} model={cannon} elevationFix={-0.8} />
 }
-
-// export const Rocket = (props: RenderComponentProps) => {
-//     return <Asset {...props} url="rocket.gltf" />
-// }
 
 export const Rocket = (props: RenderComponentProps) => {
     const { rocket } = useMyLoader()
@@ -66,47 +89,32 @@ export const Rocket = (props: RenderComponentProps) => {
 }
 
 export const Crossbow = (props: RenderComponentProps) => {
-    return <Asset {...props} url="kusza.gltf" elevationFix={-0.8} />
+    const { crossbow } = useMyLoader()
+    return <AssetPreload {...props} model={crossbow} elevationFix={-0.8} />
 }
 
 export const Ground = (props: RenderComponentProps) => {
-    return <Asset {...props} url="rock.gltf" castShadow={true} receiveShadow={true} />
+    const { graund } = useMyLoader()
+    return <AssetPreload {...props} model={graund} castShadow={true} receiveShadow={true} />
 }
 export const Wall = (props: RenderComponentProps) => {
-    return <Asset {...props} url="wall.gltf" castShadow={true} receiveShadow={true} />
+    const { wall } = useMyLoader()
+    return <AssetPreload {...props} model={wall} castShadow={true} receiveShadow={true} />
 }
 
 export const Grass = (props: RenderComponentProps) => {
-    return (
-        <Asset
-            {...props}
-            url="grass_002_export_test_1_cube.gltf" // INNY model
-            castShadow={false}
-            receiveShadow={true}
-        />
-    )
+    const { grass } = useMyLoader()
+    return <AssetPreload {...props} model={grass} castShadow={true} receiveShadow={true} />
 }
 
 export const Ice = (props: RenderComponentProps) => {
-    return (
-        <Asset
-            {...props}
-            url="ice_002_export_test_1_cube.gltf" // INNY model
-            castShadow={false}
-            receiveShadow={true}
-        />
-    )
+    const { ice } = useMyLoader()
+    return <AssetPreload {...props} model={ice} castShadow={false} receiveShadow={true} />
 }
 
 export const Button = (props: RenderComponentProps) => {
-    return (
-        <Asset
-            {...props}
-            url="ground_002_export_test_1_cube.gltf" // INNY model
-            castShadow={false}
-            receiveShadow={true}
-        />
-    )
+    const { button } = useMyLoader()
+    return <AssetPreload {...props} model={button} castShadow={false} receiveShadow={true} />
 }
 
 export const createTrigger = (color: string) => ({ instance }: RenderComponentProps) => {
@@ -134,24 +142,6 @@ interface PreloadAssetProps extends RenderComponentProps {
     castShadow?: boolean
     receiveShadow?: boolean
     elevationFix?: number
-}
-const Asset = ({
-    url,
-    instance: { xy, elevation, rotation },
-    castShadow = true,
-    receiveShadow = true,
-    elevationFix = 0,
-}: AssetProps) => {
-    const anim = useSpring({
-        pos: [xy[0], elevation + elevationFix, xy[1]],
-        rot: [0, vectorToThree(rotation), 0],
-    })
-    const gltf = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/${url}`)
-    const scene = gltf.scene.clone()
-    if (castShadow) scene.children[0].castShadow = true
-    if (receiveShadow) scene.children[0].receiveShadow = true
-    scene.scale.set(0.5, 0.5, 0.5)
-    return <animated.primitive object={scene} position={anim.pos} rotation={anim.rot} />
 }
 
 const AssetPreload = ({
@@ -188,29 +178,32 @@ const AnimatieAsset = ({
     if (castShadow) gltf.scene.children[0].castShadow = true
     if (receiveShadow) gltf.scene.children[0].receiveShadow = true
 
-    // const gltfanimation = useLoader(GLTFLoader, `/assets/animations/jump.gltf`)
-    // const gltfanimation = useLoader(GLTFLoader, `/assets/animations/move.gltf`)
-    const gltfanimation = useLoader(
+    const gltfanimationBoring = useLoader(
         GLTFLoader,
         `${process.env.PUBLIC_URL}/assets/animations/boring.gltf`,
     )
-    const mixer = new AnimationMixer(gltfanimation.scene)
-    gltfanimation.animations.forEach(clip => {
-        mixer.clipAction(clip, gltf.scene).play()
+
+    // const { jump } = useAnimationLoader()
+    const { boring } = useAnimationLoader()
+    // const { push } = useAnimationLoader()
+
+    const boringMixer = new AnimationMixer(boring.scene)
+    boring.animations.forEach(clip => {
+        boringMixer.clipAction(clip, gltf.scene).play()
     })
-    useFrame(() => mixer.update(0.02))
 
-    const cannonInHead = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/cannon.gltf`)
-    const cannonInHeadScene = cannonInHead.scene.clone()
+    useFrame(() => {
+        boringMixer.update(0.02)
+    })
 
-    const crossbowInHead = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/kusza.gltf`)
-    const crossbowInHeadScene = crossbowInHead.scene.clone()
+    const { cannon } = useMyLoader()
+    const { crossbow } = useMyLoader()
 
     return (
         <animated.group position={anim.pos} rotation={anim.rot}>
             <primitive object={gltf.scene}>
-                <primitive object={cannonInHeadScene} visible={data.gun == 'cannon'} />
-                <primitive object={crossbowInHeadScene} visible={data.gun == 'crossbow'} />
+                <primitive object={cannon} visible={data.gun == 'cannon'} />
+                <primitive object={crossbow} visible={data.gun == 'grapple'} />
             </primitive>
         </animated.group>
     )
@@ -262,12 +255,3 @@ const vectorToThree = (vector: Vector2) => {
     // return (Math.PI / 2) * 4
     return 0
 }
-
-// export const box = (props: RenderComponentProps) => {
-//     return (
-//         <mesh>
-//             <boxBufferGeometry attach="geometry" args={[0.5, 0.5, 0.5]} />
-//             <meshStandardMaterial attach="material" color={props.color} />
-//         </mesh>
-//     )
-// }

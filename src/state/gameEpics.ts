@@ -53,7 +53,7 @@ const tmpSpawnEpic = (
 ): Observable<Action> =>
     actions$.pipe(
         filter(tmpSpawn.match),
-        delay(1000),
+        delay(600),
         map(action => remove(action.payload.instance.id)),
     )
 

@@ -13,6 +13,7 @@ import {
     projectile,
     rotate,
     reset,
+    grapple,
 } from '../state/gameReducer'
 import { PLAYER_ID } from '../types/consts'
 import { ObjectInstance, ObjectTypes, Vector2, MapData } from '../types/types'
@@ -45,6 +46,17 @@ export const useGame = () => {
     const triggerEquip = () => {
         if (state.queueStared) return
         dispatch(enqueue(equip({ targetId: player.id })))
+    }
+
+    const triggerGrapple = () => {
+        if (state.queueStared) return
+
+        if (player.data?.gun !== 'grapple') {
+            play('Alert_NO')
+            return
+        }
+
+        dispatch(enqueue(grapple({ targetId: player.id })))
     }
 
     const triggerFire = () => {
@@ -103,5 +115,6 @@ export const useGame = () => {
         move: triggerMove,
         equip: triggerEquip,
         fire: triggerFire,
+        grapple: triggerGrapple,
     }
 }

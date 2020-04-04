@@ -1,8 +1,6 @@
-import { sample, uniqueId } from 'lodash'
 import React from 'react'
-import { play } from '../audio/play'
-import { move, remove, setObjectData } from '../state/gameReducer'
-import { PLAYER_ID } from '../types/consts'
+import { limitVector } from '../helpers'
+import { move } from '../state/gameReducer'
 import { ObjectDefinition, ObjectTypes } from '../types/types'
 import { Button, Grass, Ground, Ice, Wall } from './models/Items'
 
@@ -24,18 +22,15 @@ export const tileTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
     [ObjectTypes.Ice]: {
         name: 'Ice',
         height: () => 0,
-        enter: ({ who, vector }) => [move({ targetId: who.id, vector })],
+        enter: ({ who, vector }) => [
+            move({ targetId: who.id, vector: limitVector(vector, -1, 1) }),
+        ],
         Component: tileDebugComponent('lightblue'),
         Component3d: Ice,
     },
     [ObjectTypes.RockFloor]: {
         name: 'Rock floor',
         height: () => 0,
-        push: ({ force, self }) => {
-            // if (force && force >= 50) return [remove(self.id)]
-            console.log(self)
-            return []
-        },
         Component: tileDebugComponent('gray'),
         Component3d: Ground,
     },

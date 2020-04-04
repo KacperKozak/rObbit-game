@@ -3,7 +3,7 @@ import { combineEpics } from 'redux-observable'
 import { Observable } from 'rxjs'
 import { filter, ignoreElements, tap } from 'rxjs/operators'
 import { play, playEngine } from '../audio/play'
-import { equip, move, lose } from './gameReducer'
+import { equip, move, lose, grapple } from './gameReducer'
 import { PLAYER_ID } from '../types/consts'
 
 const moveSoundEpic = (actions$: Observable<Action>): Observable<Action> =>
@@ -28,4 +28,16 @@ const loseSoundEpic = (actions$: Observable<Action>): Observable<Action> =>
         ignoreElements(),
     )
 
-export const soundEpics = combineEpics(moveSoundEpic, equipSoundEpic, loseSoundEpic)
+const grappleSoundEpic = (actions$: Observable<Action>): Observable<Action> =>
+    actions$.pipe(
+        filter(grapple.match),
+        tap(target => play('Crossbow', 0.7)),
+        ignoreElements(),
+    )
+
+export const soundEpics = combineEpics(
+    moveSoundEpic,
+    equipSoundEpic,
+    loseSoundEpic,
+    grappleSoundEpic,
+)

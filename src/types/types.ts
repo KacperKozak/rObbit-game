@@ -40,7 +40,7 @@ export interface ObjectInstance {
 }
 
 export interface ObjectInstanceData {
-    gun: 'cannon' | 'crossbow'
+    gun: 'cannon' | 'grapple'
     info: string
     open: boolean
     targetId: string
