@@ -1,6 +1,6 @@
 import React from 'react'
 import { playEquip, play } from '../audio/play'
-import { move, remove, setObjectData, tmpSpawn } from '../state/gameReducer'
+import { move, remove, setObjectData, tmpSpawn, win } from '../state/gameReducer'
 import { ObjectDefinition, ObjectTypes } from '../types/types'
 import {
     Cannon,
@@ -13,6 +13,7 @@ import {
     Fence,
     Arrow,
     Button,
+    createTrigger,
 } from './models/Items'
 import { reverseVector } from '../helpers'
 import { uniqueId, sample } from 'lodash'
@@ -86,6 +87,20 @@ export const propTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
         },
         Component: propDebugComponent('blue'),
         Component3d: Fence,
+    },
+
+    [ObjectTypes.WinTrigger]: {
+        name: 'WinTrigger',
+        height: () => 0,
+        enter: ({ who, state, self }) => {
+            if (who.id === PLAYER_ID) {
+                play('Engine_start')
+                return [win()]
+            }
+            return []
+        },
+        Component: propDebugComponent('#ABC123'),
+        Component3d: createTrigger('#ABC123'),
     },
 
     [ObjectTypes.Dor]: {

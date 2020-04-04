@@ -12,6 +12,7 @@ import {
     move,
     projectile,
     rotate,
+    reset,
 } from '../state/gameReducer'
 import { PLAYER_ID } from '../types/consts'
 import { ObjectInstance, ObjectTypes, Vector2 } from '../types/types'
@@ -88,10 +89,17 @@ export const useGame = () => {
         dispatch(loadMap(object))
     }
 
+    const triggerReset = () => {
+        dispatch(reset())
+    }
+
     return {
         ...state,
         player,
+
         loadMap: triggerLoadMap,
+        reset: triggerReset,
+
         move: triggerMove,
         equip: triggerEquip,
         fire: triggerFire,

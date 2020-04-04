@@ -23,21 +23,27 @@ export interface GameState {
     queueStared: boolean
     queue: Action[]
     objects: ObjectInstance[]
+    cleanObjectsState: ObjectInstance[]
 }
 
 export interface GameStateAware {
     game: GameState
 }
 
+const mockObjects = createMap()
+
 export const initialState: GameState = {
     queueStared: false,
     queue: [],
-    objects: createMap(),
+    objects: mockObjects,
+    cleanObjectsState: mockObjects,
 }
 
 const action = actionCreatorFactory('GAME')
 
 export const loadMap = action<ObjectInstance[]>('LOAD_MAP')
+export const reset = action('RESET')
+export const win = action('WIN')
 
 export const enqueue = action<Action | Action[]>('ENQUEUE')
 export const tryNextAction = action('TRY_NEXT_ACTION')
@@ -74,6 +80,21 @@ export const gameReducer = reducerWithInitialState(initialState)
             objects,
         }),
     )
+    .case(
+        reset,
+        (state): GameState => ({
+            ...initialState,
+            objects: state.cleanObjectsState,
+            cleanObjectsState: state.cleanObjectsState,
+        }),
+    )
+    .case(
+        win,
+        (state): GameState => ({
+            ...initialState,
+        }),
+    )
+
     /*
      * Queue
      */

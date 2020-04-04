@@ -7,6 +7,7 @@ export type Vector2 = [number, number]
 
 export enum ObjectTypes {
     Player = 'Player',
+    WinTrigger = 'WinTrigger',
 
     Grass = 'Grass',
     RockFloor = 'RockFloor',

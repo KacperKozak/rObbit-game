@@ -27,6 +27,7 @@ const propDict = {
     6: ObjectTypes.Dor,
     7: ObjectTypes.Button,
     8: ObjectTypes.Box,
+    9: ObjectTypes.WinTrigger,
 }
 
 // prettier-ignore
@@ -35,7 +36,7 @@ const propsBitmap = [
     [0,1,0,8,0,0,0,],
     [0,3,5,8,0,6,0,],
     [0,2,0,5,4,2,0,],
-    [0,0,0,0,0,0,0,],
+    [0,0,0,0,0,9,0,],
 ]
 
 // TODO?

@@ -69,7 +69,7 @@ export const DebugView = ({ objects }: DebugViewProps) => {
                             onClick={() => setEditId(id)}
                         >
                             <Component instance={obj}>
-                                {type} <br />
+                                {id} - {type} <br />
                                 {isEmpty(data) ? '' : JSON.stringify(data, null, 1)}
                             </Component>
                         </div>
