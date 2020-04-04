@@ -1,21 +1,23 @@
+import { uniqueId } from 'lodash'
+import { Action } from 'redux'
 import actionCreatorFactory from 'typescript-fsa'
 import { reducerWithInitialState } from 'typescript-fsa-reducers'
+import { PROJECTILE_ELEVATION } from '../config'
 import { arrMerge, findById, findByXY } from '../helpers'
 import { createMap } from '../mocks/mapMock'
+import { getDefinition } from '../objects/definitions'
 import {
-    Vector2,
+    ActionEvent,
     ObjectInstance,
     ObjectInstanceData,
-    ActionEvent,
-    XY,
     ObjectTypes,
+    Vector2,
+    XY,
 } from '../types/types'
-import { Action } from 'redux'
-import { rotateResolver } from './resolvers/rotateResolver'
+import { flyResolver } from './resolvers/flyResolver'
 import { moveResolver } from './resolvers/moveResolver'
+import { rotateResolver } from './resolvers/rotateResolver'
 import { ResolverResults } from './resolvers/types'
-import { getDefinition } from '../objects/definitions'
-import { uniqueId } from 'lodash'
 
 export interface GameState {
     queueStared: boolean
@@ -44,6 +46,7 @@ export const move = action<{ targetId: string; vector: Vector2 }>('MOVE')
 export const rotate = action<{ targetId: string; rotation: Vector2 }>('ROTATE')
 export const equip = action<{ targetId: string }>('EQUIP')
 export const projectile = action<{ xy: XY; vector: Vector2; elevation: number }>('PROJECTILE')
+export const fly = action<{ targetId: string }>('FLY')
 
 export const updateObject = action<{
     targetId: string
@@ -109,19 +112,20 @@ export const gameReducer = reducerWithInitialState(initialState)
                 id: uniqueId(type),
                 xy,
                 rotation: vector,
-                elevation,
+                elevation: elevation + PROJECTILE_ELEVATION,
                 aIndex: 0,
                 zIndex: 10,
                 data: {},
             }
             const objects = [...state.objects, projectileInstance]
-            const actions = [
-                move({
-                    targetId: projectileInstance.id,
-                    vector: vector.map(a => a * 3) as Vector2,
-                }),
-                remove(projectileInstance.id),
-            ]
+            const actions = [fly({ targetId: projectileInstance.id })]
+            return { ...state, objects, queue: arrMerge(state.queue, actions) }
+        },
+    )
+    .case(
+        fly,
+        (state, { targetId }): GameState => {
+            const { actions, objects } = flyResolver(state, targetId)
             return { ...state, objects, queue: arrMerge(state.queue, actions) }
         },
     )

@@ -1,2 +1,3 @@
 export const MAX_ELEVATION_DIFF = 0.5
+export const PROJECTILE_ELEVATION = 1
 export const DEFAULT_ACTION_DELAY = 65
