@@ -61,6 +61,7 @@ export const setObjectData = action<{
     data: Partial<ObjectInstanceData>
 }>('SET_OBJECT_DATA')
 export const remove = action<string>('REMOVE')
+export const tmpSpawn = action<{ instance: ObjectInstance }>('TMP_SPAWN')
 
 export const gameReducer = reducerWithInitialState(initialState)
     /*
@@ -187,6 +188,13 @@ export const gameReducer = reducerWithInitialState(initialState)
         (state, targetId): GameState => ({
             ...state,
             objects: state.objects.filter(obj => obj.id !== targetId),
+        }),
+    )
+    .case(
+        tmpSpawn,
+        (state, { instance }): GameState => ({
+            ...state,
+            objects: [...state.objects, instance],
         }),
     )
 

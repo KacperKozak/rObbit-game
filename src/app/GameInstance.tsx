@@ -26,7 +26,16 @@ export const GameInstance = () => {
     return (
         <>
             <DebugView objects={objects} />
-            <div style={{ position: 'absolute', zIndex: 5 }}>
+            <div
+                style={{
+                    position: 'absolute',
+                    zIndex: 5,
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    textAlign: 'center',
+                }}
+            >
                 <button onClick={left}>←</button>
                 <button onClick={up}>↑</button>
                 <button onClick={down}>↓</button>

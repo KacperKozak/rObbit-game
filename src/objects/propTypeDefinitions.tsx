@@ -1,9 +1,10 @@
 import React from 'react'
 import { playEquip, play } from '../audio/play'
-import { move, remove, setObjectData } from '../state/gameReducer'
+import { move, remove, setObjectData, tmpSpawn } from '../state/gameReducer'
 import { ObjectDefinition, ObjectTypes } from '../types/types'
 import { Cannon, Crossbow, Player, Rock, Rocket, Boom } from './models/Items'
 import { reverseVector } from '../helpers'
+import { uniqueId } from 'lodash'
 
 const propDebugComponent = (color: string) => ({ instance, children }: any) => {
     return (
@@ -83,7 +84,21 @@ export const propTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
         },
         projectileHit: ({ self }) => {
             play('Alert_YES') // TODO Boooooom!!!
-            return [remove(self.id)]
+            return [
+                remove(self.id),
+                tmpSpawn({
+                    instance: {
+                        type: ObjectTypes.Boom,
+                        id: uniqueId(),
+                        xy: self.xy,
+                        elevation: self.elevation,
+                        rotation: self.rotation,
+                        aIndex: 0,
+                        zIndex: 20,
+                        data: {},
+                    },
+                }),
+            ]
         },
         Component: propDebugComponent('yellow'),
         Component3d: Rocket,
