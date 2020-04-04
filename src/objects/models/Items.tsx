@@ -8,9 +8,9 @@ import { useSpring, animated } from 'react-spring/three'
 import { timeInterval } from 'rxjs/operators'
 
 const useMyLoader = () => {
+    // const robot = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/robot_model.gltf`)
     const rocket = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/rocket.gltf`)
     const cannon = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/cannon.gltf`)
-    const boom = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/boom.gltf`)
     const box = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/box.gltf`)
     const rock = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/rock1.gltf`)
     const fence = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/fence.gltf`)
@@ -22,9 +22,9 @@ const useMyLoader = () => {
     const ice = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/ice.gltf`)
     const button = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/box.gltf`) //TODO MODEL
     return {
+        // robot: robot.scene.clone(),
         rocket: rocket.scene.clone(),
         cannon: cannon.scene.clone(),
-        boom: boom.scene.clone(),
         box: box.scene.clone(),
         rock: rock.scene.clone(),
         fence: fence.scene.clone(),
@@ -40,16 +40,17 @@ const useMyLoader = () => {
 const useAnimationLoader = () => {
     // const jump = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/animations/jump.gltf`)
     const boring = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/animations/boring.gltf`)
-    // const push = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/animations/move.gltf`)
+    const boom = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/boom.gltf`)
 
     return {
         // jump,
         boring,
-        // push,
+        boom,
     }
 }
 export const Player = (props: RenderComponentProps) => {
-    return <AnimatieAsset {...props} url="robot_model.gltf" />
+    // const { robot } = useMyLoader()
+    return <AnimatieAsset {...props} />
 }
 
 export const Box = (props: RenderComponentProps) => {
@@ -73,12 +74,11 @@ export const Arrow = (props: RenderComponentProps) => {
 }
 
 export const Boom = (props: RenderComponentProps) => {
-    return <AnimateSelfAsset {...props} url="boom.gltf" />
+    const { boom } = useAnimationLoader()
+    return <AnimateSelfAsset {...props} animateModel={boom} />
 }
 
 export const Cannon = (props: RenderComponentProps) => {
-    // return <Asset {...props} url="rakietnica_srednia.gltf" elevationFix={-0.8} />
-
     const { cannon } = useMyLoader()
     return <AssetPreload {...props} model={cannon} elevationFix={-0.8} />
 }
@@ -128,20 +128,18 @@ export const createTrigger = (color: string) => ({ instance }: RenderComponentPr
     )
 }
 
-interface AssetProps extends RenderComponentProps {
-    url: string
+interface AssetsProps extends RenderComponentProps {
     color?: string
     castShadow?: boolean
     receiveShadow?: boolean
     elevationFix?: number
 }
 
-interface PreloadAssetProps extends RenderComponentProps {
+interface PreloadAssetProps extends AssetsProps {
     model: GLTF['scene']
-    color?: string
-    castShadow?: boolean
-    receiveShadow?: boolean
-    elevationFix?: number
+}
+interface PreloadAssetAnimateProps extends AssetsProps {
+    animateModel: GLTF
 }
 
 const AssetPreload = ({
@@ -163,25 +161,20 @@ const AssetPreload = ({
 }
 
 const AnimatieAsset = ({
-    url,
     instance: { xy, elevation, rotation, data },
     castShadow = true,
     receiveShadow = true,
-}: AssetProps) => {
+}: AssetsProps) => {
     const anim = useSpring({
         pos: [xy[0], elevation, xy[1]],
         rot: [0, vectorToThree(rotation), 0],
     })
 
-    const gltf = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/${url}`)
-    gltf.scene.scale.set(0.5, 0.5, 0.5)
-    if (castShadow) gltf.scene.children[0].castShadow = true
-    if (receiveShadow) gltf.scene.children[0].receiveShadow = true
-
-    const gltfanimationBoring = useLoader(
-        GLTFLoader,
-        `${process.env.PUBLIC_URL}/assets/animations/boring.gltf`,
-    )
+    const robot = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/robot_model.gltf`)
+    const model = robot.scene
+    model.scale.set(0.5, 0.5, 0.5)
+    if (castShadow) model.children[0].castShadow = true
+    if (receiveShadow) model.children[0].receiveShadow = true
 
     // const { jump } = useAnimationLoader()
     const { boring } = useAnimationLoader()
@@ -189,7 +182,7 @@ const AnimatieAsset = ({
 
     const boringMixer = new AnimationMixer(boring.scene)
     boring.animations.forEach(clip => {
-        boringMixer.clipAction(clip, gltf.scene).play()
+        boringMixer.clipAction(clip, model).play()
     })
 
     useFrame(() => {
@@ -201,7 +194,7 @@ const AnimatieAsset = ({
 
     return (
         <animated.group position={anim.pos} rotation={anim.rot}>
-            <primitive object={gltf.scene}>
+            <primitive object={model}>
                 <primitive object={cannon} visible={!!data.hasCannon} />
                 <primitive object={crossbow} visible={!!data.hasGrapple} />
             </primitive>
@@ -210,18 +203,17 @@ const AnimatieAsset = ({
 }
 
 const AnimateSelfAsset = ({
-    url,
+    animateModel,
     instance: { xy, elevation, rotation, data },
     castShadow = true,
     receiveShadow = true,
-}: AssetProps) => {
+}: PreloadAssetAnimateProps) => {
     const anim = useSpring({
         pos: [xy[0], elevation, xy[1]],
         rot: [0, vectorToThree(rotation), 0],
     })
-    const gltf = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/${url}`)
 
-    const gltfScene = gltf.scene.clone()
+    const gltfScene = animateModel.scene.clone()
     // useEffect(() => {
     if (castShadow) gltfScene.children[0].castShadow = true
     if (receiveShadow) gltfScene.children[0].receiveShadow = true
@@ -230,7 +222,7 @@ const AnimateSelfAsset = ({
 
     const mixer = new AnimationMixer(gltfScene)
 
-    gltf.animations.forEach((clip, index) => {
+    animateModel.animations.forEach((clip, index) => {
         const animation = mixer.clipAction(clip, gltfScene.children[index])
         animation.setLoop(LoopOnce, 1)
         animation.play()
