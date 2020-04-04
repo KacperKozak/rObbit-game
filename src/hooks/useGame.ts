@@ -33,10 +33,12 @@ export const useGame = () => {
     }
 
     const triggerEquip = () => {
+        if (state.queueStared) return
         dispatch(enqueue(equip({ targetId })))
     }
 
     const triggerFire = () => {
+        if (state.queueStared) return
         const { id, xy, rotation, elevation, data } = findById(state.objects, targetId)!
         if (!data?.gun) {
             play('Alert_NO')

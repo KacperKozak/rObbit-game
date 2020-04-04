@@ -64,8 +64,14 @@ export const propTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
         name: 'Projectile',
         height: 0,
         projectileLaunch: ({ who }) => {
-            play(who.data?.gun === 'cannon' ? 'Bazooka' : 'Crossbow')
-            return [move({ targetId: who.id, vector: reverseVector(who.rotation) }, { delay: 250 })]
+            const isCannon = who.data?.gun === 'cannon'
+            play(isCannon ? 'Bazooka' : 'Crossbow')
+            return [
+                move(
+                    { targetId: who.id, vector: isCannon ? reverseVector(who.rotation) : [0, 0] },
+                    { delay: 250 }, // delay remove from projectileHit
+                ),
+            ]
         },
         projectileHit: ({ self }) => {
             play('Alert_YES') // TODO Boooooom!!!
