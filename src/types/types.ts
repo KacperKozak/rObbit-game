@@ -39,10 +39,11 @@ export interface ObjectInstanceData {
 }
 
 export interface ActionEvent {
-    who: ObjectInstance // who triggered this @TODO better name!
+    who: ObjectInstance
     self: ObjectInstance
     vector: Vector2
     state: GameState
+    force?: number
 }
 
 export interface ObjectDefinition {

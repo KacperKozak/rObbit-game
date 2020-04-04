@@ -32,6 +32,10 @@ export const tileTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
     [ObjectTypes.RockFloor]: {
         name: 'Rock floor',
         height: 0,
+        push: ({ force, self }) => {
+            if (force && force >= 50) return [remove(self.id)]
+            return []
+        },
         Component: tileDebugComponent('gray'),
         Component3d: Ground,
     },

@@ -31,7 +31,7 @@ export const flyResolver = (state: GameState, targetId: string): ResolverResults
 
         for (const obj of newXYObjects) {
             const objDef = getDefinition(obj.type)
-            const event: ActionEvent = { who: target, vector, state, self: obj }
+            const event: ActionEvent = { who: target, vector, state, self: obj, force: 100 }
 
             if (isTooHight(obj, target)) {
                 objects = objects.map(obj => {
