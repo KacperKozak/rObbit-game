@@ -13,9 +13,19 @@ export const Player = (props: RenderComponentProps) => {
 export const Rock = (props: RenderComponentProps) => {
     return <Asset {...props} url="rock1.gltf" />
 }
+
+export const Boom = (props: RenderComponentProps) => {
+    return <AnimateSelfAsset {...props} url="boom.gltf" />
+}
+
 export const Cannon = (props: RenderComponentProps) => {
     return <Asset {...props} url="rakietnica_srednia.gltf" elevationFix={-0.8} />
 }
+
+export const Rocket = (props: RenderComponentProps) => {
+    return <Asset {...props} url="rocket.gltf" />
+}
+
 export const Crossbow = (props: RenderComponentProps) => {
     return <Asset {...props} url="kusza.gltf" elevationFix={-0.8} />
 }
@@ -126,6 +136,43 @@ const AnimatieAsset = ({
                 <primitive object={cannonInHeadScene} visible={data.gun == 'cannon'} />
                 <primitive object={crossbowInHeadScene} visible={data.gun == 'crossbow'} />
             </primitive>
+        </animated.group>
+    )
+}
+
+const AnimateSelfAsset = ({
+    url,
+    instance: { xy, elevation, rotation, data },
+    castShadow = true,
+    receiveShadow = true,
+}: AssetProps) => {
+    const anim = useSpring({
+        pos: [xy[0], elevation, xy[1]],
+        rot: [0, vectorToThree(rotation), 0],
+    })
+    const gltf = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/${url}`)
+    const gltfScene = gltf.scene.clone()
+    if (castShadow) gltfScene.children[0].castShadow = true
+    if (receiveShadow) gltfScene.children[0].receiveShadow = true
+
+    gltfScene.scale.set(0.3, 0.3, 0.3)
+
+    const mixer = new AnimationMixer(gltfScene)
+    gltf.animations.forEach((clip, index) => {
+        mixer.clipAction(clip, gltfScene.children[index]).play()
+    })
+    useFrame(() => {
+        mixer.update(0.03)
+        console.log(mixer.time)
+        if (mixer.time > 0.8) {
+            mixer.stopAllAction()
+            gltfScene.visible = false
+        }
+    })
+
+    return (
+        <animated.group position={anim.pos} rotation={anim.rot}>
+            <primitive object={gltfScene} />
         </animated.group>
     )
 }
