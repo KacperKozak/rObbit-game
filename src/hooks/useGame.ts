@@ -51,7 +51,7 @@ export const useGame = () => {
     const triggerGrapple = () => {
         if (state.queueStared) return
 
-        if (player.data?.gun !== 'grapple') {
+        if (!player.data.hasGrapple) {
             play('Alert_NO')
             return
         }
@@ -63,35 +63,20 @@ export const useGame = () => {
         if (state.queueStared) return
         const { id, xy, rotation, elevation, data } = player
 
-        if (!data?.gun) {
+        if (!data.hasCannon) {
             play('Alert_NO')
             return
         }
 
-        let instance: ObjectInstance
-
-        if (data.gun === 'cannon') {
-            instance = {
-                type: ObjectTypes.RocketProjectile,
-                id: uniqueId(),
-                xy,
-                rotation,
-                elevation: elevation + PROJECTILE_ELEVATION,
-                aIndex: 100,
-                zIndex: 10,
-                data,
-            }
-        } else {
-            instance = {
-                type: ObjectTypes.CrossbowProjectile,
-                id: uniqueId(),
-                xy,
-                rotation,
-                elevation: elevation + PROJECTILE_ELEVATION,
-                aIndex: 100,
-                zIndex: 10,
-                data,
-            }
+        const instance: ObjectInstance = {
+            type: ObjectTypes.RocketProjectile,
+            id: uniqueId(),
+            xy,
+            rotation,
+            elevation: elevation + PROJECTILE_ELEVATION,
+            aIndex: 100,
+            zIndex: 10,
+            data,
         }
 
         dispatch(enqueue(projectile({ byId: id, instance })))

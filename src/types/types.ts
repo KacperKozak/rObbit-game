@@ -39,7 +39,8 @@ export interface ObjectInstance {
 }
 
 export interface ObjectInstanceData {
-    gun: 'cannon' | 'grapple'
+    hasCannon: boolean
+    hasGrapple: boolean
     info: string
     open: boolean
     targetId: string
