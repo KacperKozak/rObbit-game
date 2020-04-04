@@ -38,7 +38,7 @@ export const tileTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
 
     [ObjectTypes.Button]: {
         name: 'Button',
-        height: 0,
+        height: 2,
         push: ({ state, self }) => {
             const randomProp = sample(state.objects.filter(p => p.id !== PLAYER_ID))
             play('button')
