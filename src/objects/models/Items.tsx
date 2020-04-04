@@ -67,6 +67,7 @@ export const Ice = (props: RenderComponentProps) => {
         />
     )
 }
+
 export const Button = (props: RenderComponentProps) => {
     return (
         <Asset
@@ -75,6 +76,17 @@ export const Button = (props: RenderComponentProps) => {
             castShadow={false}
             receiveShadow={true}
         />
+    )
+}
+
+export const createTrigger = (color: string) => ({ instance }: RenderComponentProps) => {
+    const { xy, elevation, rotation } = instance
+
+    return (
+        <mesh position={[xy[0], elevation, xy[1]]} rotation={[0, vectorToThree(rotation), 0]}>
+            <boxBufferGeometry attach="geometry" args={[0.5, 1, 0.5]} />
+            <meshStandardMaterial attach="material" color={color} />
+        </mesh>
     )
 }
 

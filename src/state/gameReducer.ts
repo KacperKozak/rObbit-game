@@ -38,6 +38,7 @@ export const initialState: GameState = {
 const action = actionCreatorFactory('GAME')
 
 export const loadMap = action<ObjectInstance[]>('LOAD_MAP')
+export const win = action('WIN')
 
 export const enqueue = action<Action | Action[]>('ENQUEUE')
 export const tryNextAction = action('TRY_NEXT_ACTION')
@@ -74,6 +75,13 @@ export const gameReducer = reducerWithInitialState(initialState)
             objects,
         }),
     )
+    .case(
+        win,
+        (state, objects): GameState => ({
+            ...initialState,
+        }),
+    )
+
     /*
      * Queue
      */
