@@ -177,10 +177,6 @@ const AnimateSelfAsset = ({
     })
     useFrame(() => {
         mixer.update(0.03)
-        if (mixer.time > 0.8) {
-            mixer.stopAllAction()
-            gltfScene.visible = false
-        }
     })
 
     return (

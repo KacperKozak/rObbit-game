@@ -5,14 +5,16 @@ import { useEditor } from '../hooks/useEditor'
 import { useGame } from '../hooks/useGame'
 import { useKeyboardEvent } from '../hooks/useKeyboardEvent'
 import { getDefinition } from '../objects/definitions'
-import { DOWN, LEFT, RIGHT, UP, PLAYER_ID } from '../types/consts'
+import { DOWN, LEFT, RIGHT, UP } from '../types/consts'
 import { DebugView } from './DebugView'
 import { Environment } from './Environment'
-import { findById } from '../helpers'
-import { useSpring } from 'react-spring/three'
+import map1 from '../data/map1.json'
+import map2 from '../data/map2.json'
+import { ObjectInstance } from '../types/types'
+import { CAMERA_OFFSET } from '../config'
 
 export const GameInstance = () => {
-    const { objects, move, equip, fire, player } = useGame()
+    const { objects, move, equip, fire, loadMap, player } = useGame()
 
     const { editMode, toggleEditMode } = useEditor()
     useKeyboardEvent('e', toggleEditMode)
@@ -21,6 +23,12 @@ export const GameInstance = () => {
     const up = () => move(UP)
     const down = () => move(DOWN)
     const right = () => move(RIGHT)
+
+    const loadMap1 = () => loadMap(map1 as ObjectInstance[])
+    const loadMap2 = () => loadMap(map2 as ObjectInstance[])
+
+    useKeyboardEvent('1', loadMap1)
+    useKeyboardEvent('2', loadMap2)
 
     useKeyboardEvent('ArrowLeft', left)
     useKeyboardEvent('ArrowUp', up)
@@ -35,6 +43,14 @@ export const GameInstance = () => {
     //     pos: [xy[0], elevation + elevationFix, xy[1]],
     //     rot: [0, vectorToThree(rotation), 0],
     // })
+    const { scene, camera } = useThree()
+
+    let mapCenter = [0, 0]
+    objects.forEach(el => {
+        if (el.xy[0] > mapCenter[0]) mapCenter[0] = el.xy[0]
+        if (el.xy[1] > mapCenter[1]) mapCenter[1] = el.xy[0]
+    })
+    mapCenter = mapCenter.map(el => el / 2)
 
     return (
         <>
@@ -67,6 +83,8 @@ export const GameInstance = () => {
                 <button onClick={fire}>
                     fire <small>{'[space]'}</small>
                 </button>
+                <button onClick={loadMap1}>Map 1</button>
+                <button onClick={loadMap2}>Map 2</button>
             </div>
             <Canvas
                 orthographic
@@ -74,12 +92,12 @@ export const GameInstance = () => {
                     zoom: 100,
                     fov: 1075,
                     //                 vvvvvvvvvvvv to mysałem że zadziała
-                    position: [-4, 7, 5],
+                    position: [mapCenter[0] + CAMERA_OFFSET[0], 6, mapCenter[1] + CAMERA_OFFSET[1]],
                 }}
                 onCreated={scene => {
                     // cameraRef.current = scene.camera
                     //                 vvvvvvvvvvvv to wiem że nie zadziałą xDdddddddd
-                    scene.camera.lookAt(0, 1, 0)
+                    scene.camera.lookAt(mapCenter[0], 0, mapCenter[1])
                     // scene.camera.lookAt(findById(objects, PLAYER_ID))
                     scene.gl.shadowMap.type = PCFSoftShadowMap
                     scene.gl.shadowMap.enabled = true

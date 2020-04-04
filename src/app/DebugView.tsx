@@ -13,7 +13,7 @@ const size = 60
 
 export const DebugView = ({ objects }: DebugViewProps) => {
     const [editId, setEditId] = useState<string>()
-    const { edit } = useEditor()
+    const { edit, copyMap } = useEditor()
     const obj = editId && findById(objects, editId)
     const update = (value: Partial<ObjectInstance>) => {
         if (obj) edit(obj.id, value)
@@ -30,6 +30,7 @@ export const DebugView = ({ objects }: DebugViewProps) => {
                 opacity: 0.8,
             }}
         >
+            <button onClick={copyMap}>Copy map</button>
             {obj && (
                 <>
                     <input

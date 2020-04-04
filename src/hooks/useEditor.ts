@@ -1,11 +1,10 @@
-import { useDispatch } from 'react-redux'
-import { updateObject } from '../state/gameReducer'
-import { PLAYER_ID } from '../types/consts'
-import { ObjectInstance } from '../types/types'
 import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { GameStateAware, updateObject } from '../state/gameReducer'
+import { ObjectInstance } from '../types/types'
 
 export const useEditor = () => {
-    // const state = useSelector((state: GameStateAware) => state.game)
+    const state = useSelector((state: GameStateAware) => state.game)
     const [editMode, setEditMode] = useState(false)
     const dispatch = useDispatch()
 
@@ -17,5 +16,13 @@ export const useEditor = () => {
         dispatch(updateObject({ targetId, objectValues }))
     }
 
-    return { edit, toggleEditMode, editMode }
+    const copyMap = () => {
+        const serializedMap = JSON.stringify(state.objects)
+
+        navigator.clipboard.writeText(serializedMap).then(() => {
+            console.log('Copied to clipboard')
+        }, console.error)
+    }
+
+    return { edit, toggleEditMode, editMode, copyMap }
 }
