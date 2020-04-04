@@ -44,38 +44,39 @@ export const initialState: GameState = {
     cleanObjectsState: [],
 }
 
-const action = actionCreatorFactory('GAME')
+const gameAction = actionCreatorFactory('GG')
+const queueAction = actionCreatorFactory('QUEUE')
 
-export const loadMap = action<MapData>('LOAD_MAP')
-export const reset = action('RESET')
-export const win = action('WIN')
-export const lose = action('LOSE')
+export const loadMap = gameAction<MapData>('LOAD_MAP')
+export const reset = gameAction('RESET')
+export const win = gameAction('WIN')
+export const lose = gameAction('LOSE')
 
-export const enqueue = action<Action | Action[]>('ENQUEUE')
-export const tryNextAction = action('TRY_NEXT_ACTION')
-export const nextAction = action<Action>('NEXT_ACTION')
-export const queueEnd = action('QUEUE_END')
-export const enqueueAfter = action<{ actions: Action[]; timeout: number }>('ENQUEUE_AFTER')
+export const enqueue = queueAction<Action | Action[]>('ENQUEUE')
+export const tryNextAction = queueAction('TRY_NEXT_ACTION')
+export const nextAction = queueAction<Action>('NEXT_ACTION')
+export const queueEnd = queueAction('QUEUE_END')
+export const enqueueAfter = queueAction<{ actions: Action[]; timeout: number }>('ENQUEUE_AFTER')
 
-export const move = action<{ targetId: string; vector: Vector2 }>('MOVE')
-export const rotate = action<{ targetId: string; rotation: Vector2 }>('ROTATE')
-export const equip = action<{ targetId: string }>('EQUIP')
-export const fall = action<{ targetId: string }>('FALL')
+export const move = gameAction<{ targetId: string; vector: Vector2 }>('MOVE')
+export const rotate = gameAction<{ targetId: string; rotation: Vector2 }>('ROTATE')
+export const equip = gameAction<{ targetId: string }>('EQUIP')
+export const fall = gameAction<{ targetId: string }>('FALL')
 
-export const projectile = action<{ instance: ObjectInstance; byId: string }>('PROJECTILE')
-export const fly = action<{ targetId: string }>('FLY')
-export const flyEnd = action<{ targetId: string; hitTargetId?: string }>('FLY_END')
+export const projectile = gameAction<{ instance: ObjectInstance; byId: string }>('PROJECTILE')
+export const fly = gameAction<{ targetId: string }>('FLY')
+export const flyEnd = gameAction<{ targetId: string; hitTargetId?: string }>('FLY_END')
 
-export const updateObject = action<{
+export const updateObject = gameAction<{
     targetId: string
     objectValues: Partial<ObjectInstance>
 }>('UPDATE_OBJECT')
-export const setObjectData = action<{
+export const setObjectData = gameAction<{
     targetId: string
     data: Partial<ObjectInstanceData>
 }>('SET_OBJECT_DATA')
-export const remove = action<string>('REMOVE')
-export const tmpSpawn = action<{ instance: ObjectInstance }>('TMP_SPAWN')
+export const remove = gameAction<string>('REMOVE')
+export const tmpSpawn = gameAction<{ instance: ObjectInstance }>('TMP_SPAWN')
 
 export const gameReducer = reducerWithInitialState(initialState)
     /*
@@ -88,24 +89,21 @@ export const gameReducer = reducerWithInitialState(initialState)
             mapId: id,
             mapName: name,
             objects,
+            cleanObjectsState: objects,
         }),
     )
     .cases(
         [reset, lose],
         (state): GameState => ({
-            ...initialState,
+            ...state,
+            queue: [],
+            queueStared: false,
             objects: state.cleanObjectsState,
             cleanObjectsState: state.cleanObjectsState,
         }),
     )
     .case(
         win,
-        (state): GameState => ({
-            ...initialState,
-        }),
-    )
-    .case(
-        lose,
         (state): GameState => ({
             ...initialState,
         }),

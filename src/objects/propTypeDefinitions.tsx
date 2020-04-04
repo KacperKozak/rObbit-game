@@ -106,7 +106,6 @@ export const propTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
     [ObjectTypes.Dor]: {
         name: 'Dor',
         height: instance => {
-            console.log('instance', instance)
             return instance.data.open ? 0 : 1.5
         },
         push: ({ force, self }) => {
