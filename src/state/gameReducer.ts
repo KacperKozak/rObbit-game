@@ -46,11 +46,15 @@ export const move = action<{ targetId: string; vector: Vector2 }>('MOVE')
 export const rotate = action<{ targetId: string; rotation: Vector2 }>('ROTATE')
 export const equip = action<{ targetId: string }>('EQUIP')
 
-export const projectile = action<{ byId: string; xy: XY; vector: Vector2; elevation: number }>(
-    'PROJECTILE',
-)
+export const projectile = action<{
+    byId: string
+    xy: XY
+    vector: Vector2
+    elevation: number
+    data: Partial<ObjectInstanceData>
+}>('PROJECTILE')
 export const fly = action<{ targetId: string }>('FLY')
-export const hit = action<{ targetId: string; hitTargetId?: string }>('HIT')
+export const flyEnd = action<{ targetId: string; hitTargetId?: string }>('FLY_END')
 
 export const updateObject = action<{
     targetId: string
@@ -114,7 +118,7 @@ export const gameReducer = reducerWithInitialState(initialState)
      */
     .case(
         projectile,
-        (state, { xy, vector, elevation, byId }): GameState => {
+        (state, { xy, vector, elevation, byId, data }): GameState => {
             const type = ObjectTypes.Projectile
             const objDef = getDefinition(type)
             const obj: ObjectInstance = {
@@ -125,14 +129,14 @@ export const gameReducer = reducerWithInitialState(initialState)
                 elevation: elevation + PROJECTILE_ELEVATION,
                 aIndex: 100,
                 zIndex: 10,
-                data: {},
+                data,
             }
             const objects = [...state.objects, obj]
             const actions: Action[] = [fly({ targetId: obj.id })]
             const who = findById(state.objects, byId)!
             const event: ActionEvent = { who, vector: obj.rotation, state, self: obj }
-            const hitActions = objDef.projectileLaunch?.(event) || []
-            actions.push(...hitActions)
+            const launchActions = objDef.projectileLaunch?.(event) || []
+            actions.push(...launchActions)
 
             return { ...state, objects, queue: arrMerge(state.queue, actions) }
         },
@@ -145,16 +149,21 @@ export const gameReducer = reducerWithInitialState(initialState)
         },
     )
     .case(
-        hit,
+        flyEnd,
         (state, { targetId, hitTargetId }): GameState => {
             const obj = findById(state.objects, targetId)
-            // const who = findById(state.objects, hitTargetId)!
+            const what = hitTargetId ? findById(state.objects, hitTargetId) : undefined
 
             const actions: Action[] = []
             if (obj) {
                 const objDef = getDefinition(obj.type)
-                //                                 ↓ replace with who // TODO
-                const event: ActionEvent = { who: obj, vector: obj.rotation, state, self: obj }
+                const event: ActionEvent = {
+                    who: null as any, // TODO,
+                    what,
+                    vector: obj.rotation,
+                    state,
+                    self: obj,
+                }
                 const hitActions = objDef.projectileHit?.(event) || []
                 actions.push(...hitActions)
             }

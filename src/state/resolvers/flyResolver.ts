@@ -2,7 +2,7 @@ import { Action } from 'redux'
 import { applyVector, asArray, findById, findByXY } from '../../helpers'
 import { getDefinition } from '../../objects/definitions'
 import { ActionEvent, ObjectInstance } from '../../types/types'
-import { GameState, hit } from '../gameReducer'
+import { GameState, flyEnd } from '../gameReducer'
 import { ResolverResults } from './types'
 
 export const flyResolver = (state: GameState, targetId: string): ResolverResults => {
@@ -39,14 +39,14 @@ export const flyResolver = (state: GameState, targetId: string): ResolverResults
                     return { ...obj, xy }
                 })
 
-                addActions(hit({ targetId, hitTargetId: obj.id }))
+                addActions(flyEnd({ targetId, hitTargetId: obj.id }))
                 addActions(objDef.push?.(event))
                 return { objects, actions }
             }
         }
     }
 
-    addActions(hit({ targetId }))
+    addActions(flyEnd({ targetId }))
 
     objects = objects.map(obj => {
         if (obj !== target) return obj

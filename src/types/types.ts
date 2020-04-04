@@ -41,6 +41,7 @@ export interface ObjectInstanceData {
 export interface ActionEvent {
     who: ObjectInstance
     self: ObjectInstance
+    what?: ObjectInstance
     vector: Vector2
     state: GameState
     force?: number

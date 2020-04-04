@@ -44,7 +44,7 @@ export const useGame = () => {
             play('Alert_NO')
             return
         }
-        dispatch(enqueue(projectile({ byId: id, xy, vector: rotation, elevation })))
+        dispatch(enqueue(projectile({ byId: id, xy, vector: rotation, elevation, data })))
     }
 
     return { ...state, move: triggerMove, equip: triggerEquip, fire: triggerFire }

@@ -82,8 +82,17 @@ export const propTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
                 ),
             ]
         },
-        projectileHit: ({ self }) => {
-            play('Alert_YES') // TODO Boooooom!!!
+        projectileHit: ({ self, what, who }) => {
+            if (!what) {
+                return [remove(self.id)]
+            }
+
+            if (self.data.gun === 'crossbow') {
+                play('Alert_YES') // TODO Hit!
+                return [remove(self.id)]
+            }
+
+            play('Alert_YES') // TODO Boom!
             return [
                 remove(self.id),
                 tmpSpawn({
