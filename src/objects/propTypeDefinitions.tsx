@@ -1,5 +1,5 @@
 import React from 'react'
-import { playEquip } from '../audio/play'
+import { playEquip, play } from '../audio/play'
 import { move, remove, setObjectData } from '../state/gameReducer'
 import { ObjectDefinition, ObjectTypes } from '../types/types'
 import { Cannon, Crossbow, Player, Rock } from './models/Items'
@@ -62,6 +62,14 @@ export const propTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
     [ObjectTypes.Projectile]: {
         name: 'Projectile',
         height: 0,
+        projectileLaunch: () => {
+            play('Bazooka')
+            return []
+        },
+        projectileHit: ({ self }) => {
+            play('Alert_YES') // TODO Boooooom!!!
+            return [remove(self.id)]
+        },
         Component: propDebugComponent('yellow'),
         Component3d: Rock,
     },

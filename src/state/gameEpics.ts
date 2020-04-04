@@ -32,12 +32,10 @@ const nextActionEpic = (
 ): Observable<Action> =>
     actions$.pipe(
         filter(nextAction.match),
-        flatMap(action =>
-            concat(
-                of(action.payload),
-                of(tryNextAction()).pipe(delay(action.meta?.delay || DEFAULT_ACTION_DELAY)),
-            ),
-        ),
+        flatMap(action => {
+            const newActionDelay = (action.payload as any).meta?.delay || DEFAULT_ACTION_DELAY
+            return concat(of(action.payload), of(tryNextAction()).pipe(delay(newActionDelay)))
+        }),
     )
 
 export const gameEpics = combineEpics(enqueueEpic, tryNextEpic, nextActionEpic)

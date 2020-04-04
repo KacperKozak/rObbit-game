@@ -2,7 +2,7 @@ import { Action } from 'redux'
 import { applyVector, asArray, findById, findByXY } from '../../helpers'
 import { getDefinition } from '../../objects/definitions'
 import { ActionEvent, ObjectInstance } from '../../types/types'
-import { fly, GameState, remove } from '../gameReducer'
+import { GameState, hit } from '../gameReducer'
 import { ResolverResults } from './types'
 
 export const flyResolver = (state: GameState, targetId: string): ResolverResults => {
@@ -19,32 +19,40 @@ export const flyResolver = (state: GameState, targetId: string): ResolverResults
     }
 
     const vector = target.rotation
-    const newXY = applyVector(target.xy, vector)
-    const newXYObjects = findByXY(objects, newXY).sort((a, b) => b.aIndex - a.aIndex)
+    let xy = target.xy
 
-    // TODO remove
-    if (!newXYObjects.length) {
-        return { objects, actions: [remove(targetId)] }
-    }
+    let limit = 15
 
-    // // Can enter to this region?
-    for (const obj of newXYObjects) {
-        const objDef = getDefinition(obj.type)
-        const event: ActionEvent = { who: target, vector, state, self: obj }
+    while (limit) {
+        limit--
 
-        if (isTooHight(obj, target)) {
-            addActions(objDef.push?.(event))
-            addActions(remove(targetId))
-            return { objects, actions }
+        xy = applyVector(xy, vector)
+        const newXYObjects = findByXY(objects, xy).sort((a, b) => b.aIndex - a.aIndex)
+
+        for (const obj of newXYObjects) {
+            const objDef = getDefinition(obj.type)
+            const event: ActionEvent = { who: target, vector, state, self: obj }
+
+            if (isTooHight(obj, target)) {
+                objects = objects.map(obj => {
+                    if (obj !== target) return obj
+                    return { ...obj, xy }
+                })
+
+                addActions(hit({ targetId, hitTargetId: obj.id }))
+                addActions(objDef.push?.(event))
+                return { objects, actions }
+            }
         }
     }
 
+    addActions(hit({ targetId }))
+
     objects = objects.map(obj => {
         if (obj !== target) return obj
-        return { ...obj, xy: newXY }
+        return { ...obj, xy }
     })
 
-    addActions(fly({ targetId }))
     return { objects, actions }
 }
 

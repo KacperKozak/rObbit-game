@@ -51,6 +51,8 @@ export interface ObjectDefinition {
     enter?(event: ActionEvent): Action[]
     leave?(event: ActionEvent): Action[]
     equip?(event: ActionEvent): Action[]
+    projectileLaunch?(event: ActionEvent): Action[] // eg. for projectile
+    projectileHit?(event: ActionEvent): Action[] // eg. for projectile
     Component(props: RenderComponentProps & { children: ReactNode }): any
     Component3d(props: RenderComponentProps): any
 }

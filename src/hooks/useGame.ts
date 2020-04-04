@@ -37,7 +37,8 @@ export const useGame = () => {
 
     const triggerFire = () => {
         const { xy, rotation, elevation } = findById(state.objects, targetId)!
-        dispatch(enqueue(projectile({ xy, vector: rotation, elevation })))
+        const who = findById(state.objects, targetId)
+        dispatch(enqueue(projectile({ byId: who!.id, xy, vector: rotation, elevation })))
     }
 
     return { ...state, move: triggerMove, equip: triggerEquip, fire: triggerFire }
