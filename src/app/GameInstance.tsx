@@ -38,12 +38,6 @@ export const GameInstance = () => {
     useKeyboardEvent('Enter', equip)
     useKeyboardEvent(' ', fire)
 
-    // const cameraRef = useRef<Camera>()
-
-    // const anim = useSpring({
-    //     pos: [xy[0], elevation + elevationFix, xy[1]],
-    //     rot: [0, vectorToThree(rotation), 0],
-    // })
     const { scene, camera } = useThree()
 
     let mapCenter = [0, 0]
@@ -95,36 +89,31 @@ export const GameInstance = () => {
                 </button>
             </div>
             <Canvas
-                orthographic
+                // orthographic
                 camera={{
-                    zoom: 100,
-                    fov: 1075,
-                    //                 vvvvvvvvvvvv to mysałem że zadziała
-                    position: [mapCenter[0] + CAMERA_OFFSET[0], 6, mapCenter[1] + CAMERA_OFFSET[1]],
+                    zoom: 20,
                 }}
                 onCreated={scene => {
-                    // cameraRef.current = scene.camera
-                    //                 vvvvvvvvvvvv to wiem że nie zadziałą xDdddddddd
-                    scene.camera.lookAt(mapCenter[0], 0, mapCenter[1])
-                    // scene.camera.lookAt(findById(objects, PLAYER_ID))
                     scene.gl.shadowMap.type = PCFSoftShadowMap
                     scene.gl.shadowMap.enabled = true
                 }}
             >
-                <Environment player={player} />
-                <Suspense
-                    fallback={
-                        <mesh>
-                            <boxBufferGeometry attach="geometry" args={[0.5, 0.5, 0.5]} />
-                            <meshStandardMaterial attach="material" color="red" />
-                        </mesh>
-                    }
-                >
-                    {objects.map(obj => {
-                        const { Component3d } = getDefinition(obj.type)
-                        return <Component3d key={obj.id} instance={obj} />
-                    })}
-                </Suspense>
+                <group>
+                    <Environment objectsList={objects} />
+                    <Suspense
+                        fallback={
+                            <mesh>
+                                <boxBufferGeometry attach="geometry" args={[0.5, 0.5, 0.5]} />
+                                <meshStandardMaterial attach="material" color="red" />
+                            </mesh>
+                        }
+                    >
+                        {objects.map(obj => {
+                            const { Component3d } = getDefinition(obj.type)
+                            return <Component3d key={obj.id} instance={obj} />
+                        })}
+                    </Suspense>
+                </group>
             </Canvas>
         </>
     )

@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useLoader, useFrame } from 'react-three-fiber'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { RenderComponentProps, Vector2 } from '../../types/types'
-import { AnimationMixer, Group } from 'three'
+import { AnimationMixer, Group, LoopOnce } from 'three'
 import { setInterval } from 'timers'
 import { useSpring, animated } from 'react-spring/three'
+import { timeInterval } from 'rxjs/operators'
 
 export const Player = (props: RenderComponentProps) => {
     return <AnimatieAsset {...props} url="robot_model.gltf" />
@@ -175,18 +176,22 @@ const AnimateSelfAsset = ({
         rot: [0, vectorToThree(rotation), 0],
     })
     const gltf = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/${url}`)
+
     const gltfScene = gltf.scene.clone()
+    // useEffect(() => {
     if (castShadow) gltfScene.children[0].castShadow = true
     if (receiveShadow) gltfScene.children[0].receiveShadow = true
 
     gltfScene.scale.set(0.6, 0.6, 0.6)
 
     const mixer = new AnimationMixer(gltfScene)
+
     gltf.animations.forEach((clip, index) => {
         const animation = mixer.clipAction(clip, gltfScene.children[index])
-        animation.loop = 0
+        animation.setLoop(LoopOnce, 1)
         animation.play()
     })
+    // }, [xy])
     useFrame(() => {
         mixer.update(0.03)
     })

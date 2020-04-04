@@ -8,7 +8,7 @@ body {
     background-color: rgba(41, 103, 144, 1);
     /* https://codepen.io/mattyfours/pen/xNGdyO */
     background: radial-gradient(circle at 92% 16%, rgba(41, 103, 144, 1), rgba(41, 103, 144, 0) 70%),
-        radial-gradient(circle at 10% 10%, rgba(139, 76, 107, 1), rgba(139, 76, 107, 1) 70%),
+        radial-gradient(circle at 10% 10%, rgba(139, 76, 107, 1), #dbab93 70%),
         radial-gradient(circle at 41% 23%, rgba(94, 179, 220, 1), rgba(94, 179, 220, 0) 70%),
         radial-gradient(circle at 71% 79%, rgba(58, 141, 194, 1), rgba(58, 141, 194, 1) 70%),
         radial-gradient(circle at 22% 81%, rgba(200, 106, 111, 1), rgba(200, 107, 111, 1) 70%);

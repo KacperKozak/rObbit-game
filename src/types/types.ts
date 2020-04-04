@@ -13,7 +13,6 @@ export enum ObjectTypes {
     RockFloor = 'RockFloor',
     Box = 'Box',
     BigRock = 'BigRock',
-
     Fence = 'Fence',
 
     Button = 'Button',
