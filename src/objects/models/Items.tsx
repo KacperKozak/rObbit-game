@@ -14,6 +14,10 @@ export const Rock = (props: RenderComponentProps) => {
     return <Asset {...props} url="rock1.gltf" />
 }
 
+export const Fence = (props: RenderComponentProps) => {
+    return <Asset {...props} url="fence.gltf" />
+}
+
 export const Arrow = (props: RenderComponentProps) => {
     return <Asset {...props} url="arrow.gltf" />
 }

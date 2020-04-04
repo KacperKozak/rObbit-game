@@ -24,6 +24,7 @@ const propDict = {
     2: ObjectTypes.BigRock,
     3: ObjectTypes.Cannon,
     4: ObjectTypes.Crossbow,
+    5: ObjectTypes.Fence,
 }
 
 // prettier-ignore
@@ -31,7 +32,7 @@ const propsBitmap = [
     [0,0,0,4,0,0,0,],
     [0,1,0,0,0,0,0,],
     [0,3,0,0,0,0,0,],
-    [0,2,0,0,0,0,2,],
+    [0,2,5,5,0,0,2,],
     [0,0,0,0,0,0,0,],
 ]
 
