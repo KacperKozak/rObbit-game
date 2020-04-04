@@ -44,7 +44,7 @@ export const Crossbow = (props: RenderComponentProps) => {
 }
 
 export const Ground = (props: RenderComponentProps) => {
-    return <Asset {...props} url="rock.gltf" castShadow={false} receiveShadow={true} />
+    return <Asset {...props} url="rock.gltf" castShadow={true} receiveShadow={true} />
 }
 
 export const Grass = (props: RenderComponentProps) => {

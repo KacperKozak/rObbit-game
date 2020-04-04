@@ -1,5 +1,5 @@
-import React, { Suspense, useRef, useEffect } from 'react'
-import { Canvas, Camera, useThree } from 'react-three-fiber'
+import React, { Suspense, useEffect } from 'react'
+import { Canvas } from 'react-three-fiber'
 import { PCFSoftShadowMap } from 'three'
 import { useEditor } from '../hooks/useEditor'
 import { useGame } from '../hooks/useGame'
@@ -12,10 +12,11 @@ import map1 from '../data/map1.json'
 import map2 from '../data/map2.json'
 import { ObjectInstance } from '../types/types'
 import { CAMERA_OFFSET } from '../config'
+import { maps } from '../data/maps'
 
 export const GameInstance = () => {
-    const { objects, move, equip, fire, loadMap, reset } = useGame()
-
+    const { objects, mapId, mapName, move, equip, fire, loadMap, reset } = useGame()
+    // a ja szukam jakiegos objaect map :(
     const { editMode, toggleEditMode } = useEditor()
     useKeyboardEvent('e', toggleEditMode)
 
@@ -24,11 +25,6 @@ export const GameInstance = () => {
     const down = () => move(DOWN)
     const right = () => move(RIGHT)
 
-    const loadMap1 = () => loadMap(map1 as ObjectInstance[])
-    const loadMap2 = () => loadMap(map2 as ObjectInstance[])
-
-    useKeyboardEvent('1', loadMap1)
-    useKeyboardEvent('2', loadMap2)
     useKeyboardEvent('r', reset)
 
     useKeyboardEvent('ArrowLeft', left)
@@ -38,18 +34,46 @@ export const GameInstance = () => {
     useKeyboardEvent('Enter', equip)
     useKeyboardEvent(' ', fire)
 
-    const { scene, camera } = useThree()
-
     let mapCenter = [0, 0]
     objects.forEach(el => {
         if (el.xy[0] > mapCenter[0]) mapCenter[0] = el.xy[0]
         if (el.xy[1] > mapCenter[1]) mapCenter[1] = el.xy[0]
     })
     mapCenter = mapCenter.map(el => el / 2)
+    // TODO remove when menu will be added
+    useEffect(() => {
+        loadMap(maps[0])
+    }, [])
 
     return (
         <>
             {editMode && <DebugView objects={objects} />}
+            <div
+                style={{
+                    position: 'absolute',
+                    zIndex: 5,
+                    top: 0,
+                    left: 0,
+                }}
+            >
+                {maps.map(map => (
+                    <button key={map.id} onClick={() => loadMap(map)}>
+                        Map {map.name}
+                    </button>
+                ))}
+            </div>
+            {mapName && (
+                <div
+                    style={{
+                        position: 'absolute',
+                        zIndex: 5,
+                        top: 0,
+                        right: 10,
+                    }}
+                >
+                    <h1>Map: {mapName}</h1>
+                </div>
+            )}
             <div
                 style={{
                     position: 'absolute',
@@ -78,43 +102,39 @@ export const GameInstance = () => {
                 <button onClick={fire}>
                     Fire <small>{'[space]'}</small>
                 </button>
-                <button onClick={equip}>
+                <button onClick={reset}>
                     Restart <small>{`[R]`}</small>
                 </button>
-                <button onClick={loadMap1}>
-                    Map 1 <small>{`[1]`}</small>
-                </button>
-                <button onClick={loadMap2}>
-                    Map 2 <small>{`[2]`}</small>
-                </button>
             </div>
-            <Canvas
-                // orthographic
-                camera={{
-                    zoom: 20,
-                }}
-                onCreated={scene => {
-                    scene.gl.shadowMap.type = PCFSoftShadowMap
-                    scene.gl.shadowMap.enabled = true
-                }}
-            >
-                <group>
-                    <Environment objectsList={objects} />
-                    <Suspense
-                        fallback={
-                            <mesh>
-                                <boxBufferGeometry attach="geometry" args={[0.5, 0.5, 0.5]} />
-                                <meshStandardMaterial attach="material" color="red" />
-                            </mesh>
-                        }
-                    >
-                        {objects.map(obj => {
-                            const { Component3d } = getDefinition(obj.type)
-                            return <Component3d key={obj.id} instance={obj} />
-                        })}
-                    </Suspense>
-                </group>
-            </Canvas>
+            {mapId && (
+                <Canvas
+                    // orthographic
+                    camera={{
+                        zoom: 20,
+                    }}
+                    onCreated={scene => {
+                        scene.gl.shadowMap.type = PCFSoftShadowMap
+                        scene.gl.shadowMap.enabled = true
+                    }}
+                >
+                    <group>
+                        <Environment objectsList={objects} mapId={mapId} />
+                        <Suspense
+                            fallback={
+                                <mesh>
+                                    <boxBufferGeometry attach="geometry" args={[0.5, 0.5, 0.5]} />
+                                    <meshStandardMaterial attach="material" color="red" />
+                                </mesh>
+                            }
+                        >
+                            {objects.map(obj => {
+                                const { Component3d } = getDefinition(obj.type)
+                                return <Component3d key={obj.id} instance={obj} />
+                            })}
+                        </Suspense>
+                    </group>
+                </Canvas>
+            )}
         </>
     )
 }

@@ -2,7 +2,7 @@ import { uniqueId } from 'lodash'
 import { Action } from 'redux'
 import actionCreatorFactory from 'typescript-fsa'
 import { reducerWithInitialState } from 'typescript-fsa-reducers'
-import { PROJECTILE_ELEVATION } from '../config'
+import { PROJECTILE_ELEVATION, FALL_ELEVATION } from '../config'
 import { arrMerge, findById, findByXY } from '../helpers'
 import { createMap } from '../mocks/mapMock'
 import { getDefinition } from '../objects/definitions'
@@ -13,6 +13,7 @@ import {
     ObjectTypes,
     Vector2,
     XY,
+    MapData,
 } from '../types/types'
 import { flyResolver } from './resolvers/flyResolver'
 import { moveResolver } from './resolvers/moveResolver'
@@ -22,6 +23,8 @@ import { ResolverResults } from './resolvers/types'
 export interface GameState {
     queueStared: boolean
     queue: Action[]
+    mapId: string | null
+    mapName: string | null
     objects: ObjectInstance[]
     cleanObjectsState: ObjectInstance[]
 }
@@ -30,44 +33,50 @@ export interface GameStateAware {
     game: GameState
 }
 
-const mockObjects = createMap()
+// const mockObjects = createMap()
 
 export const initialState: GameState = {
     queueStared: false,
     queue: [],
-    objects: mockObjects,
-    cleanObjectsState: mockObjects,
+    mapId: null,
+    mapName: null,
+    objects: [],
+    cleanObjectsState: [],
 }
 
-const action = actionCreatorFactory('GAME')
+const gameAction = actionCreatorFactory('GG')
+const queueAction = actionCreatorFactory('QUEUE')
 
-export const loadMap = action<ObjectInstance[]>('LOAD_MAP')
-export const reset = action('RESET')
-export const win = action('WIN')
+export const loadMap = gameAction<MapData>('LOAD_MAP')
+export const reset = gameAction('RESET')
+export const win = gameAction('WIN')
+export const lose = gameAction('LOSE')
 
-export const enqueue = action<Action | Action[]>('ENQUEUE')
-export const tryNextAction = action('TRY_NEXT_ACTION')
-export const nextAction = action<Action>('NEXT_ACTION')
-export const queueEnd = action('QUEUE_END')
+export const enqueue = queueAction<Action | Action[]>('ENQUEUE')
+export const tryNextAction = queueAction('TRY_NEXT_ACTION')
+export const nextAction = queueAction<Action>('NEXT_ACTION')
+export const queueEnd = queueAction('QUEUE_END')
+export const enqueueAfter = queueAction<{ actions: Action[]; timeout: number }>('ENQUEUE_AFTER')
 
-export const move = action<{ targetId: string; vector: Vector2 }>('MOVE')
-export const rotate = action<{ targetId: string; rotation: Vector2 }>('ROTATE')
-export const equip = action<{ targetId: string }>('EQUIP')
+export const move = gameAction<{ targetId: string; vector: Vector2 }>('MOVE')
+export const rotate = gameAction<{ targetId: string; rotation: Vector2 }>('ROTATE')
+export const equip = gameAction<{ targetId: string }>('EQUIP')
+export const fall = gameAction<{ targetId: string }>('FALL')
 
-export const projectile = action<{ instance: ObjectInstance; byId: string }>('PROJECTILE')
-export const fly = action<{ targetId: string }>('FLY')
-export const flyEnd = action<{ targetId: string; hitTargetId?: string }>('FLY_END')
+export const projectile = gameAction<{ instance: ObjectInstance; byId: string }>('PROJECTILE')
+export const fly = gameAction<{ targetId: string }>('FLY')
+export const flyEnd = gameAction<{ targetId: string; hitTargetId?: string }>('FLY_END')
 
-export const updateObject = action<{
+export const updateObject = gameAction<{
     targetId: string
     objectValues: Partial<ObjectInstance>
 }>('UPDATE_OBJECT')
-export const setObjectData = action<{
+export const setObjectData = gameAction<{
     targetId: string
     data: Partial<ObjectInstanceData>
 }>('SET_OBJECT_DATA')
-export const remove = action<string>('REMOVE')
-export const tmpSpawn = action<{ instance: ObjectInstance }>('TMP_SPAWN')
+export const remove = gameAction<string>('REMOVE')
+export const tmpSpawn = gameAction<{ instance: ObjectInstance }>('TMP_SPAWN')
 
 export const gameReducer = reducerWithInitialState(initialState)
     /*
@@ -75,15 +84,20 @@ export const gameReducer = reducerWithInitialState(initialState)
      */
     .case(
         loadMap,
-        (state, objects): GameState => ({
+        (state, { id, name, objects }): GameState => ({
             ...initialState,
+            mapId: id,
+            mapName: name,
             objects,
+            cleanObjectsState: objects,
         }),
     )
-    .case(
-        reset,
+    .cases(
+        [reset, lose],
         (state): GameState => ({
-            ...initialState,
+            ...state,
+            queue: [],
+            queueStared: false,
             objects: state.cleanObjectsState,
             cleanObjectsState: state.cleanObjectsState,
         }),
@@ -205,6 +219,17 @@ export const gameReducer = reducerWithInitialState(initialState)
                 ...state,
                 objects: state.objects.map(obj =>
                     obj.id === targetId ? { ...obj, ...objectValues } : obj,
+                ),
+            }
+        },
+    )
+    .case(
+        fall,
+        (state, { targetId }): GameState => {
+            return {
+                ...state,
+                objects: state.objects.map(obj =>
+                    obj.id === targetId ? { ...obj, elevation: FALL_ELEVATION } : obj,
                 ),
             }
         },

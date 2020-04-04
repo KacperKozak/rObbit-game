@@ -8,11 +8,12 @@ import { CAMERA_OFFSET } from '../config'
 const d = 5
 
 interface EnvironmentProps {
-    // player: ObjectInstance
+    // player: ObjectInstance,
+    mapId: string | null
     objectsList: ObjectInstance[]
 }
 
-export const Environment = ({ objectsList }: EnvironmentProps) => {
+export const Environment = ({ objectsList, mapId }: EnvironmentProps) => {
     // { player }: EnvironmentProps
 
     const { scene, camera, size } = useThree()
@@ -48,7 +49,7 @@ export const Environment = ({ objectsList }: EnvironmentProps) => {
         camera.position.set(mapCenterX + offsetX, offsetZ, mapCenterY + offsetY)
         camera.lookAt(mapCenterX, 0, mapCenterY)
         // camera.zoom = 200
-    }) // bez to odpali się za każdym razem… zostaw // TODO żeby to później ogarnąć
+    }, [mapId]) // a co się jeszcze zmienia po za mapId? Moze `size`?
 
     return (
         <group>

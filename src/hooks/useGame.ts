@@ -15,7 +15,7 @@ import {
     reset,
 } from '../state/gameReducer'
 import { PLAYER_ID } from '../types/consts'
-import { ObjectInstance, ObjectTypes, Vector2 } from '../types/types'
+import { ObjectInstance, ObjectTypes, Vector2, MapData } from '../types/types'
 
 export const useGame = () => {
     const state = useSelector((state: GameStateAware) => state.game)
@@ -85,8 +85,8 @@ export const useGame = () => {
         dispatch(enqueue(projectile({ byId: id, instance })))
     }
 
-    const triggerLoadMap = (object: ObjectInstance[]) => {
-        dispatch(loadMap(object))
+    const triggerLoadMap = (map: MapData) => {
+        dispatch(loadMap(map))
     }
 
     const triggerReset = () => {
