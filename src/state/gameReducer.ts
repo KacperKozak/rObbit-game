@@ -2,7 +2,7 @@ import { uniqueId } from 'lodash'
 import { Action } from 'redux'
 import actionCreatorFactory from 'typescript-fsa'
 import { reducerWithInitialState } from 'typescript-fsa-reducers'
-import { PROJECTILE_ELEVATION } from '../config'
+import { PROJECTILE_ELEVATION, FALL_ELEVATION } from '../config'
 import { arrMerge, findById, findByXY } from '../helpers'
 import { createMap } from '../mocks/mapMock'
 import { getDefinition } from '../objects/definitions'
@@ -44,15 +44,18 @@ const action = actionCreatorFactory('GAME')
 export const loadMap = action<ObjectInstance[]>('LOAD_MAP')
 export const reset = action('RESET')
 export const win = action('WIN')
+export const lose = action('LOSE')
 
 export const enqueue = action<Action | Action[]>('ENQUEUE')
 export const tryNextAction = action('TRY_NEXT_ACTION')
 export const nextAction = action<Action>('NEXT_ACTION')
 export const queueEnd = action('QUEUE_END')
+export const enqueueAfter = action<{ actions: Action[]; timeout: number }>('ENQUEUE_AFTER')
 
 export const move = action<{ targetId: string; vector: Vector2 }>('MOVE')
 export const rotate = action<{ targetId: string; rotation: Vector2 }>('ROTATE')
 export const equip = action<{ targetId: string }>('EQUIP')
+export const fall = action<{ targetId: string }>('FALL')
 
 export const projectile = action<{ instance: ObjectInstance; byId: string }>('PROJECTILE')
 export const fly = action<{ targetId: string }>('FLY')
@@ -80,8 +83,8 @@ export const gameReducer = reducerWithInitialState(initialState)
             objects,
         }),
     )
-    .case(
-        reset,
+    .cases(
+        [reset, lose],
         (state): GameState => ({
             ...initialState,
             objects: state.cleanObjectsState,
@@ -90,6 +93,12 @@ export const gameReducer = reducerWithInitialState(initialState)
     )
     .case(
         win,
+        (state): GameState => ({
+            ...initialState,
+        }),
+    )
+    .case(
+        lose,
         (state): GameState => ({
             ...initialState,
         }),
@@ -205,6 +214,17 @@ export const gameReducer = reducerWithInitialState(initialState)
                 ...state,
                 objects: state.objects.map(obj =>
                     obj.id === targetId ? { ...obj, ...objectValues } : obj,
+                ),
+            }
+        },
+    )
+    .case(
+        fall,
+        (state, { targetId }): GameState => {
+            return {
+                ...state,
+                objects: state.objects.map(obj =>
+                    obj.id === targetId ? { ...obj, elevation: FALL_ELEVATION } : obj,
                 ),
             }
         },
