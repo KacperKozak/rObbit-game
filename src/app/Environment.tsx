@@ -14,17 +14,9 @@ interface EnvironmentProps {
 }
 
 export const Environment = ({ objectsList, mapId }: EnvironmentProps) => {
-    // { player }: EnvironmentProps
-
-    const { scene, camera, size } = useThree()
+    const { camera, size } = useThree()
 
     useEffect(() => {
-        //     console.log('camera', camera)
-        //     console.log('size', size)
-
-        //     camera.lookAt(player.xy[0], 1, player.xy[1])
-        //     camera.position.set(player.xy[0] - 2, 7, player.xy[1] + 5)
-
         const xValues = objectsList.map(obj => obj.xy[0])
         const yValues = objectsList.map(obj => obj.xy[1])
 
@@ -44,12 +36,9 @@ export const Environment = ({ objectsList, mapId }: EnvironmentProps) => {
             (size.width / size.height) /
             0.9
 
-        console.log(offsetX, offsetY, offsetZ, mapCenterX + mapCenterY)
-
         camera.position.set(mapCenterX + offsetX, offsetZ, mapCenterY + offsetY)
         camera.lookAt(mapCenterX, 0, mapCenterY)
-        // camera.zoom = 200
-    }, [mapId]) // a co się jeszcze zmienia po za mapId? Moze `size`?
+    }, [mapId, size])
 
     return (
         <group>
