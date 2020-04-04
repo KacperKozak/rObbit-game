@@ -11,7 +11,7 @@ import { Environment } from './Environment'
 import { findById } from '../helpers'
 
 export const GameInstance = () => {
-    const { objects, move, equip, fire } = useGame()
+    const { objects, move, equip, fire, player } = useGame()
 
     const { editMode, toggleEditMode } = useEditor()
     useKeyboardEvent('e', toggleEditMode)
@@ -41,12 +41,24 @@ export const GameInstance = () => {
                     textAlign: 'center',
                 }}
             >
-                <button onClick={left}>←</button>
-                <button onClick={up}>↑</button>
-                <button onClick={down}>↓</button>
-                <button onClick={right}>→</button>
-                <button onClick={equip}>equip</button>
-                <button onClick={fire}>fire</button>
+                <button onClick={left}>
+                    <strong>←</strong>
+                </button>
+                <button onClick={up}>
+                    <strong>↑</strong>
+                </button>
+                <button onClick={down}>
+                    <strong>↓</strong>
+                </button>
+                <button onClick={right}>
+                    <strong>→</strong>
+                </button>
+                <button onClick={equip}>
+                    equip <small>{`[enter]`}</small>
+                </button>
+                <button onClick={fire}>
+                    fire <small>{'[space]'}</small>
+                </button>
             </div>
             <Canvas
                 orthographic

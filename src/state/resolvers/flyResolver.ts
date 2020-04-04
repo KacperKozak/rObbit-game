@@ -58,5 +58,5 @@ export const flyResolver = (state: GameState, targetId: string): ResolverResults
 
 const isTooHight = (ontoObj: ObjectInstance, flyer: ObjectInstance) => {
     const objDef = getDefinition(ontoObj.type)
-    return ontoObj.elevation + objDef.height > flyer.elevation
+    return ontoObj.elevation + objDef.height(ontoObj) > flyer.elevation
 }

@@ -2,9 +2,21 @@ import React from 'react'
 import { playEquip, play } from '../audio/play'
 import { move, remove, setObjectData, tmpSpawn } from '../state/gameReducer'
 import { ObjectDefinition, ObjectTypes } from '../types/types'
-import { Cannon, Crossbow, Player, Rock, Rocket, Boom, Fence, Arrow, Box } from './models/Items'
+import {
+    Cannon,
+    Crossbow,
+    Player,
+    Rock,
+    Rocket,
+    Box,
+    Boom,
+    Fence,
+    Arrow,
+    Button,
+} from './models/Items'
 import { reverseVector } from '../helpers'
-import { uniqueId } from 'lodash'
+import { uniqueId, sample } from 'lodash'
+import { PLAYER_ID } from '../types/consts'
 
 const propDebugComponent = (color: string) => ({ instance, children }: any) => {
     return (
@@ -27,20 +39,20 @@ const propDebugComponent = (color: string) => ({ instance, children }: any) => {
 export const propTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>> = {
     [ObjectTypes.Player]: {
         name: 'Player',
-        height: 2,
+        height: () => 2,
         Component: propDebugComponent('white'),
         Component3d: Player,
     },
 
     [ObjectTypes.BigRock]: {
         name: 'Big rock',
-        height: 0.55,
+        height: () => 0.55,
         Component: propDebugComponent('gray'),
         Component3d: Rock,
     },
     [ObjectTypes.Box]: {
         name: 'Box',
-        height: 1,
+        height: () => 1,
         push: ({ self, vector }) => [move({ targetId: self.id, vector })],
         Component: propDebugComponent('brown'),
         Component3d: Box,
@@ -48,7 +60,7 @@ export const propTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
 
     [ObjectTypes.Fence]: {
         name: 'Fence',
-        height: 1.5,
+        height: () => 1.5,
         push: ({ force, self }) => {
             if (force && force >= 50) return [remove(self.id)]
             return []
@@ -57,9 +69,42 @@ export const propTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
         Component3d: Fence,
     },
 
+    [ObjectTypes.Button]: {
+        name: 'Button',
+        height: () => 2,
+        push: ({ state, self }) => {
+            play('button')
+            if (!self.data.targetId) {
+                console.warn('Missing Button data.targetId')
+                return []
+            }
+            const toggle = !self.data.open
+            return [
+                setObjectData({ targetId: self.id, data: { open: toggle } }),
+                setObjectData({ targetId: self.data.targetId, data: { open: toggle } }),
+            ]
+        },
+        Component: propDebugComponent('blue'),
+        Component3d: Fence,
+    },
+
+    [ObjectTypes.Dor]: {
+        name: 'Dor',
+        height: instance => {
+            console.log('instance', instance)
+            return instance.data.open ? 0 : 1.5
+        },
+        push: ({ force, self }) => {
+            if (force && force >= 50) return [remove(self.id)]
+            return []
+        },
+        Component: propDebugComponent('purple'),
+        Component3d: Fence,
+    },
+
     [ObjectTypes.Cannon]: {
         name: 'Cannon',
-        height: 0,
+        height: () => 0,
         equip: ({ who, self }) => {
             playEquip(0.8)
             return [setObjectData({ targetId: who.id, data: { gun: 'cannon' } }), remove(self.id)]
@@ -70,14 +115,14 @@ export const propTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
 
     [ObjectTypes.Boom]: {
         name: 'Boom',
-        height: 0,
+        height: () => 0,
         Component: propDebugComponent('yellow'),
         Component3d: Boom,
     },
 
     [ObjectTypes.Crossbow]: {
         name: 'Crossbow',
-        height: 0,
+        height: () => 0,
         equip: ({ who, self }) => {
             playEquip(0.8)
             return [setObjectData({ targetId: who.id, data: { gun: 'crossbow' } }), remove(self.id)]
@@ -88,7 +133,7 @@ export const propTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
 
     [ObjectTypes.RocketProjectile]: {
         name: 'RocketProjectile',
-        height: 0,
+        height: () => 0,
         projectileLaunch: ({ who }) => {
             play('Bazooka')
             return [
@@ -126,7 +171,7 @@ export const propTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
 
     [ObjectTypes.CrossbowProjectile]: {
         name: 'Projectile',
-        height: 0,
+        height: () => 0,
         projectileLaunch: ({ who }) => {
             play('Crossbow')
             return [

@@ -13,16 +13,17 @@ export enum ObjectTypes {
     Box = 'Box',
     BigRock = 'BigRock',
 
-    Ice = 'Ice',
+    Fence = 'Fence',
 
     Button = 'Button',
+    Dor = 'Dor',
+    Ice = 'Ice',
 
     Crossbow = 'Crossbow',
     Cannon = 'Cannon',
-    Fence = 'Fence',
     Boom = 'Boom',
 
-    CrossbowProjectile = 'CrossbowProjectile', // TODO remove
+    CrossbowProjectile = 'CrossbowProjectile',
     RocketProjectile = 'RocketProjectile',
 }
 
@@ -40,6 +41,8 @@ export interface ObjectInstance {
 export interface ObjectInstanceData {
     gun: 'cannon' | 'crossbow'
     info: string
+    open: boolean
+    targetId: string
 }
 
 export interface ActionEvent {
@@ -53,7 +56,7 @@ export interface ActionEvent {
 
 export interface ObjectDefinition {
     name: string
-    height: number
+    height: (instance: ObjectInstance) => number
     push?(event: ActionEvent): Action[] // triggered when elevation is to big
     enter?(event: ActionEvent): Action[]
     leave?(event: ActionEvent): Action[]

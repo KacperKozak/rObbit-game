@@ -8,26 +8,26 @@ import { enqueue, equip, GameStateAware, move, projectile, rotate } from '../sta
 import { PLAYER_ID } from '../types/consts'
 import { ObjectInstance, ObjectTypes, Vector2 } from '../types/types'
 
-const targetId = PLAYER_ID
-
 export const useGame = () => {
     const state = useSelector((state: GameStateAware) => state.game)
     const dispatch = useDispatch()
+    const player = findById(state.objects, PLAYER_ID)!
+
+    if (!player) console.warn(`Player don't exists`)
 
     const triggerMove = (vector: Vector2) => {
         if (state.queueStared) return
 
         const actions: Action[] = []
-        const who = findById(state.objects, targetId)
 
-        if (!who) {
-            return console.warn(`Player don't exists [${targetId}]`)
+        if (!player) {
+            return console.warn(`Player don't exists`)
         }
 
-        if (!isEqual(who.rotation, vector)) {
-            actions.push(rotate({ targetId, rotation: vector }))
+        if (!isEqual(player.rotation, vector)) {
+            actions.push(rotate({ targetId: player.id, rotation: vector }))
         } else {
-            actions.push(move({ targetId, vector }))
+            actions.push(move({ targetId: player.id, vector }))
         }
 
         dispatch(enqueue(actions))
@@ -35,12 +35,12 @@ export const useGame = () => {
 
     const triggerEquip = () => {
         if (state.queueStared) return
-        dispatch(enqueue(equip({ targetId })))
+        dispatch(enqueue(equip({ targetId: player.id })))
     }
 
     const triggerFire = () => {
         if (state.queueStared) return
-        const { id, xy, rotation, elevation, data } = findById(state.objects, targetId)!
+        const { id, xy, rotation, elevation, data } = player
 
         if (!data?.gun) {
             play('Alert_NO')
@@ -76,5 +76,5 @@ export const useGame = () => {
         dispatch(enqueue(projectile({ byId: id, instance })))
     }
 
-    return { ...state, move: triggerMove, equip: triggerEquip, fire: triggerFire }
+    return { ...state, player, move: triggerMove, equip: triggerEquip, fire: triggerFire }
 }
