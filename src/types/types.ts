@@ -13,6 +13,7 @@ export enum ObjectTypes {
     Player = 'Player',
     BigRock = 'BigRock',
     Cannon = 'Cannon',
+    Crossbow = 'Crossbow',
 }
 
 export interface ObjectInstance {
@@ -27,7 +28,7 @@ export interface ObjectInstance {
 }
 
 export interface ObjectInstanceData {
-    gun: 'cannon'
+    gun: 'cannon' | 'crossbow'
     info: string
 }
 

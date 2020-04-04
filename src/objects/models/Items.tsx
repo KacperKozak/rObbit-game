@@ -14,7 +14,10 @@ export const Rock = (props: RenderComponentProps) => {
     return <Asset {...props} url="rock1.gltf" />
 }
 export const Cannon = (props: RenderComponentProps) => {
-    return <Asset {...props} url="rakietnica_srednia_014.gltf" elevationFix={-0.8} />
+    return <Asset {...props} url="rakietnica_srednia.gltf" elevationFix={-0.8} />
+}
+export const Crossbow = (props: RenderComponentProps) => {
+    return <Asset {...props} url="kusza.gltf" elevationFix={-0.8} />
 }
 
 export const Ground = (props: RenderComponentProps) => {
@@ -92,39 +95,36 @@ const AnimatieAsset = ({
     })
 
     const gltf = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/${url}`)
+    gltf.scene.scale.set(0.5, 0.5, 0.5)
+    if (castShadow) gltf.scene.children[0].castShadow = true
+    if (receiveShadow) gltf.scene.children[0].receiveShadow = true
+
     // const gltfanimation = useLoader(GLTFLoader, `/assets/animations/jump.gltf`)
     // const gltfanimation = useLoader(GLTFLoader, `/assets/animations/move.gltf`)
     const gltfanimation = useLoader(
         GLTFLoader,
         `${process.env.PUBLIC_URL}/assets/animations/boring.gltf`,
     )
-    const cannonInHead = useLoader(
-        GLTFLoader,
-        `${process.env.PUBLIC_URL}/assets/rakietnica_srednia_014.gltf`,
-    )
-    const cannonInHeadScene = cannonInHead.scene.clone()
-
-    if (castShadow) gltf.scene.children[0].castShadow = true
-    if (receiveShadow) gltf.scene.children[0].receiveShadow = true
-    gltf.scene.scale.set(0.5, 0.5, 0.5)
     const mixer = new AnimationMixer(gltfanimation.scene)
     gltfanimation.animations.forEach(clip => {
         mixer.clipAction(clip, gltf.scene).play()
     })
+    useFrame(() => mixer.update(0.02))
 
-    useFrame(() => {
-        // console.log(mixer)
-        mixer.update(0.02)
-        // mixer.time = 5
-    })
+    const cannonInHead = useLoader(
+        GLTFLoader,
+        `${process.env.PUBLIC_URL}/assets/rakietnica_srednia.gltf`,
+    )
+    const cannonInHeadScene = cannonInHead.scene.clone()
 
-    if (data.gun) {
-    }
+    const crossbowInHead = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/kusza.gltf`)
+    const crossbowInHeadScene = crossbowInHead.scene.clone()
 
     return (
         <animated.group position={anim.pos} rotation={anim.rot}>
             <primitive object={gltf.scene}>
-                <primitive object={cannonInHeadScene} visible={!!data.gun} />
+                <primitive object={cannonInHeadScene} visible={data.gun == 'cannon'} />
+                <primitive object={crossbowInHeadScene} visible={data.gun == 'crossbow'} />
             </primitive>
         </animated.group>
     )

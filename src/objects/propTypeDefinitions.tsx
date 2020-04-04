@@ -3,7 +3,7 @@ import React from 'react'
 import { remove, setObjectData, move } from '../state/gameReducer'
 import { PLAYER_ID } from '../types/consts'
 import { ObjectDefinition, ObjectTypes } from '../types/types'
-import { Rock, Player, Cannon } from './models/Items'
+import { Rock, Player, Cannon, Crossbow } from './models/Items'
 import { play, playEquip } from '../audio/play'
 
 const propDebugComponent = (color: string) => ({ instance, children }: any) => {
@@ -52,5 +52,16 @@ export const propTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
         },
         Component: propDebugComponent('red'),
         Component3d: Cannon,
+    },
+    [ObjectTypes.Crossbow]: {
+        name: 'Crossbow',
+        height: 0,
+        getId: () => uniqueId('Crossbow'),
+        equip: ({ who, self }) => {
+            playEquip(0.8)
+            return [setObjectData({ targetId: who.id, data: { gun: 'crossbow' } }), remove(self.id)]
+        },
+        Component: propDebugComponent('red'),
+        Component3d: Crossbow,
     },
 }
