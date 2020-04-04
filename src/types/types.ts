@@ -12,16 +12,17 @@ export enum ObjectTypes {
     RockFloor = 'RockFloor',
     BigRock = 'BigRock',
 
-    Ice = 'Ice',
+    Fence = 'Fence',
 
     Button = 'Button',
+    Dor = 'Dor',
+    Ice = 'Ice',
 
     Crossbow = 'Crossbow',
     Cannon = 'Cannon',
-    Fence = 'Fence',
     Boom = 'Boom',
 
-    CrossbowProjectile = 'CrossbowProjectile', // TODO remove
+    CrossbowProjectile = 'CrossbowProjectile',
     RocketProjectile = 'RocketProjectile',
 }
 

@@ -51,6 +51,17 @@ export const propTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
         Component3d: Fence,
     },
 
+    [ObjectTypes.Dor]: {
+        name: 'Dor',
+        height: 1.5,
+        push: ({ force, self }) => {
+            if (force && force >= 50) return [remove(self.id)]
+            return []
+        },
+        Component: propDebugComponent('purple'),
+        Component3d: Fence,
+    },
+
     [ObjectTypes.Cannon]: {
         name: 'Cannon',
         height: 0,

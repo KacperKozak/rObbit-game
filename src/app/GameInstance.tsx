@@ -5,12 +5,13 @@ import { useEditor } from '../hooks/useEditor'
 import { useGame } from '../hooks/useGame'
 import { useKeyboardEvent } from '../hooks/useKeyboardEvent'
 import { getDefinition } from '../objects/definitions'
-import { DOWN, LEFT, RIGHT, UP } from '../types/consts'
+import { DOWN, LEFT, RIGHT, UP, PLAYER_ID } from '../types/consts'
 import { DebugView } from './DebugView'
 import { Environment } from './Environment'
+import { findById } from '../helpers'
 
 export const GameInstance = () => {
-    const { objects, move, equip, fire } = useGame()
+    const { objects, move, equip, fire, player } = useGame()
 
     const { editMode, toggleEditMode } = useEditor()
     useKeyboardEvent('e', toggleEditMode)
