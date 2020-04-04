@@ -1,6 +1,7 @@
 import React, { Suspense } from 'react'
 import { Canvas } from 'react-three-fiber'
 import { PCFSoftShadowMap } from 'three'
+import { useEditor } from '../hooks/useEditor'
 import { useGame } from '../hooks/useGame'
 import { useKeyboardEvent } from '../hooks/useKeyboardEvent'
 import { getDefinition } from '../objects/definitions'
@@ -10,6 +11,9 @@ import { Environment } from './Environment'
 
 export const GameInstance = () => {
     const { objects, move, equip, fire } = useGame()
+
+    const { editMode, toggleEditMode } = useEditor()
+    useKeyboardEvent('e', toggleEditMode)
 
     const left = () => move(LEFT)
     const up = () => move(UP)
@@ -25,7 +29,7 @@ export const GameInstance = () => {
 
     return (
         <>
-            <DebugView objects={objects} />
+            {editMode && <DebugView objects={objects} />}
             <div
                 style={{
                     position: 'absolute',
