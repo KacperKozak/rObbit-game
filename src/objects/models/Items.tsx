@@ -1,11 +1,29 @@
 import React, { useEffect } from 'react'
 import { useLoader, useFrame } from 'react-three-fiber'
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
+import { GLTFLoader, GLTF } from 'three/examples/jsm/loaders/GLTFLoader'
 import { RenderComponentProps, Vector2 } from '../../types/types'
 import { AnimationMixer, Group, LoopOnce } from 'three'
 import { setInterval } from 'timers'
 import { useSpring, animated } from 'react-spring/three'
 import { timeInterval } from 'rxjs/operators'
+
+const useMyLoader = () => {
+    const rocket = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/rocket.gltf`)
+    const cannon = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/cannon.gltf`)
+    const boom = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/boom.gltf`)
+    // robot_model: `${process.env.PUBLIC_URL}/assets/robot_model.gltf`,
+    // box: `${process.env.PUBLIC_URL}/assets/box.gltf`,
+    // rock1: `${process.env.PUBLIC_URL}/assets/rock1.gltf`,
+    // fence: `${process.env.PUBLIC_URL}/assets/fence.gltf`,
+    // arrow: `${process.env.PUBLIC_URL}/assets/arrow.gltf`,
+    // rakietnica_srednia: `${process.env.PUBLIC_URL}/assets/rakietnica_srednia.gltf`,
+    // rocket: `${process.env.PUBLIC_URL}/assets/rocket.gltf`,
+    // kusza: `${process.env.PUBLIC_URL}/assets/kusza.gltf`,
+    // wall: `${process.env.PUBLIC_URL}/assets/wall.gltf`,
+    // }
+
+    return { rocket: rocket.scene.clone(), cannon: cannon.scene.clone(), boom: boom.scene.clone() }
+}
 
 export const Player = (props: RenderComponentProps) => {
     return <AnimatieAsset {...props} url="robot_model.gltf" />
@@ -32,11 +50,19 @@ export const Boom = (props: RenderComponentProps) => {
 }
 
 export const Cannon = (props: RenderComponentProps) => {
-    return <Asset {...props} url="rakietnica_srednia.gltf" elevationFix={-0.8} />
+    // return <Asset {...props} url="rakietnica_srednia.gltf" elevationFix={-0.8} />
+
+    const { cannon } = useMyLoader()
+    return <AssetPreload {...props} model={cannon} />
 }
 
+// export const Rocket = (props: RenderComponentProps) => {
+//     return <Asset {...props} url="rocket.gltf" />
+// }
+
 export const Rocket = (props: RenderComponentProps) => {
-    return <Asset {...props} url="rocket.gltf" />
+    const { rocket } = useMyLoader()
+    return <AssetPreload {...props} model={rocket} />
 }
 
 export const Crossbow = (props: RenderComponentProps) => {
@@ -45,6 +71,9 @@ export const Crossbow = (props: RenderComponentProps) => {
 
 export const Ground = (props: RenderComponentProps) => {
     return <Asset {...props} url="rock.gltf" castShadow={true} receiveShadow={true} />
+}
+export const Wall = (props: RenderComponentProps) => {
+    return <Asset {...props} url="wall.gltf" castShadow={true} receiveShadow={true} />
 }
 
 export const Grass = (props: RenderComponentProps) => {
@@ -99,6 +128,13 @@ interface AssetProps extends RenderComponentProps {
     elevationFix?: number
 }
 
+interface PreloadAssetProps extends RenderComponentProps {
+    model: GLTF['scene']
+    color?: string
+    castShadow?: boolean
+    receiveShadow?: boolean
+    elevationFix?: number
+}
 const Asset = ({
     url,
     instance: { xy, elevation, rotation },
@@ -116,6 +152,24 @@ const Asset = ({
     if (receiveShadow) scene.children[0].receiveShadow = true
     scene.scale.set(0.5, 0.5, 0.5)
     return <animated.primitive object={scene} position={anim.pos} rotation={anim.rot} />
+}
+
+const AssetPreload = ({
+    model,
+    instance: { xy, elevation, rotation },
+    castShadow = true,
+    receiveShadow = true,
+    elevationFix = 0,
+}: PreloadAssetProps) => {
+    const anim = useSpring({
+        pos: [xy[0], elevation + elevationFix, xy[1]],
+        rot: [0, vectorToThree(rotation), 0],
+    })
+
+    if (castShadow) model.children[0].castShadow = true
+    if (receiveShadow) model.children[0].receiveShadow = true
+    model.scale.set(0.5, 0.5, 0.5)
+    return <animated.primitive object={model} position={anim.pos} rotation={anim.rot} />
 }
 
 const AnimatieAsset = ({
@@ -146,10 +200,7 @@ const AnimatieAsset = ({
     })
     useFrame(() => mixer.update(0.02))
 
-    const cannonInHead = useLoader(
-        GLTFLoader,
-        `${process.env.PUBLIC_URL}/assets/rakietnica_srednia.gltf`,
-    )
+    const cannonInHead = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/cannon.gltf`)
     const cannonInHeadScene = cannonInHead.scene.clone()
 
     const crossbowInHead = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/kusza.gltf`)

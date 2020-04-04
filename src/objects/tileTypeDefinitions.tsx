@@ -4,7 +4,7 @@ import { play } from '../audio/play'
 import { move, remove, setObjectData } from '../state/gameReducer'
 import { PLAYER_ID } from '../types/consts'
 import { ObjectDefinition, ObjectTypes } from '../types/types'
-import { Button, Grass, Ground, Ice } from './models/Items'
+import { Button, Grass, Ground, Ice, Wall } from './models/Items'
 
 const tileDebugComponent = (color: string) => (props: any) => (
     <div
@@ -28,7 +28,6 @@ export const tileTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
         Component: tileDebugComponent('lightblue'),
         Component3d: Ice,
     },
-
     [ObjectTypes.RockFloor]: {
         name: 'Rock floor',
         height: () => 0,
@@ -39,5 +38,16 @@ export const tileTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
         },
         Component: tileDebugComponent('gray'),
         Component3d: Ground,
+    },
+    [ObjectTypes.Wall]: {
+        name: 'Wall',
+        height: () => 0,
+        push: ({ force, self }) => {
+            // if (force && force >= 50) return [remove(self.id)]
+            // console.log(self)
+            return []
+        },
+        Component: tileDebugComponent('gray'),
+        Component3d: Wall,
     },
 }

@@ -11,6 +11,7 @@ export enum ObjectTypes {
 
     Grass = 'Grass',
     RockFloor = 'RockFloor',
+    Wall = 'Wall',
     Box = 'Box',
     BigRock = 'BigRock',
     Fence = 'Fence',
