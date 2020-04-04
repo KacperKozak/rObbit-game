@@ -2,7 +2,7 @@ import React from 'react'
 import { playEquip, play } from '../audio/play'
 import { move, remove, setObjectData } from '../state/gameReducer'
 import { ObjectDefinition, ObjectTypes } from '../types/types'
-import { Cannon, Crossbow, Player, Rock, Rocket } from './models/Items'
+import { Cannon, Crossbow, Player, Rock, Rocket, Boom } from './models/Items'
 import { reverseVector } from '../helpers'
 
 const propDebugComponent = (color: string) => ({ instance, children }: any) => {
@@ -49,6 +49,14 @@ export const propTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
         Component: propDebugComponent('red'),
         Component3d: Cannon,
     },
+
+    [ObjectTypes.Boom]: {
+        name: 'Boom',
+        height: 0,
+        Component: propDebugComponent('yellow'),
+        Component3d: Boom,
+    },
+
     [ObjectTypes.Crossbow]: {
         name: 'Crossbow',
         height: 0,
