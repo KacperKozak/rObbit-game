@@ -1,10 +1,10 @@
 import { Action } from 'redux'
-import { MAX_ELEVATION_DIFF, FALL_REMOVE_DELAY, FALL_TRIGGER_DELAY } from '../../config'
+import { FALL_REMOVE_DELAY, FALL_TRIGGER_DELAY, MAX_MOVE_ELEVATION } from '../../config'
 import { applyVector, asArray, findById, findByXY } from '../../helpers'
 import { getDefinition } from '../../objects/definitions'
 import { PLAYER_ID } from '../../types/consts'
 import { ActionEvent, ObjectInstance, Vector2 } from '../../types/types'
-import { enqueueAfter, GameState, lose, remove, fall } from '../gameReducer'
+import { fall, GameState, lose, remove, updateObject } from '../gameReducer'
 import { ResolverResults } from './types'
 
 export const moveResolver = (
@@ -28,21 +28,12 @@ export const moveResolver = (
 
     // Nothing there, fall and die
     if (!newXYObjects.length) {
-        const fallObjects = objects.map(obj => {
-            if (obj !== target) return obj
-            return { ...obj, xy: newXY }
-        })
         addActions([
-            enqueueAfter({
-                timeout: FALL_TRIGGER_DELAY,
-                actions: [fall({ targetId })],
-            }),
-            enqueueAfter({
-                timeout: FALL_REMOVE_DELAY,
-                actions: [targetId === PLAYER_ID ? lose() : remove(targetId)],
-            }),
+            updateObject({ targetId, objectValues: { xy: newXY } }, { delay: FALL_TRIGGER_DELAY }),
+            fall({ targetId }, { delay: FALL_REMOVE_DELAY }),
+            targetId === PLAYER_ID ? lose() : remove(targetId),
         ])
-        return { objects: fallObjects, actions }
+        return { objects, actions }
     }
 
     // Can enter to this region?
@@ -82,5 +73,5 @@ const maxElevation = (objects: ObjectInstance[]): number =>
 
 const isTooHight = (ontoObj: ObjectInstance, who: ObjectInstance) => {
     const objDef = getDefinition(ontoObj.type)
-    return ontoObj.elevation + objDef.height(ontoObj) - who.elevation > MAX_ELEVATION_DIFF
+    return ontoObj.elevation + objDef.height(ontoObj) - who.elevation > MAX_MOVE_ELEVATION
 }

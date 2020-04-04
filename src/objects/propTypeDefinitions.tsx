@@ -121,7 +121,7 @@ export const propTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
         height: () => 0,
         equip: ({ who, self }) => {
             playEquip(0.8)
-            return [setObjectData({ targetId: who.id, data: { gun: 'cannon' } }), remove(self.id)]
+            return [setObjectData({ targetId: who.id, data: { hasCannon: true } }), remove(self.id)]
         },
         Component: propDebugComponent('red'),
         Component3d: Cannon,
@@ -139,7 +139,10 @@ export const propTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
         height: () => 0,
         equip: ({ who, self }) => {
             playEquip(0.8)
-            return [setObjectData({ targetId: who.id, data: { gun: 'grapple' } }), remove(self.id)]
+            return [
+                setObjectData({ targetId: who.id, data: { hasGrapple: true } }),
+                remove(self.id),
+            ]
         },
         Component: propDebugComponent('red'),
         Component3d: Crossbow,

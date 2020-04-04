@@ -8,15 +8,15 @@ import {
     enqueue,
     equip,
     GameStateAware,
+    grapple,
     loadMap,
     move,
     projectile,
-    rotate,
     reset,
-    grapple,
+    rotate,
 } from '../state/gameReducer'
 import { PLAYER_ID } from '../types/consts'
-import { ObjectInstance, ObjectTypes, Vector2, MapData } from '../types/types'
+import { MapData, ObjectInstance, ObjectTypes, Vector2 } from '../types/types'
 
 export const useGame = () => {
     const state = useSelector((state: GameStateAware) => state.game)
@@ -51,7 +51,7 @@ export const useGame = () => {
     const triggerGrapple = () => {
         if (state.queueStared) return
 
-        if (player.data?.gun !== 'grapple') {
+        if (!player.data.hasGrapple) {
             play('Alert_NO')
             return
         }
@@ -63,35 +63,20 @@ export const useGame = () => {
         if (state.queueStared) return
         const { id, xy, rotation, elevation, data } = player
 
-        if (!data?.gun) {
+        if (!data.hasCannon) {
             play('Alert_NO')
             return
         }
 
-        let instance: ObjectInstance
-
-        if (data.gun === 'cannon') {
-            instance = {
-                type: ObjectTypes.RocketProjectile,
-                id: uniqueId(),
-                xy,
-                rotation,
-                elevation: elevation + PROJECTILE_ELEVATION,
-                aIndex: 100,
-                zIndex: 10,
-                data,
-            }
-        } else {
-            instance = {
-                type: ObjectTypes.CrossbowProjectile,
-                id: uniqueId(),
-                xy,
-                rotation,
-                elevation: elevation + PROJECTILE_ELEVATION,
-                aIndex: 100,
-                zIndex: 10,
-                data,
-            }
+        const instance: ObjectInstance = {
+            type: ObjectTypes.RocketProjectile,
+            id: uniqueId(),
+            xy,
+            rotation,
+            elevation: elevation + PROJECTILE_ELEVATION,
+            aIndex: 100,
+            zIndex: 10,
+            data,
         }
 
         dispatch(enqueue(projectile({ byId: id, instance })))

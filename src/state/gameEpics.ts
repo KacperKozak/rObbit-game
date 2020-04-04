@@ -1,18 +1,17 @@
 import { first } from 'lodash'
 import { Action } from 'redux'
 import { combineEpics, StateObservable } from 'redux-observable'
-import { concat, Observable, of, timer } from 'rxjs'
-import { delay, filter, flatMap, map, mapTo, ignoreElements } from 'rxjs/operators'
+import { concat, Observable, of } from 'rxjs'
+import { delay, filter, flatMap, map, mapTo } from 'rxjs/operators'
 import { DEFAULT_ACTION_DELAY } from '../config'
 import {
     enqueue,
     GameStateAware,
     nextAction,
     queueEnd,
-    tryNextAction,
-    tmpSpawn,
     remove,
-    enqueueAfter,
+    tmpSpawn,
+    tryNextAction,
 } from './gameReducer'
 
 const enqueueEpic = (
@@ -57,24 +56,4 @@ const tmpSpawnEpic = (
         map(action => remove(action.payload.instance.id)),
     )
 
-const enqueueAfterEpic = (
-    actions$: Observable<Action>,
-    state$: StateObservable<GameStateAware>,
-): Observable<Action> =>
-    actions$.pipe(
-        filter(enqueueAfter.match),
-        flatMap(({ payload }) =>
-            concat(
-                timer(payload.timeout).pipe(ignoreElements()),
-                of(...payload.actions.map(a => enqueue(a))),
-            ),
-        ),
-    )
-
-export const gameEpics = combineEpics(
-    enqueueEpic,
-    tryNextEpic,
-    nextActionEpic,
-    enqueueAfterEpic,
-    tmpSpawnEpic,
-)
+export const gameEpics = combineEpics(enqueueEpic, tryNextEpic, nextActionEpic, tmpSpawnEpic)

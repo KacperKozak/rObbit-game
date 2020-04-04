@@ -57,7 +57,6 @@ export const enqueue = queueAction<Action | Action[]>('ENQUEUE')
 export const tryNextAction = queueAction('TRY_NEXT_ACTION')
 export const nextAction = queueAction<Action>('NEXT_ACTION')
 export const queueEnd = queueAction('QUEUE_END')
-export const enqueueAfter = queueAction<{ actions: Action[]; timeout: number }>('ENQUEUE_AFTER')
 
 export const move = gameAction<{ targetId: string; vector: Vector2 }>('MOVE')
 export const rotate = gameAction<{ targetId: string; rotation: Vector2 }>('ROTATE')

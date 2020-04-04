@@ -202,8 +202,8 @@ const AnimatieAsset = ({
     return (
         <animated.group position={anim.pos} rotation={anim.rot}>
             <primitive object={gltf.scene}>
-                <primitive object={cannon} visible={data.gun == 'cannon'} />
-                <primitive object={crossbow} visible={data.gun == 'grapple'} />
+                <primitive object={cannon} visible={!!data.hasCannon} />
+                <primitive object={crossbow} visible={!!data.hasGrapple} />
             </primitive>
         </animated.group>
     )
