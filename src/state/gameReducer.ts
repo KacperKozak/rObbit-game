@@ -19,6 +19,7 @@ import { flyResolver } from './resolvers/flyResolver'
 import { moveResolver } from './resolvers/moveResolver'
 import { rotateResolver } from './resolvers/rotateResolver'
 import { ResolverResults } from './resolvers/types'
+import { grappleResolver } from './resolvers/grappleResolver'
 
 export interface GameState {
     queueStared: boolean
@@ -66,6 +67,7 @@ export const fall = gameAction<{ targetId: string }>('FALL')
 export const projectile = gameAction<{ instance: ObjectInstance; byId: string }>('PROJECTILE')
 export const fly = gameAction<{ targetId: string }>('FLY')
 export const flyEnd = gameAction<{ targetId: string; hitTargetId?: string }>('FLY_END')
+export const grapple = gameAction<{ targetId: string }>('GRAPPLE')
 
 export const updateObject = gameAction<{
     targetId: string
@@ -199,6 +201,21 @@ export const gameReducer = reducerWithInitialState(initialState)
                 actions.push(...hitActions)
             }
             return { ...state, queue: arrMerge(state.queue, actions) }
+        },
+    )
+
+    /*
+     * Grapple
+     */
+    .case(
+        grapple,
+        (state, { targetId }): GameState => {
+            const { actions, objects } = grappleResolver(state, targetId)
+            return {
+                ...state,
+                objects,
+                queue: arrMerge(state.queue, actions),
+            }
         },
     )
 

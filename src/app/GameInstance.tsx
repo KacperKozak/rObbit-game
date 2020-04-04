@@ -15,7 +15,7 @@ import { CAMERA_OFFSET } from '../config'
 import { maps } from '../data/maps'
 
 export const GameInstance = () => {
-    const { objects, mapId, mapName, move, equip, fire, loadMap, reset } = useGame()
+    const { objects, mapId, mapName, move, equip, grapple, fire, loadMap, reset } = useGame()
     // a ja szukam jakiegos objaect map :(
     const { editMode, toggleEditMode } = useEditor()
     useKeyboardEvent('e', toggleEditMode)
@@ -32,6 +32,7 @@ export const GameInstance = () => {
     useKeyboardEvent('ArrowDown', down)
     useKeyboardEvent('ArrowRight', right)
     useKeyboardEvent('Enter', equip)
+    useKeyboardEvent('Shift', grapple)
     useKeyboardEvent(' ', fire)
 
     let mapCenter = [0, 0]
@@ -98,6 +99,9 @@ export const GameInstance = () => {
                 </button>
                 <button onClick={equip}>
                     Equip <small>{`[enter]`}</small>
+                </button>
+                <button onClick={grapple}>
+                    Grapple <small>{`[shift]`}</small>
                 </button>
                 <button onClick={fire}>
                     Fire <small>{'[space]'}</small>
