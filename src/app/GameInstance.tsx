@@ -13,7 +13,7 @@ import map2 from '../data/map2.json'
 import { ObjectInstance } from '../types/types'
 
 export const GameInstance = () => {
-    const { objects, move, equip, fire, loadMap, player } = useGame()
+    const { objects, move, equip, fire, loadMap, reset } = useGame()
 
     const { editMode, toggleEditMode } = useEditor()
     useKeyboardEvent('e', toggleEditMode)
@@ -28,6 +28,7 @@ export const GameInstance = () => {
 
     useKeyboardEvent('1', loadMap1)
     useKeyboardEvent('2', loadMap2)
+    useKeyboardEvent('r', reset)
 
     useKeyboardEvent('ArrowLeft', left)
     useKeyboardEvent('ArrowUp', up)
@@ -62,13 +63,20 @@ export const GameInstance = () => {
                     <strong>→</strong>
                 </button>
                 <button onClick={equip}>
-                    equip <small>{`[enter]`}</small>
+                    Equip <small>{`[enter]`}</small>
                 </button>
                 <button onClick={fire}>
-                    fire <small>{'[space]'}</small>
+                    Fire <small>{'[space]'}</small>
                 </button>
-                <button onClick={loadMap1}>Map 1</button>
-                <button onClick={loadMap2}>Map 2</button>
+                <button onClick={equip}>
+                    Restart <small>{`[R]`}</small>
+                </button>
+                <button onClick={loadMap1}>
+                    Map 1 <small>{`[1]`}</small>
+                </button>
+                <button onClick={loadMap2}>
+                    Map 2 <small>{`[2]`}</small>
+                </button>
             </div>
             <Canvas
                 orthographic
