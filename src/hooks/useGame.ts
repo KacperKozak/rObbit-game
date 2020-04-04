@@ -8,15 +8,15 @@ import {
     enqueue,
     equip,
     GameStateAware,
+    grapple,
     loadMap,
     move,
     projectile,
-    rotate,
     reset,
-    grapple,
+    rotate,
 } from '../state/gameReducer'
 import { PLAYER_ID } from '../types/consts'
-import { ObjectInstance, ObjectTypes, Vector2, MapData } from '../types/types'
+import { MapData, ObjectInstance, ObjectTypes, Vector2 } from '../types/types'
 
 export const useGame = () => {
     const state = useSelector((state: GameStateAware) => state.game)

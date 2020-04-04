@@ -1,10 +1,15 @@
 import { uniqueId } from 'lodash'
 import { Action } from 'redux'
-import { GRAPPLE_ELEVATION, PROJECTILE_ELEVATION } from '../../config'
+import {
+    GRAPPLE_ELEVATION,
+    PROJECTILE_ELEVATION,
+    GRAPPLE_MOVE_DELAY,
+    GRAPPLE_RANGE,
+} from '../../config'
 import { applyVector, asArray, findById, findByXY, vectorDiff } from '../../helpers'
 import { getDefinition } from '../../objects/definitions'
 import { ObjectInstance, ObjectTypes, Vector2 } from '../../types/types'
-import { enqueueAfter, GameState, move, tmpSpawn, updateObject } from '../gameReducer'
+import { GameState, move, tmpSpawn, updateObject } from '../gameReducer'
 import { ResolverResults } from './types'
 
 export const grappleResolver = (state: GameState, targetId: string): ResolverResults => {
@@ -34,7 +39,7 @@ export const grappleResolver = (state: GameState, targetId: string): ResolverRes
     const vector = target.rotation
     let xy = target.xy
 
-    let limit = 5
+    let limit = GRAPPLE_RANGE
 
     while (limit) {
         limit--
@@ -46,16 +51,16 @@ export const grappleResolver = (state: GameState, targetId: string): ResolverRes
         for (const obj of newXYObjects) {
             if (isTooHight(obj, target)) {
                 addActions(tmpSpawn({ instance: projectileInstance }))
-                addActions(updateObject({ targetId: projectileInstance.id, objectValues: { xy } }))
                 addActions(
-                    enqueueAfter({
-                        timeout: 500,
-                        actions: [
-                            move({
-                                targetId,
-                                vector: vectorDiff(target.xy, prevXY),
-                            }),
-                        ],
+                    updateObject(
+                        { targetId: projectileInstance.id, objectValues: { xy } },
+                        { delay: GRAPPLE_MOVE_DELAY },
+                    ),
+                )
+                addActions(
+                    move({
+                        targetId,
+                        vector: vectorDiff(target.xy, prevXY),
                     }),
                 )
 
