@@ -1,22 +1,22 @@
 {
   "files": {
     "main.css": "/alpha-mechanical/static/css/main.79e8ced5.chunk.css",
-    "main.js": "/alpha-mechanical/static/js/main.be74eda7.chunk.js",
-    "main.js.map": "/alpha-mechanical/static/js/main.be74eda7.chunk.js.map",
+    "main.js": "/alpha-mechanical/static/js/main.c2937281.chunk.js",
+    "main.js.map": "/alpha-mechanical/static/js/main.c2937281.chunk.js.map",
     "runtime-main.js": "/alpha-mechanical/static/js/runtime-main.0fb3ba15.js",
     "runtime-main.js.map": "/alpha-mechanical/static/js/runtime-main.0fb3ba15.js.map",
-    "static/js/2.5690eadf.chunk.js": "/alpha-mechanical/static/js/2.5690eadf.chunk.js",
-    "static/js/2.5690eadf.chunk.js.map": "/alpha-mechanical/static/js/2.5690eadf.chunk.js.map",
+    "static/js/2.c3d1ef96.chunk.js": "/alpha-mechanical/static/js/2.c3d1ef96.chunk.js",
+    "static/js/2.c3d1ef96.chunk.js.map": "/alpha-mechanical/static/js/2.c3d1ef96.chunk.js.map",
     "index.html": "/alpha-mechanical/index.html",
-    "precache-manifest.e0fd0f6c6b12525c06c0a2b781117053.js": "/alpha-mechanical/precache-manifest.e0fd0f6c6b12525c06c0a2b781117053.js",
+    "precache-manifest.17d5bcf807f23bc23ec66b86793a665a.js": "/alpha-mechanical/precache-manifest.17d5bcf807f23bc23ec66b86793a665a.js",
     "service-worker.js": "/alpha-mechanical/service-worker.js",
     "static/css/main.79e8ced5.chunk.css.map": "/alpha-mechanical/static/css/main.79e8ced5.chunk.css.map",
-    "static/js/2.5690eadf.chunk.js.LICENSE.txt": "/alpha-mechanical/static/js/2.5690eadf.chunk.js.LICENSE.txt"
+    "static/js/2.c3d1ef96.chunk.js.LICENSE.txt": "/alpha-mechanical/static/js/2.c3d1ef96.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.0fb3ba15.js",
-    "static/js/2.5690eadf.chunk.js",
+    "static/js/2.c3d1ef96.chunk.js",
     "static/css/main.79e8ced5.chunk.css",
-    "static/js/main.be74eda7.chunk.js"
+    "static/js/main.c2937281.chunk.js"
   ]
 }
