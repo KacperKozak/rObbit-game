@@ -10,6 +10,7 @@ export enum ObjectTypes {
 
     Grass = 'Grass',
     RockFloor = 'RockFloor',
+    Box = 'Box',
     BigRock = 'BigRock',
 
     Ice = 'Ice',

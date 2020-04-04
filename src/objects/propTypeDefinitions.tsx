@@ -2,7 +2,7 @@ import React from 'react'
 import { playEquip, play } from '../audio/play'
 import { move, remove, setObjectData, tmpSpawn } from '../state/gameReducer'
 import { ObjectDefinition, ObjectTypes } from '../types/types'
-import { Cannon, Crossbow, Player, Rock, Rocket, Boom, Fence, Arrow } from './models/Items'
+import { Cannon, Crossbow, Player, Rock, Rocket, Boom, Fence, Arrow, Box } from './models/Items'
 import { reverseVector } from '../helpers'
 import { uniqueId } from 'lodash'
 
@@ -34,10 +34,16 @@ export const propTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
 
     [ObjectTypes.BigRock]: {
         name: 'Big rock',
-        height: 0.5,
+        height: 0.55,
+        Component: propDebugComponent('gray'),
+        Component3d: Rock,
+    },
+    [ObjectTypes.Box]: {
+        name: 'Box',
+        height: 1,
         push: ({ self, vector }) => [move({ targetId: self.id, vector })],
         Component: propDebugComponent('brown'),
-        Component3d: Rock,
+        Component3d: Box,
     },
 
     [ObjectTypes.Fence]: {

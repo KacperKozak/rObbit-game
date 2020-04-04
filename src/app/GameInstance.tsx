@@ -5,9 +5,10 @@ import { useEditor } from '../hooks/useEditor'
 import { useGame } from '../hooks/useGame'
 import { useKeyboardEvent } from '../hooks/useKeyboardEvent'
 import { getDefinition } from '../objects/definitions'
-import { DOWN, LEFT, RIGHT, UP } from '../types/consts'
+import { DOWN, LEFT, RIGHT, UP, PLAYER_ID } from '../types/consts'
 import { DebugView } from './DebugView'
 import { Environment } from './Environment'
+import { findById } from '../helpers'
 
 export const GameInstance = () => {
     const { objects, move, equip, fire } = useGame()
@@ -52,6 +53,7 @@ export const GameInstance = () => {
                 camera={{ zoom: 100, fov: 1075, position: [-2 + 3, 7, 5 + 2] }}
                 onCreated={scene => {
                     scene.camera.lookAt(3, 1, 2)
+                    // scene.camera.lookAt(findById(objects, PLAYER_ID))
                     scene.gl.shadowMap.type = PCFSoftShadowMap
                     scene.gl.shadowMap.enabled = true
                 }}

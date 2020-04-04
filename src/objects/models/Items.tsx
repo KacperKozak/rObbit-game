@@ -10,6 +10,10 @@ export const Player = (props: RenderComponentProps) => {
     return <AnimatieAsset {...props} url="robot_model.gltf" />
 }
 
+export const Box = (props: RenderComponentProps) => {
+    return <Asset {...props} url="box.gltf" />
+}
+
 export const Rock = (props: RenderComponentProps) => {
     return <Asset {...props} url="rock1.gltf" />
 }

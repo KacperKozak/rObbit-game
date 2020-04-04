@@ -25,15 +25,16 @@ const propDict = {
     3: ObjectTypes.Cannon,
     4: ObjectTypes.Crossbow,
     5: ObjectTypes.Fence,
+    6: ObjectTypes.Box,
 }
 
 // prettier-ignore
 const propsBitmap = [
     [0,0,0,4,0,0,0,],
-    [0,1,0,0,0,0,0,],
-    [0,3,0,0,0,0,0,],
+    [0,1,6,0,0,0,0,],
+    [0,3,0,0,6,0,0,],
     [0,2,5,5,0,0,2,],
-    [0,0,0,0,0,0,0,],
+    [0,6,0,0,0,0,0,],
 ]
 
 // TODO?
