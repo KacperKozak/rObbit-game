@@ -14,6 +14,10 @@ export const Rock = (props: RenderComponentProps) => {
     return <Asset {...props} url="rock1.gltf" />
 }
 
+export const Arrow = (props: RenderComponentProps) => {
+    return <Asset {...props} url="arrow.gltf" />
+}
+
 export const Boom = (props: RenderComponentProps) => {
     return <AnimateSelfAsset {...props} url="boom.gltf" />
 }
@@ -155,7 +159,7 @@ const AnimateSelfAsset = ({
     if (castShadow) gltfScene.children[0].castShadow = true
     if (receiveShadow) gltfScene.children[0].receiveShadow = true
 
-    gltfScene.scale.set(0.3, 0.3, 0.3)
+    gltfScene.scale.set(0.5, 0.5, 0.5)
 
     const mixer = new AnimationMixer(gltfScene)
     gltf.animations.forEach((clip, index) => {
@@ -163,7 +167,6 @@ const AnimateSelfAsset = ({
     })
     useFrame(() => {
         mixer.update(0.03)
-        console.log(mixer.time)
         if (mixer.time > 0.8) {
             mixer.stopAllAction()
             gltfScene.visible = false
