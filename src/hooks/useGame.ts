@@ -5,6 +5,7 @@ import { findById } from '../helpers'
 import { enqueue, equip, GameStateAware, move, rotate, projectile } from '../state/gameReducer'
 import { PLAYER_ID } from '../types/consts'
 import { Vector2 } from '../types/types'
+import { play } from '../audio/play'
 
 const targetId = PLAYER_ID
 
@@ -36,9 +37,12 @@ export const useGame = () => {
     }
 
     const triggerFire = () => {
-        const { xy, rotation, elevation } = findById(state.objects, targetId)!
-        const who = findById(state.objects, targetId)
-        dispatch(enqueue(projectile({ byId: who!.id, xy, vector: rotation, elevation })))
+        const { id, xy, rotation, elevation, data } = findById(state.objects, targetId)!
+        if (!data?.gun) {
+            play('Alert_NO')
+            return
+        }
+        dispatch(enqueue(projectile({ byId: id, xy, vector: rotation, elevation })))
     }
 
     return { ...state, move: triggerMove, equip: triggerEquip, fire: triggerFire }

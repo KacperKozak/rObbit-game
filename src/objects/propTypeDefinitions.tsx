@@ -62,8 +62,8 @@ export const propTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
     [ObjectTypes.Projectile]: {
         name: 'Projectile',
         height: 0,
-        projectileLaunch: () => {
-            play('Bazooka')
+        projectileLaunch: ({ who }) => {
+            play(who.data?.gun === 'cannon' ? 'Bazooka' : 'Crossbow')
             return []
         },
         projectileHit: ({ self }) => {
