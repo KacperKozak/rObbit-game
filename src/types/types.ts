@@ -18,6 +18,7 @@ export enum ObjectTypes {
 
     Crossbow = 'Crossbow',
     Cannon = 'Cannon',
+    Boom = 'Boom',
     Projectile = 'Projectile',
 }
 
