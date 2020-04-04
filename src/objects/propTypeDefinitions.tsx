@@ -3,6 +3,7 @@ import { playEquip, play } from '../audio/play'
 import { move, remove, setObjectData } from '../state/gameReducer'
 import { ObjectDefinition, ObjectTypes } from '../types/types'
 import { Cannon, Crossbow, Player, Rock } from './models/Items'
+import { reverseVector } from '../helpers'
 
 const propDebugComponent = (color: string) => ({ instance, children }: any) => {
     return (
@@ -64,7 +65,7 @@ export const propTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
         height: 0,
         projectileLaunch: ({ who }) => {
             play(who.data?.gun === 'cannon' ? 'Bazooka' : 'Crossbow')
-            return []
+            return [move({ targetId: who.id, vector: reverseVector(who.rotation) }, { delay: 250 })]
         },
         projectileHit: ({ self }) => {
             play('Alert_YES') // TODO Boooooom!!!

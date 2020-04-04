@@ -127,7 +127,7 @@ export const gameReducer = reducerWithInitialState(initialState)
                 data: {},
             }
             const objects = [...state.objects, obj]
-            const actions: Action[] = [fly({ targetId: obj.id }, { delay: 400 })]
+            const actions: Action[] = [fly({ targetId: obj.id })]
             const who = findById(state.objects, byId)!
             const event: ActionEvent = { who, vector: obj.rotation, state, self: obj }
             const hitActions = objDef.projectileLaunch?.(event) || []
