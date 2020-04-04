@@ -37,6 +37,8 @@ export const initialState: GameState = {
 
 const action = actionCreatorFactory('GAME')
 
+export const loadMap = action<ObjectInstance[]>('LOAD_MAP')
+
 export const enqueue = action<Action | Action[]>('ENQUEUE')
 export const tryNextAction = action('TRY_NEXT_ACTION')
 export const nextAction = action<Action>('NEXT_ACTION')
@@ -62,6 +64,16 @@ export const remove = action<string>('REMOVE')
 export const tmpSpawn = action<{ instance: ObjectInstance }>('TMP_SPAWN')
 
 export const gameReducer = reducerWithInitialState(initialState)
+    /*
+     * Loading
+     */
+    .case(
+        loadMap,
+        (state, objects): GameState => ({
+            ...initialState,
+            objects,
+        }),
+    )
     /*
      * Queue
      */

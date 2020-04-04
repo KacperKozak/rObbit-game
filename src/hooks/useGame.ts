@@ -4,7 +4,15 @@ import { Action } from 'redux'
 import { play } from '../audio/play'
 import { PROJECTILE_ELEVATION } from '../config'
 import { findById } from '../helpers'
-import { enqueue, equip, GameStateAware, move, projectile, rotate } from '../state/gameReducer'
+import {
+    enqueue,
+    equip,
+    GameStateAware,
+    loadMap,
+    move,
+    projectile,
+    rotate,
+} from '../state/gameReducer'
 import { PLAYER_ID } from '../types/consts'
 import { ObjectInstance, ObjectTypes, Vector2 } from '../types/types'
 
@@ -76,5 +84,16 @@ export const useGame = () => {
         dispatch(enqueue(projectile({ byId: id, instance })))
     }
 
-    return { ...state, player, move: triggerMove, equip: triggerEquip, fire: triggerFire }
+    const triggerLoadMap = (object: ObjectInstance[]) => {
+        dispatch(loadMap(object))
+    }
+
+    return {
+        ...state,
+        player,
+        loadMap: triggerLoadMap,
+        move: triggerMove,
+        equip: triggerEquip,
+        fire: triggerFire,
+    }
 }

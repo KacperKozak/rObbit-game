@@ -5,13 +5,15 @@ import { useEditor } from '../hooks/useEditor'
 import { useGame } from '../hooks/useGame'
 import { useKeyboardEvent } from '../hooks/useKeyboardEvent'
 import { getDefinition } from '../objects/definitions'
-import { DOWN, LEFT, RIGHT, UP, PLAYER_ID } from '../types/consts'
+import { DOWN, LEFT, RIGHT, UP } from '../types/consts'
 import { DebugView } from './DebugView'
 import { Environment } from './Environment'
-import { findById } from '../helpers'
+import map1 from '../data/map1.json'
+import map2 from '../data/map2.json'
+import { ObjectInstance } from '../types/types'
 
 export const GameInstance = () => {
-    const { objects, move, equip, fire, player } = useGame()
+    const { objects, move, equip, fire, loadMap, player } = useGame()
 
     const { editMode, toggleEditMode } = useEditor()
     useKeyboardEvent('e', toggleEditMode)
@@ -20,6 +22,12 @@ export const GameInstance = () => {
     const up = () => move(UP)
     const down = () => move(DOWN)
     const right = () => move(RIGHT)
+
+    const loadMap1 = () => loadMap(map1 as ObjectInstance[])
+    const loadMap2 = () => loadMap(map2 as ObjectInstance[])
+
+    useKeyboardEvent('1', loadMap1)
+    useKeyboardEvent('2', loadMap2)
 
     useKeyboardEvent('ArrowLeft', left)
     useKeyboardEvent('ArrowUp', up)
@@ -59,6 +67,8 @@ export const GameInstance = () => {
                 <button onClick={fire}>
                     fire <small>{'[space]'}</small>
                 </button>
+                <button onClick={loadMap1}>Map 1</button>
+                <button onClick={loadMap2}>Map 2</button>
             </div>
             <Canvas
                 orthographic
