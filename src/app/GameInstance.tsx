@@ -68,7 +68,7 @@ export const GameInstance = () => {
                 <button onClick={fire}>
                     Fire <small>{'[space]'}</small>
                 </button>
-                <button onClick={equip}>
+                <button onClick={reset}>
                     Restart <small>{`[R]`}</small>
                 </button>
                 <button onClick={loadMap1}>
