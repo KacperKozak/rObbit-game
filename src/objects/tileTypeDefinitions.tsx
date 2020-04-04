@@ -34,7 +34,7 @@ export const tileTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
         height: () => 0,
         push: ({ force, self }) => {
             // if (force && force >= 50) return [remove(self.id)]
-            // console.log(self)
+            console.log(self)
             return []
         },
         Component: tileDebugComponent('gray'),

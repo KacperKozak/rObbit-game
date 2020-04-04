@@ -167,11 +167,13 @@ const AnimateSelfAsset = ({
     if (castShadow) gltfScene.children[0].castShadow = true
     if (receiveShadow) gltfScene.children[0].receiveShadow = true
 
-    gltfScene.scale.set(0.5, 0.5, 0.5)
+    gltfScene.scale.set(0.6, 0.6, 0.6)
 
     const mixer = new AnimationMixer(gltfScene)
     gltf.animations.forEach((clip, index) => {
-        mixer.clipAction(clip, gltfScene.children[index]).play()
+        const animation = mixer.clipAction(clip, gltfScene.children[index])
+        animation.loop = 0
+        animation.play()
     })
     useFrame(() => {
         mixer.update(0.03)
@@ -192,7 +194,8 @@ const vectorToThree = (vector: Vector2) => {
     if (vector[0] === 1 && vector[1] === 0) return Math.PI / 2
     if (vector[0] === 0 && vector[1] === -1) return (Math.PI / 2) * 2
     if (vector[0] === -1 && vector[1] === 0) return (Math.PI / 2) * 3
-    // if (vector[0] === 0 && vector[1] === 1) return (Math.PI / 2) * 4
+    if (vector[0] === 0 && vector[1] === 1) return (Math.PI / 2) * 4
+    // return (Math.PI / 2) * 4
     return 0
 }
 

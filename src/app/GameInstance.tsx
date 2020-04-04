@@ -1,5 +1,5 @@
-import React, { Suspense } from 'react'
-import { Canvas } from 'react-three-fiber'
+import React, { Suspense, useRef, useEffect } from 'react'
+import { Canvas, Camera, useThree } from 'react-three-fiber'
 import { PCFSoftShadowMap } from 'three'
 import { useEditor } from '../hooks/useEditor'
 import { useGame } from '../hooks/useGame'
@@ -9,6 +9,7 @@ import { DOWN, LEFT, RIGHT, UP, PLAYER_ID } from '../types/consts'
 import { DebugView } from './DebugView'
 import { Environment } from './Environment'
 import { findById } from '../helpers'
+import { useSpring } from 'react-spring/three'
 
 export const GameInstance = () => {
     const { objects, move, equip, fire, player } = useGame()
@@ -27,6 +28,13 @@ export const GameInstance = () => {
     useKeyboardEvent('ArrowRight', right)
     useKeyboardEvent('Enter', equip)
     useKeyboardEvent(' ', fire)
+
+    // const cameraRef = useRef<Camera>()
+
+    // const anim = useSpring({
+    //     pos: [xy[0], elevation + elevationFix, xy[1]],
+    //     rot: [0, vectorToThree(rotation), 0],
+    // })
 
     return (
         <>
@@ -62,15 +70,22 @@ export const GameInstance = () => {
             </div>
             <Canvas
                 orthographic
-                camera={{ zoom: 100, fov: 1075, position: [-2 + 3, 7, 5 + 2] }}
+                camera={{
+                    zoom: 100,
+                    fov: 1075,
+                    //                 vvvvvvvvvvvv to mysałem że zadziała
+                    position: [-4, 7, 5],
+                }}
                 onCreated={scene => {
-                    scene.camera.lookAt(3, 1, 2)
+                    // cameraRef.current = scene.camera
+                    //                 vvvvvvvvvvvv to wiem że nie zadziałą xDdddddddd
+                    scene.camera.lookAt(0, 1, 0)
                     // scene.camera.lookAt(findById(objects, PLAYER_ID))
                     scene.gl.shadowMap.type = PCFSoftShadowMap
                     scene.gl.shadowMap.enabled = true
                 }}
             >
-                <Environment />
+                <Environment player={player} />
                 <Suspense
                     fallback={
                         <mesh>

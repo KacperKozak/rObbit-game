@@ -1,9 +1,26 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Color } from 'three'
+import { useGame } from '../hooks/useGame'
+import { useThree } from 'react-three-fiber'
+import { ObjectInstance } from '../types/types'
 
 const d = 5
 
-export const Environment = () => {
+interface EnvironmentProps {
+    player: ObjectInstance
+}
+
+export const Environment = ({ player }: EnvironmentProps) => {
+    // const { scene, camera, size } = useThree()
+
+    // useEffect(() => {
+    //     console.log('camera', camera)
+    //     console.log('size', size)
+
+    //     camera.lookAt(player.xy[0], 1, player.xy[1])
+    //     camera.position.set(player.xy[0] - 2, 7, player.xy[1] + 5)
+    // }, player.xy)
+
     return (
         <group>
             <ambientLight intensity={2} />
