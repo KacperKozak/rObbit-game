@@ -23,7 +23,8 @@ export type SoundName = keyof typeof soundList
 
 export const play = (name: SoundName, volume?: number) => {
     const sound = new Audio(soundList[name])
-    if (volume) sound.volume = volume
+    sound.volume = 0.5
+    if (volume) sound.volume = volume / 2
     sound.play()
     // sound.addEventListener('ended', () => {
     //     sound.play()

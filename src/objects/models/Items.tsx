@@ -95,11 +95,11 @@ export const Crossbow = (props: RenderComponentProps) => {
 
 export const Ground = (props: RenderComponentProps) => {
     const { graund } = useMyLoader()
-    return <AssetPreload {...props} model={graund} castShadow={true} receiveShadow={true} />
+    return <AssetPreload {...props} model={graund} castShadow={false} receiveShadow={true} />
 }
 export const Wall = (props: RenderComponentProps) => {
     const { wall } = useMyLoader()
-    return <AssetPreload {...props} model={wall} castShadow={true} receiveShadow={true} />
+    return <AssetPreload {...props} model={wall} castShadow={false} receiveShadow={true} />
 }
 
 export const Grass = (props: RenderComponentProps) => {
