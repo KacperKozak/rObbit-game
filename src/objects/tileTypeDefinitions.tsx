@@ -1,10 +1,10 @@
-import { uniqueId, sample } from 'lodash'
-import React, { FC } from 'react'
+import { sample, uniqueId } from 'lodash'
+import React from 'react'
+import { play } from '../audio/play'
+import { move, remove, setObjectData } from '../state/gameReducer'
+import { PLAYER_ID } from '../types/consts'
 import { ObjectDefinition, ObjectTypes } from '../types/types'
 import { Button, Grass, Ground, Ice } from './models/Items'
-import { remove, move, setObjectData } from '../state/gameReducer'
-import { PLAYER_ID } from '../types/consts'
-import { play } from '../audio/play'
 
 const tileDebugComponent = (color: string) => (props: any) => (
     <div
@@ -17,7 +17,6 @@ export const tileTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
     [ObjectTypes.Grass]: {
         name: 'Grass',
         height: 0,
-        getId: () => uniqueId('grass'),
         Component: tileDebugComponent('green'),
         Component3d: Grass,
     },
@@ -25,7 +24,6 @@ export const tileTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
     [ObjectTypes.Ice]: {
         name: 'Ice',
         height: 0,
-        getId: () => uniqueId('ice'),
         enter: ({ who, vector }) => [move({ targetId: who.id, vector })],
         Component: tileDebugComponent('lightblue'),
         Component3d: Ice,
@@ -34,7 +32,6 @@ export const tileTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
     [ObjectTypes.RockFloor]: {
         name: 'Rock floor',
         height: 0,
-        getId: () => uniqueId('rock-floor'),
         Component: tileDebugComponent('gray'),
         Component3d: Ground,
     },
@@ -42,7 +39,6 @@ export const tileTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
     [ObjectTypes.Button]: {
         name: 'Button',
         height: 0,
-        getId: () => uniqueId('button'),
         push: ({ state, self }) => {
             const randomProp = sample(state.objects.filter(p => p.id !== PLAYER_ID))
             play('button')

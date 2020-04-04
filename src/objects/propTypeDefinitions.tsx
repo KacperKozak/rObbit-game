@@ -1,10 +1,8 @@
-import { uniqueId } from 'lodash'
 import React from 'react'
-import { remove, setObjectData, move } from '../state/gameReducer'
-import { PLAYER_ID } from '../types/consts'
+import { playEquip } from '../audio/play'
+import { move, remove, setObjectData } from '../state/gameReducer'
 import { ObjectDefinition, ObjectTypes } from '../types/types'
-import { Rock, Player, Cannon, Crossbow } from './models/Items'
-import { play, playEquip } from '../audio/play'
+import { Cannon, Crossbow, Player, Rock } from './models/Items'
 
 const propDebugComponent = (color: string) => ({ instance, children }: any) => {
     return (
@@ -28,7 +26,6 @@ export const propTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
     [ObjectTypes.Player]: {
         name: 'Player',
         height: 2,
-        getId: () => PLAYER_ID,
         Component: propDebugComponent('white'),
         Component3d: Player,
     },
@@ -36,7 +33,6 @@ export const propTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
     [ObjectTypes.BigRock]: {
         name: 'Big rock',
         height: 0.5,
-        getId: () => uniqueId('big-rock'),
         push: ({ self, vector }) => [move({ targetId: self.id, vector })],
         Component: propDebugComponent('brown'),
         Component3d: Rock,
@@ -45,7 +41,6 @@ export const propTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
     [ObjectTypes.Cannon]: {
         name: 'Cannon',
         height: 0,
-        getId: () => uniqueId('cannon'),
         equip: ({ who, self }) => {
             playEquip(0.8)
             return [setObjectData({ targetId: who.id, data: { gun: 'cannon' } }), remove(self.id)]
@@ -56,12 +51,18 @@ export const propTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
     [ObjectTypes.Crossbow]: {
         name: 'Crossbow',
         height: 0,
-        getId: () => uniqueId('Crossbow'),
         equip: ({ who, self }) => {
             playEquip(0.8)
             return [setObjectData({ targetId: who.id, data: { gun: 'crossbow' } }), remove(self.id)]
         },
         Component: propDebugComponent('red'),
         Component3d: Crossbow,
+    },
+
+    [ObjectTypes.Projectile]: {
+        name: 'Projectile',
+        height: 0,
+        Component: propDebugComponent('yellow'),
+        Component3d: Rock,
     },
 }

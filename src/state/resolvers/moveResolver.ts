@@ -1,11 +1,10 @@
 import { Action } from 'redux'
+import { MAX_ELEVATION_DIFF } from '../../config'
 import { applyVector, asArray, findById, findByXY } from '../../helpers'
 import { getDefinition } from '../../objects/definitions'
-import { ActionEvent, Vector2, ObjectInstance } from '../../types/types'
+import { ActionEvent, ObjectInstance, Vector2 } from '../../types/types'
 import { GameState } from '../gameReducer'
 import { ResolverResults } from './types'
-
-const MAX_ELEVATION_DIFF = 0.5
 
 export const moveResolver = (
     state: GameState,
@@ -37,7 +36,7 @@ export const moveResolver = (
         const objDef = getDefinition(obj.type)
         const event: ActionEvent = { who: target, vector, state, self: obj }
 
-        if (obj.elevation + objDef.height - target.elevation > MAX_ELEVATION_DIFF) {
+        if (isTooHight(obj, target)) {
             addActions(objDef.push?.(event))
             return { objects, actions }
         }
@@ -65,3 +64,8 @@ const maxElevation = (objects: ObjectInstance[]): number =>
             return objDef.height + obj.elevation
         }),
     )
+
+const isTooHight = (ontoObj: ObjectInstance, who: ObjectInstance) => {
+    const objDef = getDefinition(ontoObj.type)
+    return ontoObj.elevation + objDef.height - who.elevation > MAX_ELEVATION_DIFF
+}

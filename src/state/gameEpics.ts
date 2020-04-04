@@ -1,23 +1,10 @@
+import { first } from 'lodash'
 import { Action } from 'redux'
 import { combineEpics, StateObservable } from 'redux-observable'
-import { concat, from, Observable, of, Subject } from 'rxjs'
-import {
-    concatMap,
-    delay,
-    distinctUntilChanged,
-    filter,
-    ignoreElements,
-    map,
-    mapTo,
-    startWith,
-    switchMap,
-    switchMapTo,
-    flatMap,
-    tap,
-} from 'rxjs/operators'
-import { enqueue, GameStateAware, nextAction, tryNextAction, queueEnd, equip } from './gameReducer'
-import { first } from 'lodash'
-import { play } from '../audio/play'
+import { concat, Observable, of } from 'rxjs'
+import { delay, filter, flatMap, map, mapTo } from 'rxjs/operators'
+import { DEFAULT_ACTION_DELAY } from '../config'
+import { enqueue, GameStateAware, nextAction, queueEnd, tryNextAction } from './gameReducer'
 
 const enqueueEpic = (
     actions$: Observable<Action>,
@@ -46,7 +33,10 @@ const nextActionEpic = (
     actions$.pipe(
         filter(nextAction.match),
         flatMap(action =>
-            concat(of(action.payload), of(tryNextAction()).pipe(delay(action.meta?.delay || 50))),
+            concat(
+                of(action.payload),
+                of(tryNextAction()).pipe(delay(action.meta?.delay || DEFAULT_ACTION_DELAY)),
+            ),
         ),
     )
 

@@ -9,7 +9,7 @@ import { DebugView } from './DebugView'
 import { Environment } from './Environment'
 
 export const GameInstance = () => {
-    const { objects, move, equip } = useGame()
+    const { objects, move, equip, fire } = useGame()
 
     const left = () => move(LEFT)
     const up = () => move(UP)
@@ -21,16 +21,18 @@ export const GameInstance = () => {
     useKeyboardEvent('ArrowDown', down)
     useKeyboardEvent('ArrowRight', right)
     useKeyboardEvent('Enter', equip)
+    useKeyboardEvent(' ', fire)
 
     return (
         <>
             <DebugView objects={objects} />
-            <div style={{ position: 'absolute' }}>
+            <div style={{ position: 'absolute', zIndex: 5 }}>
                 <button onClick={left}>←</button>
                 <button onClick={up}>↑</button>
                 <button onClick={down}>↓</button>
                 <button onClick={right}>→</button>
                 <button onClick={equip}>equip</button>
+                <button onClick={fire}>fire</button>
             </div>
             <Canvas
                 orthographic

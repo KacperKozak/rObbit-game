@@ -1,7 +1,7 @@
-import { tileTypeDefinitions } from '../objects/tileTypeDefinitions'
-import { propTypeDefinitions } from '../objects/propTypeDefinitions'
-import { ObjectInstance, ObjectTypes } from '../types/types'
+import { sample, uniqueId } from 'lodash'
 import { findByXY } from '../helpers'
+import { DOWN, LEFT, RIGHT, UP, PLAYER_ID } from '../types/consts'
+import { ObjectInstance, ObjectTypes } from '../types/types'
 
 const tileDict = {
     0: ObjectTypes.Grass,
@@ -30,14 +30,14 @@ const propDict = {
 const propsBitmap = [
     [0,0,0,4,0,0,0,],
     [0,1,0,0,0,0,0,],
-    [0,0,0,0,0,0,0,],
-    [0,2,0,0,3,0,2,],
+    [0,3,0,0,0,0,0,],
+    [0,2,0,0,0,0,2,],
     [0,0,0,0,0,0,0,],
 ]
 
 // TODO?
 const randomRotation = () => {
-    return (Math.PI / 2) * Math.round(Math.random() * 4)
+    return sample([UP, LEFT, RIGHT, DOWN])!
 }
 
 export const createMap = (): ObjectInstance[] => {
@@ -47,9 +47,9 @@ export const createMap = (): ObjectInstance[] => {
             return {
                 type,
                 xy: [x, y],
-                id: tileTypeDefinitions[type]!.getId(),
+                id: uniqueId(type),
                 elevation: Math.random() / 1.5,
-                rotation: [0, 0],
+                rotation: randomRotation(),
                 zIndex: 1,
                 aIndex: 100,
                 data: {},
@@ -65,7 +65,7 @@ export const createMap = (): ObjectInstance[] => {
                 return {
                     type,
                     xy: [x, y],
-                    id: propTypeDefinitions[type]!.getId(),
+                    id: type === ObjectTypes.Player ? PLAYER_ID : uniqueId(type),
                     elevation: findByXY(tiles, [x, y])[0]?.elevation || 0,
                     rotation: [0, 0],
                     zIndex: 2,

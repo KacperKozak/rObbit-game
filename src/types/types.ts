@@ -6,14 +6,19 @@ export type XY = [number, number]
 export type Vector2 = [number, number]
 
 export enum ObjectTypes {
-    Grass = 'Grass',
-    Ice = 'Ice',
-    RockFloor = 'RockFloor',
-    Button = 'Button',
     Player = 'Player',
+
+    Grass = 'Grass',
+    RockFloor = 'RockFloor',
     BigRock = 'BigRock',
-    Cannon = 'Cannon',
+
+    Ice = 'Ice',
+
+    Button = 'Button',
+
     Crossbow = 'Crossbow',
+    Cannon = 'Cannon',
+    Projectile = 'Projectile',
 }
 
 export interface ObjectInstance {
@@ -42,7 +47,6 @@ export interface ActionEvent {
 export interface ObjectDefinition {
     name: string
     height: number
-    getId(): string
     push?(event: ActionEvent): Action[] // triggered when elevation is to big
     enter?(event: ActionEvent): Action[]
     leave?(event: ActionEvent): Action[]
