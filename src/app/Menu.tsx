@@ -7,6 +7,7 @@ import { useKeyboardEvent } from '../hooks/useKeyboardEvent'
 import { DOWN, LEFT, RIGHT, UP } from '../types/consts'
 import { DebugView } from './DebugView'
 import styled from 'styled-components'
+import { useLocal } from '../hooks/useLocal'
 
 export const Menu = () => {
     const {
@@ -24,6 +25,7 @@ export const Menu = () => {
     } = useGame()
     const { player } = useGame()
     const { editMode, toggleEditMode } = useEditor()
+    const { isCompleted } = useLocal()
 
     const nextMap = () => {
         const currentIndex = maps.findIndex(m => m.id === mapId)
@@ -74,7 +76,7 @@ export const Menu = () => {
                     <LevelWrapper>
                         {maps.map(map => (
                             <LevelButton key={map.id} onClick={() => loadMap(map)}>
-                                {map.name}
+                                {map.name} {isCompleted(map.id) && <Completed />}
                                 {map.image && <img src={map.image} width="200" alt="" />}
                             </LevelButton>
                         ))}
@@ -102,14 +104,16 @@ export const Menu = () => {
                         <strong>←</strong>
                         <small>{`[A]`}</small>
                     </Button>
-                    <Button onClick={up}>
-                        <strong>↑</strong>
-                        <small>{`[W]`}</small>
-                    </Button>
-                    <Button onClick={down}>
-                        <strong>↓</strong>
-                        <small>{`[S]`}</small>
-                    </Button>
+                    <ButtonBlock>
+                        <Button onClick={up}>
+                            <strong>↑</strong>
+                            <small>{`[W]`}</small>
+                        </Button>
+                        <Button onClick={down}>
+                            <strong>↓</strong>
+                            <small>{`[S]`}</small>
+                        </Button>
+                    </ButtonBlock>
                     <Button onClick={right}>
                         <strong>→</strong>
                         <small>{`[D]`}</small>
@@ -141,9 +145,16 @@ export const Menu = () => {
     )
 }
 
+const Completed = styled.span`
+    &::after {
+        content: '✓';
+        color: #8fe34f;
+    }
+`
+
 const Button = styled.button`
     background: none;
-    color: rgba(205, 236, 255, 0.726);
+    color: rgba(205, 236, 255, 0.7);
     font-size: 14px;
     border: 1px solid currentColor;
     padding: 10px 20px;
@@ -151,7 +162,6 @@ const Button = styled.button`
     border-radius: 4px;
     text-transform: uppercase;
     display: inline-block;
-    vertical-align: middle;
     cursor: pointer;
 
     &:hover {
@@ -166,6 +176,14 @@ const Button = styled.button`
     }
     strong {
         font-size: 27px;
+    }
+`
+
+const ButtonBlock = styled.div`
+    display: inline-block;
+    ${Button} {
+        display: block;
+        margin-top: 6px;
     }
 `
 
@@ -205,6 +223,8 @@ const LevelButton = styled.button`
         display: block;
         margin: auto;
         margin-top: 20px;
+        height: 200px;
+        object-fit: contain;
     }
 `
 
