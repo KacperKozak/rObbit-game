@@ -25,4 +25,5 @@ const DialogBG = styled.div`
     background-color: #0b4566;
     padding: 30px 50px;
     border-radius: 4px;
+    text-align: center;
 `

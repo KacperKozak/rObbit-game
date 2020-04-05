@@ -169,9 +169,10 @@ export const Menu = () => {
             )}
             {winDialog && (
                 <Dialog>
-                    <h1>Win!</h1>
+                    <h1>Congratulations!</h1>
+                    <p>Level complete</p> <br />
                     <Button onClick={nextMap}>
-                        Next map <small>[enter]</small>
+                        Next level <small>[enter]</small>
                     </Button>
                 </Dialog>
             )}
