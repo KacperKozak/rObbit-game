@@ -9,9 +9,21 @@ import { getDefinition } from '../objects/definitions'
 import { DOWN, LEFT, RIGHT, UP } from '../types/consts'
 import { DebugView } from './DebugView'
 import { Environment } from './Environment'
+import { Dialog } from '../components/Dialog'
 
 export const GameInstance = () => {
-    const { objects, mapId, mapName, move, equip, grapple, fire, loadMap, reset } = useGame()
+    const {
+        objects,
+        winDialog,
+        mapId,
+        mapName,
+        move,
+        equip,
+        grapple,
+        fire,
+        loadMap,
+        reset,
+    } = useGame()
     const { editMode, toggleEditMode } = useEditor()
 
     useEffect(() => {
@@ -142,6 +154,12 @@ export const GameInstance = () => {
                         </Suspense>
                     </group>
                 </Canvas>
+            )}
+            {winDialog && (
+                <Dialog>
+                    <h1>Win!</h1>
+                    <button onClick={reset}>Next map</button>
+                </Dialog>
             )}
         </>
     )
