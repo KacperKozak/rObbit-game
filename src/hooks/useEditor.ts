@@ -23,7 +23,7 @@ export const useEditor = () => {
 
         const instance: ObjectInstance = {
             type,
-            id: partialInstance.id || uniqueId(type + '-'),
+            id: partialInstance.id || uniqueId(type + '-') + `-${state.objects.length}`,
             xy: [0, 0],
             rotation: randomRotation(),
             zIndex: 0,
