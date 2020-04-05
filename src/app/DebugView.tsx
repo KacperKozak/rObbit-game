@@ -1,7 +1,7 @@
 import { isEmpty, isEqual } from 'lodash'
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { createArray, findByXY } from '../helpers'
+import { createArray, findByXY, applyVector } from '../helpers'
 import { useEditor } from '../hooks/useEditor'
 import { getDefinition, objectDefinitions } from '../objects/definitions'
 import { DOWN, LEFT, RIGHT, UP } from '../types/consts'
@@ -49,11 +49,16 @@ const color: Record<ObjectTypes, string> = {
 }
 
 export const DebugView = ({ objects }: DebugViewProps) => {
-    const { copyMap } = useEditor()
+    const { copyMap, moveMap } = useEditor()
 
     return (
         <Container>
             <button onClick={copyMap}>Copy map</button>
+            Move map:
+            <button onClick={() => moveMap(UP)}>UP</button>
+            <button onClick={() => moveMap(DOWN)}>DOWN</button>
+            <button onClick={() => moveMap(LEFT)}>LEFT</button>
+            <button onClick={() => moveMap(RIGHT)}>RIGHT</button>
             <MapGrid>
                 {createArray(grid).map(y => (
                     <Row key={y}>
@@ -127,6 +132,8 @@ export const Cell = ({ objects, xy }: CellProps) => {
                         <ElevationInput obj={obj} onChange={update(obj.id)} />
                         rotation:
                         <RotationInput obj={obj} onChange={update(obj.id)} />
+                        move:
+                        <MoveInput obj={obj} onChange={update(obj.id)} />
                         <Cols>
                             <div>
                                 zIndex:
@@ -306,14 +313,14 @@ const RotationInput = ({ obj, onChange }: RotationInputProps) => {
 interface RotationInputButtonProps {
     label: string
     obj: ObjectInstance
-    rotation: Vector2
+    rotation?: Vector2
     onChange(partial: Partial<ObjectInstance>): void
 }
 
 const RotationInputButton = ({ obj, onChange, rotation, label }: RotationInputButtonProps) => {
     return (
         <RotationBtn
-            active={isEqual(obj.rotation, rotation)}
+            active={!!rotation && isEqual(obj.rotation, rotation)}
             onClick={() => onChange({ rotation })}
         >
             {label}
@@ -326,6 +333,33 @@ const RotationBtn = styled.span<{ active: boolean }>`
     cursor: pointer;
     ${p => p.active && 'font-weight: bold;'};
 `
+
+const MoveInput = ({ obj, onChange }: RotationInputProps) => {
+    return (
+        <div>
+            <RotationInputButton
+                obj={obj}
+                label={'UP'}
+                onChange={() => onChange({ xy: applyVector(obj.xy, UP) })}
+            />
+            <RotationInputButton
+                obj={obj}
+                label={'RIGHT'}
+                onChange={() => onChange({ xy: applyVector(obj.xy, RIGHT) })}
+            />
+            <RotationInputButton
+                obj={obj}
+                label={'DOWN'}
+                onChange={() => onChange({ xy: applyVector(obj.xy, DOWN) })}
+            />
+            <RotationInputButton
+                obj={obj}
+                label={'LEFT'}
+                onChange={() => onChange({ xy: applyVector(obj.xy, LEFT) })}
+            />
+        </div>
+    )
+}
 
 interface DataInputProps {
     obj: ObjectInstance

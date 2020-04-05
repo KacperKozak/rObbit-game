@@ -1,15 +1,16 @@
 import { uniqueId } from 'lodash'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { randomRotation } from '../helpers'
+import { randomRotation, applyVector } from '../helpers'
 import {
     addObject,
     GameStateAware,
     removeObject,
     updateObject,
     updateCleanObjectsState,
+    replaceObjects,
 } from '../state/gameReducer'
-import { ObjectInstance, ObjectTypes } from '../types/types'
+import { ObjectInstance, ObjectTypes, Vector2 } from '../types/types'
 
 export const useEditor = () => {
     const state = useSelector((state: GameStateAware) => state.game)
@@ -27,12 +28,21 @@ export const useEditor = () => {
         updateCleanState()
     }
 
-    const add = (partialInstance: Partial<ObjectInstance>) => {
-        const { type = ObjectTypes.Grass, ...rest } = partialInstance
+    const moveMap = (vector: Vector2) => {
+        dispatch(
+            replaceObjects(
+                state.objects.map(obj => ({
+                    ...obj,
+                    xy: applyVector(obj.xy, vector),
+                })),
+            ),
+        )
+    }
 
+    const add = (partialInstance: Partial<ObjectInstance>) => {
         const instance: ObjectInstance = {
-            type,
-            id: partialInstance.id || uniqueId(type + '-') + `-${state.objects.length}`,
+            type: ObjectTypes.RockFloor,
+            id: `${uniqueId()}-${state.objects.length}`,
             xy: [0, 0],
             rotation: randomRotation(),
             zIndex: 0,
@@ -59,5 +69,5 @@ export const useEditor = () => {
         }, console.error)
     }
 
-    return { update, add, remove, toggleEditMode, editMode, copyMap }
+    return { update, add, remove, moveMap, toggleEditMode, editMode, copyMap }
 }
