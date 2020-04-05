@@ -16,7 +16,7 @@ export const FALL_ELEVATION = -5
 
 export const AUTHORS = [
     { name: 'Kacper Kozak', tech: '(silnik gry)' },
-    { name: 'Bartosz Kozak', tech: '(silnik gry, grafika 3D)' },
-    { name: 'Maciek Karczewski | Redhatto', tech: '(grafika 3D, artwork)' },
+    { name: 'Bartosz Kozak', tech: '(renderer gry, level design, grafika 3D)' },
+    { name: 'Maciek Wierzejski | Redhatto', tech: '(grafika, 3D, filmy i artwork)' },
     { name: 'Leszek Karczewski | DamnDog', tech: '(muzyka i dźwięk)' },
 ]
