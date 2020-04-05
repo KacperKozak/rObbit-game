@@ -15,33 +15,33 @@ const size = 150
 const grid = 10
 
 const color: Record<ObjectTypes, string> = {
-    [ObjectTypes.Player]: 'white',
-    [ObjectTypes.WinTrigger]: 'white',
+    [ObjectTypes.Player]: 'red',
+    [ObjectTypes.WinTrigger]: 'green',
 
-    [ObjectTypes.Grass]: 'white',
-    [ObjectTypes.Water]: 'white',
-    [ObjectTypes.RockFloor]: 'white',
+    [ObjectTypes.Grass]: 'green',
+    [ObjectTypes.Water]: 'blue',
+    [ObjectTypes.RockFloor]: 'gray',
     [ObjectTypes.Wall]: 'white',
-    [ObjectTypes.Box]: 'white',
-    [ObjectTypes.BigRock]: 'white',
+    [ObjectTypes.Box]: 'brown',
+    [ObjectTypes.BigRock]: 'silver',
 
-    [ObjectTypes.Pipe]: 'white',
-    [ObjectTypes.PipeLeft]: 'white',
-    [ObjectTypes.PipeRight]: 'white',
-    [ObjectTypes.PipePlace]: 'white',
-    [ObjectTypes.PipeUp]: 'white',
-    [ObjectTypes.PipeDown]: 'white',
-    [ObjectTypes.PipeElement]: 'white',
+    [ObjectTypes.Pipe]: 'lightblue',
+    [ObjectTypes.PipeLeft]: 'lightblue',
+    [ObjectTypes.PipeRight]: 'lightblue',
+    [ObjectTypes.PipePlace]: 'lightblue',
+    [ObjectTypes.PipeUp]: 'lightblue',
+    [ObjectTypes.PipeDown]: 'lightblue',
+    [ObjectTypes.PipeElement]: 'lightblue',
 
     [ObjectTypes.Fence]: 'white',
 
-    [ObjectTypes.Button]: 'white',
-    [ObjectTypes.Door]: 'white',
-    [ObjectTypes.WallMetal]: 'white',
+    [ObjectTypes.Button]: 'pink',
+    [ObjectTypes.Door]: 'pink',
+    [ObjectTypes.WallMetal]: 'black',
     [ObjectTypes.Ice]: 'white',
 
-    [ObjectTypes.Crossbow]: 'white',
-    [ObjectTypes.Cannon]: 'white',
+    [ObjectTypes.Crossbow]: 'purple',
+    [ObjectTypes.Cannon]: 'purple',
     [ObjectTypes.Boom]: 'white',
 
     [ObjectTypes.CrossbowProjectile]: 'white',
@@ -75,7 +75,7 @@ const Container = styled.div`
     left: 0;
     bottom: 0;
     opacity: 0.8;
-    background-color: black;
+    background-color: rgba(0, 0, 0, 0.7);
     overflow: auto;
 `
 
@@ -155,7 +155,8 @@ export const Cell = ({ objects, xy }: CellProps) => {
             {objects.map(obj => (
                 <CellObj key={obj.id}>
                     <div>
-                        <strong>{obj.type}</strong> <br /> <small>{obj.id}</small>
+                        <strong style={{ color: color[obj.type] }}>{obj.type}</strong> <br />
+                        <small>{obj.id}</small>
                     </div>
                     {!isEmpty(obj.data) && <pre>{JSON.stringify(obj.data, null, 1)}</pre>}
                     <small>
