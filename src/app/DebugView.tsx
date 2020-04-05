@@ -88,6 +88,13 @@ const Row = styled.div`
     display: flex;
 `
 
+const Cols = styled.div`
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: auto;
+    margin: 5px 0;
+`
+
 interface CellProps {
     xy: XY
     objects: ObjectInstance[]
@@ -117,16 +124,23 @@ export const Cell = ({ objects, xy }: CellProps) => {
                         <TextInput obj={obj} field="id" onChange={update(obj.id)} />
                         <TypeSelect obj={obj} onChange={update(obj.id)} />
                         elevation:
-                        <NumberInput obj={obj} field="elevation" onChange={update(obj.id)} />
+                        <ElevationInput obj={obj} onChange={update(obj.id)} />
                         rotation:
                         <RotationInput obj={obj} onChange={update(obj.id)} />
-                        zIndex:
-                        <NumberInput obj={obj} field="zIndex" onChange={update(obj.id)} />
-                        aIndex:
-                        <NumberInput obj={obj} field="aIndex" onChange={update(obj.id)} />
-                        <div>
-                            h: {getHeight(obj)} e: {obj.elevation}
-                        </div>
+                        <Cols>
+                            <div>
+                                zIndex:
+                                <NumberInput obj={obj} field="zIndex" onChange={update(obj.id)} />
+                            </div>
+                            <div>
+                                aIndex:
+                                <NumberInput obj={obj} field="aIndex" onChange={update(obj.id)} />
+                            </div>
+                            <div>
+                                Size: <br />
+                                h: <b>{getHeight(obj)}</b> e: <b>{obj.elevation}</b>
+                            </div>
+                        </Cols>
                         {!isEmpty(obj.data) && <pre>{JSON.stringify(obj.data, null, 1)}</pre>}
                     </CellObj>
                 ))}
@@ -215,7 +229,8 @@ const NumberInput = ({ obj, field, onChange }: NumberInputProps) => {
         <div>
             <input
                 type="number"
-                defaultValue={obj[field] as string}
+                value={obj[field] as string}
+                style={{ width: 30 }}
                 onChange={event => onChange({ [field]: parseInt(event.target.value, 10) })}
             />
         </div>
@@ -251,14 +266,23 @@ const ElevationInput = ({ obj, onChange }: ElevationInputProps) => {
     const f = 100
     return (
         <div>
-            <input
-                type="range"
-                min={-1 * f}
-                max={10 * f}
-                value={obj.elevation * f}
-                onChange={event => onChange({ elevation: parseInt(event.target.value, 10) / f })}
-            />
-            {Math.round(obj.elevation * 10) / 10}
+            <Cols>
+                <input
+                    type="number"
+                    value={obj.elevation}
+                    onChange={event => onChange({ elevation: parseInt(event.target.value, 10) })}
+                    style={{ width: 30 }}
+                />
+                <input
+                    type="range"
+                    min={-1 * f}
+                    max={10 * f}
+                    value={obj.elevation * f}
+                    onChange={event =>
+                        onChange({ elevation: parseInt(event.target.value, 10) / f })
+                    }
+                />
+            </Cols>
         </div>
     )
 }
