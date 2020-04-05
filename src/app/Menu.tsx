@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Dialog } from '../components/Dialog'
 import { maps } from '../data/maps'
 import { useEditor } from '../hooks/useEditor'
@@ -8,6 +8,8 @@ import { DOWN, LEFT, RIGHT, UP } from '../types/consts'
 import { DebugView } from './DebugView'
 import styled from 'styled-components'
 import { useLocal } from '../hooks/useLocal'
+import { Button, ButtonBlock } from '../components/Button'
+import { getAudio } from '../audio/play'
 
 export const Menu = () => {
     const {
@@ -26,6 +28,31 @@ export const Menu = () => {
     const { player } = useGame()
     const { editMode, toggleEditMode } = useEditor()
     const { isCompleted } = useLocal()
+
+    const [gameStarted, setGameStarted] = useState(false)
+
+    const musicRef = useRef(getAudio('Music', 0.3))
+    const droneRef = useRef(getAudio('Drone', 1))
+    const playMusic = !mapId || winDialog
+
+    useEffect(() => {
+        if (!gameStarted) return
+        if (playMusic) {
+            droneRef.current.pause()
+
+            musicRef.current.currentTime = 0
+            musicRef.current.play()
+        } else {
+            musicRef.current.pause()
+
+            droneRef.current.currentTime = 0
+            droneRef.current.play()
+
+            const onEnd = () => droneRef.current.play()
+            droneRef.current.addEventListener('ended', onEnd)
+            return () => droneRef.current.removeEventListener('ended', onEnd)
+        }
+    }, [playMusic, gameStarted])
 
     const nextMap = () => {
         const currentIndex = maps.findIndex(m => m.id === mapId)
@@ -73,14 +100,21 @@ export const Menu = () => {
             {!mapId && (
                 <>
                     <Title>Alpha Mechanical</Title>
-                    <LevelWrapper>
-                        {maps.map(map => (
-                            <LevelButton key={map.id} onClick={() => loadMap(map)}>
-                                {map.name} {isCompleted(map.id) && <Completed />}
-                                {map.image && <img src={map.image} width="200" alt="" />}
-                            </LevelButton>
-                        ))}
-                    </LevelWrapper>
+
+                    {gameStarted ? (
+                        <LevelWrapper>
+                            {maps.map(map => (
+                                <LevelButton key={map.id} onClick={() => loadMap(map)}>
+                                    {map.name} {isCompleted(map.id) && <Completed />}
+                                    {map.image && <img src={map.image} width="200" alt="" />}
+                                </LevelButton>
+                            ))}
+                        </LevelWrapper>
+                    ) : (
+                        <StartButtonWrapper>
+                            <StartButton onClick={() => setGameStarted(true)}>Play</StartButton>
+                        </StartButtonWrapper>
+                    )}
                 </>
             )}
 
@@ -152,39 +186,15 @@ const Completed = styled.span`
     }
 `
 
-const Button = styled.button`
-    background: none;
-    color: rgba(205, 236, 255, 0.7);
-    font-size: 14px;
-    border: 1px solid currentColor;
-    padding: 10px 20px;
-    margin: 4px;
-    border-radius: 4px;
-    text-transform: uppercase;
-    display: inline-block;
-    cursor: pointer;
-
-    &:hover {
-        background-color: rgba(205, 236, 255, 0.2);
-    }
-
-    small {
-        display: block;
-        font-size: 10;
-        text-transform: uppercase;
-        margin-top: 2px;
-    }
-    strong {
-        font-size: 27px;
-    }
+const StartButtonWrapper = styled.div`
+    display: flex;
+    justify-content: center;
+    padding-top: 200px;
 `
 
-const ButtonBlock = styled.div`
-    display: inline-block;
-    ${Button} {
-        display: block;
-        margin-top: 6px;
-    }
+const StartButton = styled(Button)`
+    font-size: 50px;
+    padding: 40px 60px;
 `
 
 const Title = styled.h1`

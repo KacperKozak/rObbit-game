@@ -1,6 +1,6 @@
 const soundList = {
     button: `${process.env.PUBLIC_URL}/sounds/Button_gameplay.mp3`,
-    music: `${process.env.PUBLIC_URL}/sounds/elementary1.mp3`,
+    // music: `${process.env.PUBLIC_URL}/sounds/elementary1.mp3`,
     Alert_NO: `${process.env.PUBLIC_URL}/sounds/Alert_NO.mp3`,
     Alert_YES: `${process.env.PUBLIC_URL}/sounds/Alert_YES.mp3`,
     Bazooka: `${process.env.PUBLIC_URL}/sounds/Bazooka.mp3`,
@@ -19,23 +19,31 @@ const soundList = {
     Jump: `${process.env.PUBLIC_URL}/sounds/Jump.mp3`,
     Explosion_1: `${process.env.PUBLIC_URL}/sounds/Explosion_1.mp3`,
     Explosion_2: `${process.env.PUBLIC_URL}/sounds/Explosion_2.mp3`,
+
+    Music: `${process.env.PUBLIC_URL}/music/Music.mp3`,
+    Drone: `${process.env.PUBLIC_URL}/music/Drone.mp3`,
 }
 
 export type SoundName = keyof typeof soundList
 
-export const play = (name: SoundName, volume?: number) => {
-    const sound = new Audio(soundList[name])
-    sound.volume = 0.5
-    if (volume) sound.volume = volume / 2
-    sound.play()
-    // sound.addEventListener('ended', () => {
-    //     sound.play()
-    // })
+const masterVolume = 0.5
+
+export const getAudio = (name: SoundName, volume?: number) => {
+    const audio = new Audio(soundList[name])
+    audio.volume = masterVolume
+    if (volume) audio.volume = volume * masterVolume
+    return audio
 }
+
+export const play = (name: SoundName, volume?: number) => {
+    getAudio(name).play()
+}
+
 export const playEquip = (volume?: number) => {
     const list = ['Equip_1', 'Equip_2', 'Equip_3', 'Equip_4']
     play(list[Math.round(Math.random() * 4)] as SoundName, volume)
 }
+
 let explosionIndex = 0
 export const playExplosion = (volume?: number) => {
     const list = ['Explosion_1', 'Explosion_2']
