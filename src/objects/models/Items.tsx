@@ -223,7 +223,7 @@ const AnimatieAsset = ({
     })
 
     const robot = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/robot_model.gltf`)
-    const model = robot.scene
+    const model = robot.scene.clone()
     model.scale.set(0.5, 0.5, 0.5)
     if (castShadow) model.children.map(el => (el.castShadow = true))
     if (receiveShadow) model.children.map(el => (el.receiveShadow = true))
