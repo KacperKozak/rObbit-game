@@ -11,6 +11,7 @@ export const Dialog: FC = ({ children }) => {
 
 const Container = styled.div`
     position: fixed;
+    z-index: 50;
     top: 0;
     left: 0;
     right: 0;
