@@ -1,11 +1,9 @@
-import React, { useEffect, useRef, useMemo, useState } from 'react'
-import { useLoader, useFrame } from 'react-three-fiber'
-import { GLTFLoader, GLTF } from 'three/examples/jsm/loaders/GLTFLoader'
+import React, { useMemo } from 'react'
+import { animated, useSpring } from 'react-spring/three'
+import { useFrame, useLoader } from 'react-three-fiber'
+import { AnimationMixer, LoopOnce } from 'three'
+import { GLTF, GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { RenderComponentProps, Vector2 } from '../../types/types'
-import { AnimationMixer, Group, LoopOnce } from 'three'
-import { setInterval } from 'timers'
-import { useSpring, animated } from 'react-spring/three'
-import { timeInterval } from 'rxjs/operators'
 
 const useMyLoader = () => {
     // const robot = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/robot_model.gltf`)

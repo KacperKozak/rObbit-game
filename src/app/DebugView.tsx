@@ -1,5 +1,5 @@
 import { isEmpty, isEqual } from 'lodash'
-import React, { DetailedHTMLProps, useState } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { createArray, findByXY } from '../helpers'
 import { useEditor } from '../hooks/useEditor'

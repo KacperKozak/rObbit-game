@@ -1,25 +1,15 @@
-import { uniqueId } from 'lodash'
 import { Action } from 'redux'
 import actionCreatorFactory from 'typescript-fsa'
 import { reducerWithInitialState } from 'typescript-fsa-reducers'
-import { PROJECTILE_ELEVATION, FALL_ELEVATION } from '../config'
+import { FALL_ELEVATION } from '../config'
 import { arrMerge, findById } from '../helpers'
-import { createMap } from '../mocks/mapMock'
 import { getDefinition } from '../objects/definitions'
-import {
-    ActionEvent,
-    ObjectInstance,
-    ObjectInstanceData,
-    ObjectTypes,
-    Vector2,
-    XY,
-    MapData,
-} from '../types/types'
+import { ActionEvent, MapData, ObjectInstance, ObjectInstanceData, Vector2 } from '../types/types'
+import { equipResolver } from './resolvers/equipResolver'
 import { flyResolver } from './resolvers/flyResolver'
+import { grappleResolver } from './resolvers/grappleResolver'
 import { moveResolver } from './resolvers/moveResolver'
 import { rotateResolver } from './resolvers/rotateResolver'
-import { grappleResolver } from './resolvers/grappleResolver'
-import { equipResolver } from './resolvers/equipResolver'
 
 export interface GameState {
     queueStared: boolean

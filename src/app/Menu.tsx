@@ -1,11 +1,11 @@
-import React, { FC, useEffect } from 'react'
-import { useGame } from '../hooks/useGame'
-import { useEditor } from '../hooks/useEditor'
-import { maps } from '../data/maps'
-import { useKeyboardEvent } from '../hooks/useKeyboardEvent'
-import { LEFT, UP, DOWN, RIGHT } from '../types/consts'
-import { DebugView } from './DebugView'
+import React from 'react'
 import { Dialog } from '../components/Dialog'
+import { maps } from '../data/maps'
+import { useEditor } from '../hooks/useEditor'
+import { useGame } from '../hooks/useGame'
+import { useKeyboardEvent } from '../hooks/useKeyboardEvent'
+import { DOWN, LEFT, RIGHT, UP } from '../types/consts'
+import { DebugView } from './DebugView'
 
 export const Menu = () => {
     const {
