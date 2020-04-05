@@ -88,4 +88,5 @@ export interface MapData {
     id: string
     name: string
     objects: ObjectInstance[]
+    image?: string
 }

@@ -68,92 +68,144 @@ export const Menu = () => {
 
     return (
         <>
+            {!mapId && (
+                <>
+                    <Title>Alpha Mechanical</Title>
+                    <LevelWrapper>
+                        {maps.map(map => (
+                            <LevelButton key={map.id} onClick={() => loadMap(map)}>
+                                {map.name}
+                                {map.image && <img src={map.image} width="200" alt="" />}
+                            </LevelButton>
+                        ))}
+                    </LevelWrapper>
+                </>
+            )}
+
             {editMode && <DebugView objects={objects} />}
 
-            <div
-                style={{
-                    position: 'absolute',
-                    zIndex: 5,
-                    top: 0,
-                    left: 0,
-                }}
-            >
-                {mapId && (
-                    <>
-                        <button onClick={unloadMap}>
-                            Exit
-                            <small>{`[Q]`}</small>
-                        </button>
-                        <button onClick={reset}>
-                            Restart <small>{`[R]`}</small>
-                        </button>
-                    </>
-                )}
-                {!mapId &&
-                    maps.map(map => (
-                        <LevelButton key={map.id} onClick={() => loadMap(map)}>
-                            {map.name}
-                        </LevelButton>
-                    ))}
-            </div>
+            {mapId && (
+                <SmallMenuWrapper>
+                    <Button onClick={unloadMap}>
+                        Exit
+                        <small>{`[Q]`}</small>
+                    </Button>
+                    <Button onClick={reset}>
+                        Restart <small>{`[R]`}</small>
+                    </Button>
+                </SmallMenuWrapper>
+            )}
             {mapName && <MapName>Map: {mapName}</MapName>}
             {mapId && player && (
                 <ControlsWrapper>
-                    <button onClick={left}>
+                    <Button onClick={left}>
                         <strong>←</strong>
                         <small>{`[A]`}</small>
-                    </button>
-                    <button onClick={up}>
+                    </Button>
+                    <Button onClick={up}>
                         <strong>↑</strong>
                         <small>{`[W]`}</small>
-                    </button>
-                    <button onClick={down}>
+                    </Button>
+                    <Button onClick={down}>
                         <strong>↓</strong>
                         <small>{`[S]`}</small>
-                    </button>
-                    <button onClick={right}>
+                    </Button>
+                    <Button onClick={right}>
                         <strong>→</strong>
                         <small>{`[D]`}</small>
-                    </button>
-                    <button onClick={equip}>
+                    </Button>
+                    <Button onClick={equip}>
                         Equip <small>{`[E]`}</small>
-                    </button>
+                    </Button>
                     {player.data.hasGrapple && (
-                        <button onClick={grapple}>
+                        <Button onClick={grapple}>
                             Grapple <small>{`[F]`}</small>
-                        </button>
+                        </Button>
                     )}
                     {player.data.hasCannon && (
-                        <button onClick={fire}>
+                        <Button onClick={fire}>
                             Fire <small>{'[SPACE]'}</small>
-                        </button>
+                        </Button>
                     )}
                 </ControlsWrapper>
             )}
             {winDialog && (
                 <Dialog>
                     <h1>Win!</h1>
-                    <button onClick={nextMap}>
+                    <Button onClick={nextMap}>
                         Next map <small>[enter]</small>
-                    </button>
+                    </Button>
                 </Dialog>
             )}
         </>
     )
 }
 
-const LevelButton = styled.div`
-    cursor: pointer;
+const Button = styled.button`
     background: none;
     color: rgba(205, 236, 255, 0.726);
-    font-size: 30px;
+    font-size: 14px;
     border: 1px solid currentColor;
-    padding: 20px 30px;
+    padding: 10px 20px;
     margin: 4px;
     border-radius: 4px;
     text-transform: uppercase;
     display: inline-block;
     vertical-align: middle;
+    cursor: pointer;
+
+    &:hover {
+        background-color: rgba(205, 236, 255, 0.2);
+    }
+
+    small {
+        display: block;
+        font-size: 10;
+        text-transform: uppercase;
+        margin-top: 2px;
+    }
+    strong {
+        font-size: 27px;
+    }
+`
+
+const Title = styled.h1`
+    font-family: 'Megrim', sans-serif;
+    font-size: 80px;
+    text-align: center;
+    font-weight: normal;
+`
+
+const LevelWrapper = styled.div`
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    grid-auto-rows: 1fr;
+    grid-gap: 24px;
+    padding: 24px;
+`
+
+const LevelButton = styled.button`
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: rgba(205, 236, 255, 0.726);
+    font-size: 30px;
+    padding: 20px 30px;
+    margin: 4px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    text-align: center;
+    transition: all ease 150ms;
+
+    &:hover {
+        background-color: rgba(205, 236, 255, 0.2);
+    }
+
+    img {
+        display: block;
+        margin: auto;
+        margin-top: 20px;
+    }
 `
 
 const MapName = styled.div`
@@ -172,4 +224,11 @@ const ControlsWrapper = styled.div`
     left: 0;
     right: 0;
     text-align: center;
+`
+
+const SmallMenuWrapper = styled.div`
+    position: absolute;
+    z-index: 5;
+    top: 0;
+    left: 0;
 `

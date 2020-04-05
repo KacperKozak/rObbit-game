@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Megrim&display=swap');
+
 body {
     margin: 0;
     padding: 0px;
@@ -23,28 +25,6 @@ a {
 
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
-}
-
-button {
-    background: none;
-    color: rgba(205, 236, 255, 0.726);
-    font-size: 14px;
-    border: 1px solid currentColor;
-    padding: 10px 20px;
-    margin: 4px;
-    border-radius: 4px;
-    text-transform: uppercase;
-    display: inline-block;
-    vertical-align: middle;
-}
-button small {
-    display: block;
-    font-size: 10;
-    text-transform: uppercase;
-    margin-top: 2px;
-}
-button strong {
-    font-size: 27px;
 }
 
 canvas,

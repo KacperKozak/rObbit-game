@@ -21,8 +21,10 @@ export const GameInstance = () => {
                         zoom: 20,
                     }}
                     onCreated={scene => {
-                        scene.gl.shadowMap.type = PCFSoftShadowMap
-                        scene.gl.shadowMap.enabled = true
+                        if (scene.gl?.shadowMap) {
+                            scene.gl.shadowMap.type = PCFSoftShadowMap
+                            scene.gl.shadowMap.enabled = true
+                        }
                     }}
                 >
                     <group>

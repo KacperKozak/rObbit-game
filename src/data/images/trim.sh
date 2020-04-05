@@ -1,1 +1,1 @@
-mogrify *.png -trim +repage
+mogrify -trim +repage *.png
