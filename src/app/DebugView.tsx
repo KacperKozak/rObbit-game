@@ -1,11 +1,11 @@
 import { isEmpty, isEqual } from 'lodash'
-import React, { useState } from 'react'
-import { findById, createArray, findByXY } from '../helpers'
+import React, { DetailedHTMLProps, useState } from 'react'
+import styled from 'styled-components'
+import { createArray, findByXY } from '../helpers'
 import { useEditor } from '../hooks/useEditor'
 import { getDefinition, objectDefinitions } from '../objects/definitions'
-import { ObjectInstance, ObjectTypes, XY, Vector2 } from '../types/types'
-import styled from 'styled-components'
-import { UP, RIGHT, DOWN, LEFT } from '../types/consts'
+import { DOWN, LEFT, RIGHT, UP } from '../types/consts'
+import { ObjectInstance, ObjectTypes, Vector2, XY } from '../types/types'
 
 interface DebugViewProps {
     objects: ObjectInstance[]
@@ -141,7 +141,7 @@ export const Cell = ({ objects, xy }: CellProps) => {
                                 h: <b>{getHeight(obj)}</b> e: <b>{obj.elevation}</b>
                             </div>
                         </Cols>
-                        {!isEmpty(obj.data) && <pre>{JSON.stringify(obj.data, null, 1)}</pre>}
+                        <DataInput obj={obj} onChange={update(obj.id)} />
                     </CellObj>
                 ))}
                 <button onClick={addEmpty}>+</button>
@@ -222,16 +222,22 @@ interface NumberInputProps {
     obj: ObjectInstance
     field: keyof ObjectInstance
     onChange(partial: Partial<ObjectInstance>): void
+    style?: React.CSSProperties
 }
 
-const NumberInput = ({ obj, field, onChange }: NumberInputProps) => {
+const NumberInput = ({ obj, field, onChange, style }: NumberInputProps) => {
     return (
         <div>
             <input
                 type="number"
+                step="0.1"
                 value={obj[field] as string}
-                style={{ width: 30 }}
-                onChange={event => onChange({ [field]: parseInt(event.target.value, 10) })}
+                style={style || { width: 30 }}
+                onChange={event => {
+                    const value = parseFloat(event.target.value)
+                    if (Number.isNaN(value)) return
+                    onChange({ [field]: parseFloat(event.target.value) })
+                }}
             />
         </div>
     )
@@ -267,20 +273,13 @@ const ElevationInput = ({ obj, onChange }: ElevationInputProps) => {
     return (
         <div>
             <Cols>
-                <input
-                    type="number"
-                    value={obj.elevation}
-                    onChange={event => onChange({ elevation: parseInt(event.target.value, 10) })}
-                    style={{ width: 30 }}
-                />
+                <NumberInput obj={obj} field="elevation" onChange={onChange} />
                 <input
                     type="range"
                     min={-1 * f}
                     max={10 * f}
                     value={obj.elevation * f}
-                    onChange={event =>
-                        onChange({ elevation: parseInt(event.target.value, 10) / f })
-                    }
+                    onChange={event => onChange({ elevation: parseFloat(event.target.value) / f })}
                 />
             </Cols>
         </div>
@@ -326,3 +325,30 @@ const RotationBtn = styled.span<{ active: boolean }>`
     cursor: pointer;
     ${p => p.active && 'font-weight: bold;'};
 `
+
+interface DataInputProps {
+    obj: ObjectInstance
+    onChange(partial: Partial<ObjectInstance>): void
+}
+
+const DataInput = ({ obj, onChange }: DataInputProps) => {
+    const data = JSON.stringify(obj.data)
+    const [localData, setLocalData] = useState(data)
+    return (
+        <div>
+            <textarea
+                value={localData}
+                onFocus={() => setLocalData(JSON.stringify(obj.data))}
+                onChange={event => {
+                    setLocalData(event.target.value)
+                    try {
+                        const data = JSON.parse(event.target.value)
+                        onChange({ data })
+                    } catch (e) {
+                        console.error(e)
+                    }
+                }}
+            />
+        </div>
+    )
+}
