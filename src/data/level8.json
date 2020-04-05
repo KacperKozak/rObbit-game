@@ -1,7 +1,7 @@
 [
     {
         "type": "Player",
-        "xy": [1, 1],
+        "xy": [1, 2],
         "id": "player",
         "elevation": 0,
         "rotation": [1, 0],
@@ -101,16 +101,6 @@
     },
     {
         "type": "Grass",
-        "id": "RockFloor-11-10",
-        "xy": [5, 1],
-        "rotation": [-1, 0],
-        "zIndex": 0,
-        "aIndex": 0,
-        "data": {},
-        "elevation": 0
-    },
-    {
-        "type": "Grass",
         "id": "RockFloor-12-11",
         "xy": [1, 2],
         "rotation": [1, 0],
@@ -140,7 +130,7 @@
         "elevation": 0
     },
     {
-        "type": "Grass",
+        "type": "Water",
         "id": "RockFloor-15-14",
         "xy": [4, 2],
         "rotation": [0, -1],
@@ -190,16 +180,6 @@
         "elevation": 0
     },
     {
-        "type": "Grass",
-        "id": "RockFloor-20-19",
-        "xy": [5, 2],
-        "rotation": [0, -1],
-        "zIndex": 0,
-        "aIndex": 0,
-        "data": {},
-        "elevation": 0
-    },
-    {
         "type": "Box",
         "id": "RockFloor-21-20",
         "xy": [3, 1],
@@ -208,5 +188,375 @@
         "aIndex": 0,
         "data": {},
         "elevation": 1.61
+    },
+    {
+        "type": "RockFloor",
+        "id": "RockFloor-8-21",
+        "xy": [3, 4],
+        "rotation": [-1, 0],
+        "zIndex": 0,
+        "aIndex": 0,
+        "data": {},
+        "elevation": 0.2
+    },
+    {
+        "type": "RockFloor",
+        "id": "RockFloor-9-22",
+        "xy": [2, 4],
+        "rotation": [1, 0],
+        "zIndex": 0,
+        "aIndex": 0,
+        "data": {},
+        "elevation": 0.36
+    },
+    {
+        "type": "RockFloor",
+        "id": "RockFloor-10-23",
+        "xy": [1, 4],
+        "rotation": [-1, 0],
+        "zIndex": 0,
+        "aIndex": 0,
+        "data": {},
+        "elevation": 0.1
+    },
+    {
+        "type": "Water",
+        "id": "RockFloor-12-24",
+        "xy": [4, 4],
+        "rotation": [-1, 0],
+        "zIndex": 0,
+        "aIndex": 0,
+        "data": {},
+        "elevation": 0
+    },
+    {
+        "type": "RockFloor",
+        "id": "RockFloor-13-25",
+        "xy": [4, 3],
+        "rotation": [1, 0],
+        "zIndex": 0,
+        "aIndex": 0,
+        "data": {},
+        "elevation": -1
+    },
+    {
+        "type": "RockFloor",
+        "id": "RockFloor-14-26",
+        "xy": [4, 4],
+        "rotation": [0, -1],
+        "zIndex": 0,
+        "aIndex": 0,
+        "data": {},
+        "elevation": -1
+    },
+    {
+        "type": "Grass",
+        "id": "RockFloor-15-27",
+        "xy": [5, 3],
+        "rotation": [-1, 0],
+        "zIndex": 0,
+        "aIndex": 0,
+        "data": {},
+        "elevation": 0
+    },
+    {
+        "type": "Grass",
+        "id": "RockFloor-16-28",
+        "xy": [5, 4],
+        "rotation": [0, -1],
+        "zIndex": 0,
+        "aIndex": 0,
+        "data": {},
+        "elevation": 0
+    },
+    {
+        "type": "RockFloor",
+        "id": "RockFloor-17-29",
+        "xy": [5, 4],
+        "rotation": [0, -1],
+        "zIndex": 0,
+        "aIndex": 0,
+        "data": {},
+        "elevation": -1
+    },
+    {
+        "type": "Water",
+        "id": "RockFloor-5-30",
+        "xy": [5, 0],
+        "rotation": [0, 1],
+        "zIndex": 0,
+        "aIndex": 0,
+        "data": {},
+        "elevation": 0
+    },
+    {
+        "type": "RockFloor",
+        "id": "RockFloor-6-31",
+        "xy": [5, 0],
+        "rotation": [0, -1],
+        "zIndex": 0,
+        "aIndex": 0,
+        "data": {},
+        "elevation": -1
+    },
+    {
+        "type": "Water",
+        "id": "RockFloor-7-31",
+        "xy": [5, 1],
+        "rotation": [1, 0],
+        "zIndex": 0,
+        "aIndex": 0,
+        "data": {},
+        "elevation": 0
+    },
+    {
+        "type": "RockFloor",
+        "id": "RockFloor-8-32",
+        "xy": [5, 1],
+        "rotation": [0, 1],
+        "zIndex": 0,
+        "aIndex": 0,
+        "data": {},
+        "elevation": -1
+    },
+    {
+        "type": "Water",
+        "id": "RockFloor-9-32",
+        "xy": [5, 2],
+        "rotation": [-1, 0],
+        "zIndex": 0,
+        "aIndex": 0,
+        "data": {},
+        "elevation": 0
+    },
+    {
+        "type": "RockFloor",
+        "id": "RockFloor-10-33",
+        "xy": [5, 2],
+        "rotation": [-1, 0],
+        "zIndex": 0,
+        "aIndex": 0,
+        "data": {},
+        "elevation": -1
+    },
+    {
+        "type": "RockFloor",
+        "id": "RockFloor-12-34",
+        "xy": [4, 2],
+        "rotation": [0, -1],
+        "zIndex": 0,
+        "aIndex": 0,
+        "data": {},
+        "elevation": -1
+    },
+    {
+        "type": "Grass",
+        "id": "RockFloor-13-35",
+        "xy": [6, 0],
+        "rotation": [0, -1],
+        "zIndex": 0,
+        "aIndex": 0,
+        "data": {},
+        "elevation": 0
+    },
+    {
+        "type": "Grass",
+        "id": "RockFloor-14-36",
+        "xy": [6, 1],
+        "rotation": [0, 1],
+        "zIndex": 0,
+        "aIndex": 0,
+        "data": {},
+        "elevation": 0
+    },
+    {
+        "type": "Grass",
+        "id": "RockFloor-15-37",
+        "xy": [6, 2],
+        "rotation": [1, 0],
+        "zIndex": 0,
+        "aIndex": 0,
+        "data": {},
+        "elevation": 0
+    },
+    {
+        "type": "Grass",
+        "id": "RockFloor-16-38",
+        "xy": [6, 3],
+        "rotation": [-1, 0],
+        "zIndex": 0,
+        "aIndex": 0,
+        "data": {},
+        "elevation": 0
+    },
+    {
+        "type": "RockFloor",
+        "id": "RockFloor-17-39",
+        "xy": [7, 1],
+        "rotation": [0, -1],
+        "zIndex": 0,
+        "aIndex": 0,
+        "data": {},
+        "elevation": 0
+    },
+    {
+        "type": "Pipe",
+        "id": "RockFloor-18-40",
+        "xy": [7, 2],
+        "rotation": [-1, 0],
+        "zIndex": 0,
+        "aIndex": 0,
+        "data": {},
+        "elevation": 0
+    },
+    {
+        "type": "Pipe",
+        "id": "RockFloor-19-41",
+        "xy": [7, 3],
+        "rotation": [-1, 0],
+        "zIndex": 0,
+        "aIndex": 0,
+        "data": {},
+        "elevation": 0
+    },
+    {
+        "type": "RockFloor",
+        "id": "RockFloor-20-42",
+        "xy": [6, 4],
+        "rotation": [0, 1],
+        "zIndex": 0,
+        "aIndex": 0,
+        "data": {},
+        "elevation": 0
+    },
+    {
+        "type": "PipeUp",
+        "id": "RockFloor-21-43",
+        "xy": [7, 1],
+        "rotation": [1, 0],
+        "zIndex": 0,
+        "aIndex": 0,
+        "data": {},
+        "elevation": 0
+    },
+    {
+        "type": "Grass",
+        "id": "RockFloor-22-44",
+        "xy": [7, 3],
+        "rotation": [0, 1],
+        "zIndex": 0,
+        "aIndex": 0,
+        "data": {},
+        "elevation": 0
+    },
+    {
+        "type": "Grass",
+        "id": "RockFloor-23-45",
+        "xy": [7, 2],
+        "rotation": [1, 0],
+        "zIndex": 0,
+        "aIndex": 0,
+        "data": {},
+        "elevation": 0
+    },
+    {
+        "type": "BigRock",
+        "id": "RockFloor-24-46",
+        "xy": [5, 3],
+        "rotation": [0, -1],
+        "zIndex": 0,
+        "aIndex": 0,
+        "data": {},
+        "elevation": 0
+    },
+    {
+        "type": "PipeElement",
+        "id": "RockFloor-25-47",
+        "xy": [6, 2],
+        "rotation": [-1, 0],
+        "zIndex": 0,
+        "aIndex": 0,
+        "data": {},
+        "elevation": 0
+    },
+    {
+        "type": "Grass",
+        "id": "RockFloor-26-48",
+        "xy": [7, 4],
+        "rotation": [0, -1],
+        "zIndex": 0,
+        "aIndex": 0,
+        "data": {},
+        "elevation": 0
+    },
+    {
+        "type": "PipePlace",
+        "id": "RockFloor-27-49",
+        "xy": [7, 4],
+        "rotation": [-1, 0],
+        "zIndex": 0,
+        "aIndex": 0,
+        "data": {},
+        "elevation": 0
+    },
+    {
+        "type": "RockFloor",
+        "id": "RockFloor-28-50",
+        "xy": [7, 5],
+        "rotation": [1, 0],
+        "zIndex": 0,
+        "aIndex": 0,
+        "data": {},
+        "elevation": 0
+    },
+    {
+        "type": "PipeDown",
+        "id": "RockFloor-29-51",
+        "xy": [7, 5],
+        "rotation": [-1, 0],
+        "zIndex": 0,
+        "aIndex": 0,
+        "data": {},
+        "elevation": 0
+    },
+    {
+        "type": "RockFloor",
+        "id": "RockFloor-30-52",
+        "xy": [6, 5],
+        "rotation": [0, -1],
+        "zIndex": 0,
+        "aIndex": 0,
+        "data": {},
+        "elevation": -0.21
+    },
+    {
+        "type": "Grass",
+        "id": "RockFloor-31-53",
+        "xy": [5, 5],
+        "rotation": [0, -1],
+        "zIndex": 0,
+        "aIndex": 0,
+        "data": {},
+        "elevation": -0.13
+    },
+    {
+        "type": "Water",
+        "id": "RockFloor-35-54",
+        "xy": [4, 5],
+        "rotation": [0, 1],
+        "zIndex": 0,
+        "aIndex": 0,
+        "data": {},
+        "elevation": 0
+    },
+    {
+        "type": "Grass",
+        "id": "RockFloor-36-55",
+        "xy": [3, 5],
+        "rotation": [-1, 0],
+        "zIndex": 0,
+        "aIndex": 0,
+        "data": {},
+        "elevation": -0.05
     }
 ]
