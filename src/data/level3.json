@@ -147,7 +147,7 @@
         "zIndex": 0,
         "aIndex": 0,
         "data": {},
-        "elevation": 0
+        "elevation": -0.2
     },
     {
         "type": "RockFloor",
@@ -157,7 +157,7 @@
         "zIndex": 0,
         "aIndex": 0,
         "data": {},
-        "elevation": -0.21
+        "elevation": -0.35
     },
     {
         "type": "RockFloor",
@@ -177,7 +177,7 @@
         "zIndex": 0,
         "aIndex": 0,
         "data": {},
-        "elevation": 0.07
+        "elevation": -0.11
     },
     {
         "type": "RockFloor",
@@ -197,7 +197,7 @@
         "zIndex": 0,
         "aIndex": 0,
         "data": {},
-        "elevation": 0.17
+        "elevation": 0.02
     },
     {
         "type": "BigRock",
@@ -377,7 +377,7 @@
         "zIndex": 0,
         "aIndex": 0,
         "data": {},
-        "elevation": -0.21
+        "elevation": -0.4
     },
     {
         "type": "BigRock",
@@ -552,12 +552,12 @@
     {
         "type": "Box",
         "id": "RockFloor-58",
-        "xy": [5, 4],
+        "xy": [5, 3],
         "rotation": [-1, 0],
         "zIndex": 0,
         "aIndex": 0,
         "data": {},
-        "elevation": -0.21
+        "elevation": -0.2
     },
     {
         "type": "Fence",

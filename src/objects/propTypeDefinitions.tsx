@@ -93,7 +93,7 @@ export const propTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
 
     [ObjectTypes.Fence]: {
         name: 'Fence',
-        height: () => 1.5,
+        height: () => 1.2,
         push: ({ force, self }) => {
             if (force && force >= 50) return [removeObject(self.id)]
             return []
