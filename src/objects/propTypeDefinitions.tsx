@@ -67,7 +67,7 @@ export const propTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
     },
     [ObjectTypes.PipeElement]: {
         name: 'PipeElement',
-        height: () => 0.75,
+        height: () => 0.9,
         push: ({ self, vector }) => [move({ targetId: self.id, vector })],
         Component3d: PipeElement,
     },

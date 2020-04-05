@@ -198,7 +198,7 @@ const AssetPreload = ({
         if (receiveShadow) m.children.map(el => (el.receiveShadow = true))
         if (m.children.length > 1) {
             // data.open && m.children[1].position.setZ(1.5)
-            data.open && m.children[1].position.setY(2)
+            data.open && m.children[1].position.setY(3)
             data.active && m.children[1].position.setX(-0.2)
         }
         return m
