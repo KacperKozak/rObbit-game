@@ -1,8 +1,9 @@
 import React from 'react'
 import { limitVector } from '../helpers'
-import { move } from '../state/gameReducer'
+import { move, lose } from '../state/gameReducer'
 import { ObjectDefinition, ObjectTypes } from '../types/types'
-import { Button, Grass, Ground, Ice, Wall } from './models/Items'
+import { Button, Grass, Ground, Ice, Wall, Water } from './models/Items'
+import { PLAYER_ID } from '../types/consts'
 
 const tileDebugComponent = (color: string) => (props: any) => (
     <div
@@ -17,6 +18,14 @@ export const tileTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
         height: () => 0,
         Component: tileDebugComponent('green'),
         Component3d: Grass,
+    },
+    [ObjectTypes.Water]: {
+        name: 'Water',
+        height: () => -1,
+        Component: tileDebugComponent('green'),
+        enter: ({ who }) => (who.id === PLAYER_ID ? [lose()] : []),
+
+        Component3d: Water,
     },
 
     [ObjectTypes.Ice]: {
@@ -37,11 +46,6 @@ export const tileTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
     [ObjectTypes.Wall]: {
         name: 'Wall',
         height: () => 0,
-        push: ({ force, self }) => {
-            // if (force && force >= 50) return [remove(self.id)]
-            // console.log(self)
-            return []
-        },
         Component: tileDebugComponent('gray'),
         Component3d: Wall,
     },

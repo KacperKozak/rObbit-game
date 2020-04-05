@@ -24,10 +24,11 @@ const propDict = {
     3: ObjectTypes.Cannon,
     4: ObjectTypes.Crossbow,
     5: ObjectTypes.Fence,
-    6: ObjectTypes.Dor,
+    6: ObjectTypes.Door,
     7: ObjectTypes.Button,
     8: ObjectTypes.Box,
     9: ObjectTypes.WinTrigger,
+    10: ObjectTypes.Pipe,
 }
 
 // prettier-ignore
@@ -74,7 +75,7 @@ export const createMap = (): ObjectInstance[] => {
                     rotation: [0, 0],
                     zIndex: 2,
                     aIndex: 10,
-                    data: type === ObjectTypes.Button ? { targetId: 'Dor39' } : {},
+                    data: type === ObjectTypes.Button ? { targetId: 'Door39' } : {},
                 }
             }),
         )

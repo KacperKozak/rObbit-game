@@ -7,7 +7,7 @@
         "rotation": [0, 0],
         "zIndex": 2,
         "aIndex": 10,
-        "data": { "targetId": "Dor39" }
+        "data": { "targetId": "Door39" }
     },
     {
         "type": "Player",
@@ -40,9 +40,9 @@
         "data": {}
     },
     {
-        "type": "Dor",
+        "type": "Door",
         "xy": [5, 2],
-        "id": "Dor39",
+        "id": "Door39",
         "elevation": 0.17559858324138156,
         "rotation": [0, 0],
         "zIndex": 2,

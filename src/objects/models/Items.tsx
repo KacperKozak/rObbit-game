@@ -19,8 +19,17 @@ const useMyLoader = () => {
     const graund = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/graund.gltf`)
     const wall = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/wall.gltf`)
     const grass = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/grass.gltf`)
+    const water = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/water.gltf`)
     const ice = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/ice.gltf`)
-    const button = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/box.gltf`) //TODO MODEL
+    const button = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/button.gltf`)
+    const door = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/door.gltf`)
+    const pipe = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/pipe.gltf`)
+    const pipeLeft = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/pipe-left.gltf`)
+    const pipeRight = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/pipe-right.gltf`)
+    const pipePlace = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/pipe-place.gltf`)
+    const pipeElement = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/pipe-element.gltf`)
+    const pipeUp = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/pipe-down.gltf`)
+    const pipeDown = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/pipe-down.gltf`)
     return {
         // robot: robot.scene.clone(),
         rocket: rocket.scene.clone(),
@@ -33,8 +42,17 @@ const useMyLoader = () => {
         graund: graund.scene.clone(),
         wall: wall.scene.clone(),
         grass: grass.scene.clone(),
+        water: water.scene.clone(),
         ice: ice.scene.clone(),
         button: button.scene.clone(),
+        door: door.scene.clone(),
+        pipe: pipe.scene.clone(),
+        pipeLeft: pipeLeft.scene.clone(),
+        pipeRight: pipeRight.scene.clone(),
+        pipePlace: pipePlace.scene.clone(),
+        pipeElement: pipeElement.scene.clone(),
+        pipeUp: pipeUp.scene.clone(),
+        pipeDown: pipeDown.scene.clone(),
     }
 }
 const useAnimationLoader = () => {
@@ -52,47 +70,38 @@ export const Player = (props: RenderComponentProps) => {
     // const { robot } = useMyLoader()
     return <AnimatieAsset {...props} />
 }
-
 export const Box = (props: RenderComponentProps) => {
     const { box } = useMyLoader()
     return <AssetPreload {...props} model={box} />
 }
-
 export const Rock = (props: RenderComponentProps) => {
     const { rock } = useMyLoader()
     return <AssetPreload {...props} model={rock} />
 }
-
 export const Fence = (props: RenderComponentProps) => {
     const { fence } = useMyLoader()
     return <AssetPreload {...props} model={fence} />
 }
-
 export const Arrow = (props: RenderComponentProps) => {
     const { arrow } = useMyLoader()
     return <AssetPreload {...props} model={arrow} />
 }
-
 export const Boom = (props: RenderComponentProps) => {
     const { boom } = useAnimationLoader()
     return <AnimateSelfAsset {...props} animateModel={boom} />
 }
-
 export const Cannon = (props: RenderComponentProps) => {
     const { cannon } = useMyLoader()
     return <AssetPreload {...props} model={cannon} elevationFix={-0.8} />
 }
-
 export const Rocket = (props: RenderComponentProps) => {
     const { rocket } = useMyLoader()
     return <AssetPreload {...props} model={rocket} />
 }
-
 export const Crossbow = (props: RenderComponentProps) => {
     const { crossbow } = useMyLoader()
     return <AssetPreload {...props} model={crossbow} elevationFix={-0.8} />
 }
-
 export const Ground = (props: RenderComponentProps) => {
     const { graund } = useMyLoader()
     return <AssetPreload {...props} model={graund} castShadow={false} receiveShadow={true} />
@@ -101,22 +110,54 @@ export const Wall = (props: RenderComponentProps) => {
     const { wall } = useMyLoader()
     return <AssetPreload {...props} model={wall} castShadow={false} receiveShadow={true} />
 }
-
 export const Grass = (props: RenderComponentProps) => {
     const { grass } = useMyLoader()
     return <AssetPreload {...props} model={grass} castShadow={true} receiveShadow={true} />
 }
-
+export const Water = (props: RenderComponentProps) => {
+    const { water } = useMyLoader()
+    return <AssetPreload {...props} model={water} castShadow={true} receiveShadow={true} />
+}
 export const Ice = (props: RenderComponentProps) => {
     const { ice } = useMyLoader()
     return <AssetPreload {...props} model={ice} castShadow={false} receiveShadow={true} />
 }
-
 export const Button = (props: RenderComponentProps) => {
     const { button } = useMyLoader()
     return <AssetPreload {...props} model={button} castShadow={false} receiveShadow={true} />
 }
-
+export const Door = (props: RenderComponentProps) => {
+    const { door } = useMyLoader()
+    return <AssetPreload {...props} model={door} castShadow={true} receiveShadow={true} />
+}
+export const Pipe = (props: RenderComponentProps) => {
+    const { pipe } = useMyLoader()
+    return <AssetPreload {...props} model={pipe} castShadow={false} receiveShadow={true} />
+}
+export const PipeLeft = (props: RenderComponentProps) => {
+    const { pipeLeft } = useMyLoader()
+    return <AssetPreload {...props} model={pipeLeft} castShadow={false} receiveShadow={true} />
+}
+export const PipeRight = (props: RenderComponentProps) => {
+    const { pipeRight } = useMyLoader()
+    return <AssetPreload {...props} model={pipeRight} castShadow={false} receiveShadow={true} />
+}
+export const PipeDown = (props: RenderComponentProps) => {
+    const { pipeDown } = useMyLoader()
+    return <AssetPreload {...props} model={pipeDown} castShadow={false} receiveShadow={true} />
+}
+export const PipeUp = (props: RenderComponentProps) => {
+    const { pipeUp } = useMyLoader()
+    return <AssetPreload {...props} model={pipeUp} castShadow={false} receiveShadow={true} />
+}
+export const PipePlace = (props: RenderComponentProps) => {
+    const { pipePlace } = useMyLoader()
+    return <AssetPreload {...props} model={pipePlace} castShadow={false} receiveShadow={true} />
+}
+export const PipeElement = (props: RenderComponentProps) => {
+    const { pipeElement } = useMyLoader()
+    return <AssetPreload {...props} model={pipeElement} castShadow={false} receiveShadow={true} />
+}
 export const createTrigger = (color: string) => ({ instance }: RenderComponentProps) => {
     const { xy, elevation, rotation } = instance
 
@@ -144,7 +185,7 @@ interface PreloadAssetAnimateProps extends AssetsProps {
 
 const AssetPreload = ({
     model,
-    instance: { xy, elevation, rotation },
+    instance: { xy, elevation, rotation, data },
     castShadow = true,
     receiveShadow = true,
     elevationFix = 0,
@@ -154,9 +195,13 @@ const AssetPreload = ({
         rot: [0, vectorToThree(rotation), 0],
     })
 
-    if (castShadow) model.children[0].castShadow = true
-    if (receiveShadow) model.children[0].receiveShadow = true
+    if (castShadow) model.children.map(el => (el.castShadow = true))
+    if (receiveShadow) model.children.map(el => (el.receiveShadow = true))
     model.scale.set(0.5, 0.5, 0.5)
+    if (model.children.length > 1) {
+        data.open && model.children[1].position.setY(2)
+        data.active && model.children[1].position.setX(-0.2)
+    }
     return <animated.primitive object={model} position={anim.pos} rotation={anim.rot} />
 }
 

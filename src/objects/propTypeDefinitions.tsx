@@ -14,6 +14,14 @@ import {
     Arrow,
     Button,
     createTrigger,
+    Pipe,
+    PipeLeft,
+    PipeRight,
+    PipePlace,
+    PipeUp,
+    PipeDown,
+    PipeElement,
+    Door,
 } from './models/Items'
 import { reverseVector } from '../helpers'
 import { uniqueId, sample } from 'lodash'
@@ -51,6 +59,58 @@ export const propTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
         Component: propDebugComponent('gray'),
         Component3d: Rock,
     },
+    [ObjectTypes.Pipe]: {
+        name: 'Pipe',
+        height: () => 0.75,
+        Component: propDebugComponent('darkgray'),
+        Component3d: Pipe,
+    },
+
+    [ObjectTypes.PipeLeft]: {
+        name: 'PipeLeft',
+        height: () => 0.75,
+        Component: propDebugComponent('darkgray'),
+        Component3d: PipeLeft,
+    },
+    [ObjectTypes.PipeRight]: {
+        name: 'PipeRight',
+        height: () => 0.75,
+        Component: propDebugComponent('darkgray'),
+        Component3d: PipeRight,
+    },
+    [ObjectTypes.PipeUp]: {
+        name: 'PipeUp',
+        height: () => 0.75,
+        Component: propDebugComponent('darkgray'),
+        Component3d: PipeUp,
+    },
+    [ObjectTypes.PipeDown]: {
+        name: 'PipeDown',
+        height: () => 0.75,
+        Component: propDebugComponent('darkgray'),
+        Component3d: PipeDown,
+    },
+    [ObjectTypes.PipeElement]: {
+        name: 'PipeElement',
+        height: () => 0.75,
+        push: ({ self, vector }) => [move({ targetId: self.id, vector })],
+        Component: propDebugComponent('yellow'),
+        Component3d: PipeElement,
+    },
+    [ObjectTypes.PipePlace]: {
+        name: 'PipePlace',
+        height: () => 0.14,
+        enter: ({ who, state, self }) => {
+            if (who.type === 'PipeElement') {
+                play('Engine_start')
+                return [win()]
+            }
+            return []
+        },
+        Component: propDebugComponent('darkgray'),
+        Component3d: PipePlace,
+    },
+
     [ObjectTypes.Box]: {
         name: 'Box',
         height: () => 1,
@@ -79,9 +139,9 @@ export const propTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
                 console.warn('Missing Button data.targetId')
                 return []
             }
-            const toggle = !self.data.open
+            const toggle = !self.data.active
             return [
-                setObjectData({ targetId: self.id, data: { open: toggle } }),
+                setObjectData({ targetId: self.id, data: { active: toggle } }),
                 setObjectData({ targetId: self.data.targetId, data: { open: toggle } }),
             ]
         },
@@ -103,17 +163,17 @@ export const propTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
         Component3d: createTrigger('#ABC123'),
     },
 
-    [ObjectTypes.Dor]: {
-        name: 'Dor',
+    [ObjectTypes.Door]: {
+        name: 'Door',
         height: instance => {
             return instance.data.open ? 0 : 1.5
         },
-        push: ({ force, self }) => {
-            if (force && force >= 50) return [remove(self.id)]
-            return []
-        },
+        // push: ({ force, self }) => {
+        //     if (force && force >= 50) return [remove(self.id)]
+        //     return []
+        // },
         Component: propDebugComponent('purple'),
-        Component3d: Fence,
+        Component3d: Door,
     },
 
     [ObjectTypes.Cannon]: {

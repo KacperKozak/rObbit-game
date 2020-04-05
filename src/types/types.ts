@@ -10,14 +10,24 @@ export enum ObjectTypes {
     WinTrigger = 'WinTrigger',
 
     Grass = 'Grass',
+    Water = 'Water',
     RockFloor = 'RockFloor',
     Wall = 'Wall',
     Box = 'Box',
     BigRock = 'BigRock',
+
+    Pipe = 'Pipe',
+    PipeLeft = 'PipeLeft',
+    PipeRight = 'PipeRight',
+    PipePlace = 'PipePlace',
+    PipeUp = 'PipeUp',
+    PipeDown = 'PipeDown',
+    PipeElement = 'PipeElement',
+
     Fence = 'Fence',
 
     Button = 'Button',
-    Dor = 'Dor',
+    Door = 'Door',
     Ice = 'Ice',
 
     Crossbow = 'Crossbow',
@@ -44,6 +54,7 @@ export interface ObjectInstanceData {
     hasGrapple: boolean
     info: string
     open: boolean
+    active: boolean
     targetId: string
 }
 
