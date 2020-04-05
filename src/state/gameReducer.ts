@@ -1,25 +1,15 @@
-import { uniqueId } from 'lodash'
 import { Action } from 'redux'
 import actionCreatorFactory from 'typescript-fsa'
 import { reducerWithInitialState } from 'typescript-fsa-reducers'
-import { PROJECTILE_ELEVATION, FALL_ELEVATION } from '../config'
+import { FALL_ELEVATION } from '../config'
 import { arrMerge, findById } from '../helpers'
-import { createMap } from '../mocks/mapMock'
 import { getDefinition } from '../objects/definitions'
-import {
-    ActionEvent,
-    ObjectInstance,
-    ObjectInstanceData,
-    ObjectTypes,
-    Vector2,
-    XY,
-    MapData,
-} from '../types/types'
+import { ActionEvent, MapData, ObjectInstance, ObjectInstanceData, Vector2 } from '../types/types'
+import { equipResolver } from './resolvers/equipResolver'
 import { flyResolver } from './resolvers/flyResolver'
+import { grappleResolver } from './resolvers/grappleResolver'
 import { moveResolver } from './resolvers/moveResolver'
 import { rotateResolver } from './resolvers/rotateResolver'
-import { grappleResolver } from './resolvers/grappleResolver'
-import { equipResolver } from './resolvers/equipResolver'
 
 export interface GameState {
     queueStared: boolean
@@ -51,6 +41,7 @@ const gameAction = actionCreatorFactory('GG')
 const queueAction = actionCreatorFactory('QUEUE')
 
 export const loadMap = gameAction<MapData>('LOAD_MAP')
+export const unloadMap = gameAction('UNLOAD_MAP')
 export const reset = gameAction('RESET')
 export const win = gameAction('WIN')
 export const showWinDialog = gameAction('SHOW_WIN_DIALOG')
@@ -97,6 +88,7 @@ export const gameReducer = reducerWithInitialState(initialState)
             cleanObjectsState: objects,
         }),
     )
+    .case(unloadMap, (): GameState => initialState)
     .case(
         reset,
         (state): GameState => ({

@@ -14,6 +14,7 @@ import {
     projectile,
     reset,
     rotate,
+    unloadMap,
 } from '../state/gameReducer'
 import { PLAYER_ID } from '../types/consts'
 import { MapData, ObjectInstance, ObjectTypes, Vector2 } from '../types/types'
@@ -85,6 +86,9 @@ export const useGame = () => {
     const triggerLoadMap = (map: MapData) => {
         dispatch(loadMap(map))
     }
+    const triggerUnloadMap = () => {
+        dispatch(unloadMap())
+    }
 
     const triggerReset = () => {
         dispatch(reset())
@@ -95,6 +99,7 @@ export const useGame = () => {
         player,
 
         loadMap: triggerLoadMap,
+        unloadMap: triggerUnloadMap,
         reset: triggerReset,
 
         move: triggerMove,
