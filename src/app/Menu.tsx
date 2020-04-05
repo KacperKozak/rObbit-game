@@ -6,6 +6,7 @@ import { useGame } from '../hooks/useGame'
 import { useKeyboardEvent } from '../hooks/useKeyboardEvent'
 import { DOWN, LEFT, RIGHT, UP } from '../types/consts'
 import { DebugView } from './DebugView'
+import styled from 'styled-components'
 
 export const Menu = () => {
     const {
@@ -24,16 +25,12 @@ export const Menu = () => {
     const { player } = useGame()
     const { editMode, toggleEditMode } = useEditor()
 
-    // useEffect(() => {
-    //     const KEY = 'lastMapId'
-    //     if (mapId) {
-    //         localStorage.setItem(KEY, mapId)
-    //     } else {
-    //         const lastMapId = localStorage.getItem(KEY)
-    //         const lastMap = maps.find(map => map.id === lastMapId)
-    //         lastMap && loadMap(lastMap)
-    //     }
-    // }, [mapId])
+    const nextMap = () => {
+        const currentIndex = maps.findIndex(m => m.id === mapId)
+        const nextMap = maps[currentIndex + 1]
+        if (nextMap) loadMap(nextMap)
+        else unloadMap()
+    }
 
     useKeyboardEvent('m', toggleEditMode, [editMode])
 
@@ -44,6 +41,7 @@ export const Menu = () => {
 
     useKeyboardEvent('r', reset)
     useKeyboardEvent('q', unloadMap)
+    useKeyboardEvent('enter', () => winDialog && nextMap(), [winDialog])
 
     useKeyboardEvent('w', up, [up])
     useKeyboardEvent('s', down, [down])
@@ -63,9 +61,7 @@ export const Menu = () => {
         '*',
         event => {
             const index = +event.key
-            if (!Number.isNaN(index) && maps[index]) {
-                loadMap(maps[index])
-            }
+            if (!Number.isNaN(index) && maps[index]) loadMap(maps[index])
         },
         [],
     )
@@ -100,29 +96,9 @@ export const Menu = () => {
                         </button>
                     ))}
             </div>
-            {mapName && (
-                <div
-                    style={{
-                        position: 'absolute',
-                        zIndex: 5,
-                        top: 0,
-                        right: 10,
-                    }}
-                >
-                    <h1>Map: {mapName}</h1>
-                </div>
-            )}
+            {mapName && <MapName>Map: {mapName}</MapName>}
             {mapId && player && (
-                <div
-                    style={{
-                        position: 'absolute',
-                        zIndex: 5,
-                        bottom: 0,
-                        left: 0,
-                        right: 0,
-                        textAlign: 'center',
-                    }}
-                >
+                <ControlsWrapper>
                     <button onClick={left}>
                         <strong>←</strong>
                         <small>{`[A]`}</small>
@@ -152,14 +128,34 @@ export const Menu = () => {
                             Fire <small>{'[SPACE]'}</small>
                         </button>
                     )}
-                </div>
+                </ControlsWrapper>
             )}
             {winDialog && (
                 <Dialog>
                     <h1>Win!</h1>
-                    <button onClick={reset}>Next map</button>
+                    <button onClick={nextMap}>
+                        Next map <small>[enter]</small>
+                    </button>
                 </Dialog>
             )}
         </>
     )
 }
+
+const MapName = styled.div`
+    position: absolute;
+    z-index: 5;
+    top: 0;
+    right: 0;
+    padding: 5px 5px 0 0;
+    font-size: 18px;
+`
+
+const ControlsWrapper = styled.div`
+    position: absolute;
+    z-index: 5;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+`
