@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/alpha-mechanical/static/css/main.b21fe41e.chunk.css",
-    "main.js": "/alpha-mechanical/static/js/main.4191ca04.chunk.js",
-    "main.js.map": "/alpha-mechanical/static/js/main.4191ca04.chunk.js.map",
+    "main.js": "/alpha-mechanical/static/js/main.c55d9361.chunk.js",
+    "main.js.map": "/alpha-mechanical/static/js/main.c55d9361.chunk.js.map",
     "runtime-main.js": "/alpha-mechanical/static/js/runtime-main.0fb3ba15.js",
     "runtime-main.js.map": "/alpha-mechanical/static/js/runtime-main.0fb3ba15.js.map",
-    "static/js/2.5b2091d0.chunk.js": "/alpha-mechanical/static/js/2.5b2091d0.chunk.js",
-    "static/js/2.5b2091d0.chunk.js.map": "/alpha-mechanical/static/js/2.5b2091d0.chunk.js.map",
+    "static/js/2.d9a4d774.chunk.js": "/alpha-mechanical/static/js/2.d9a4d774.chunk.js",
+    "static/js/2.d9a4d774.chunk.js.map": "/alpha-mechanical/static/js/2.d9a4d774.chunk.js.map",
     "index.html": "/alpha-mechanical/index.html",
-    "precache-manifest.e8b8ef70f7a746ec4bb20c9197588459.js": "/alpha-mechanical/precache-manifest.e8b8ef70f7a746ec4bb20c9197588459.js",
+    "precache-manifest.d24afb5dce6227c9a3c9c4cb925c666a.js": "/alpha-mechanical/precache-manifest.d24afb5dce6227c9a3c9c4cb925c666a.js",
     "service-worker.js": "/alpha-mechanical/service-worker.js",
     "static/css/main.b21fe41e.chunk.css.map": "/alpha-mechanical/static/css/main.b21fe41e.chunk.css.map",
-    "static/js/2.5b2091d0.chunk.js.LICENSE.txt": "/alpha-mechanical/static/js/2.5b2091d0.chunk.js.LICENSE.txt",
+    "static/js/2.d9a4d774.chunk.js.LICENSE.txt": "/alpha-mechanical/static/js/2.d9a4d774.chunk.js.LICENSE.txt",
     "static/media/1.png": "/alpha-mechanical/static/media/1.95cda525.png",
     "static/media/2.png": "/alpha-mechanical/static/media/2.2492224d.png",
     "static/media/3.png": "/alpha-mechanical/static/media/3.730fc322.png",
@@ -20,12 +20,13 @@
     "static/media/6.png": "/alpha-mechanical/static/media/6.0727068f.png",
     "static/media/7.png": "/alpha-mechanical/static/media/7.388f7bd1.png",
     "static/media/8.png": "/alpha-mechanical/static/media/8.5a21b17c.png",
-    "static/media/9.png": "/alpha-mechanical/static/media/9.ad09a8cc.png"
+    "static/media/9.png": "/alpha-mechanical/static/media/9.ad09a8cc.png",
+    "static/media/intro.mp4": "/alpha-mechanical/static/media/intro.cc1ac876.mp4"
   },
   "entrypoints": [
     "static/js/runtime-main.0fb3ba15.js",
-    "static/js/2.5b2091d0.chunk.js",
+    "static/js/2.d9a4d774.chunk.js",
     "static/css/main.b21fe41e.chunk.css",
-    "static/js/main.4191ca04.chunk.js"
+    "static/js/main.c55d9361.chunk.js"
   ]
 }
