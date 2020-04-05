@@ -41,7 +41,7 @@ export const Menu = () => {
 
     useKeyboardEvent('r', reset)
     useKeyboardEvent('q', unloadMap)
-    useKeyboardEvent('enter', () => winDialog && nextMap(), [winDialog])
+    useKeyboardEvent(winDialog && 'enter', nextMap, [winDialog])
 
     useKeyboardEvent('w', up, [up])
     useKeyboardEvent('s', down, [down])
@@ -61,7 +61,7 @@ export const Menu = () => {
         '*',
         event => {
             const index = +event.key
-            if (!Number.isNaN(index) && maps[index]) loadMap(maps[index])
+            if (index && maps[index]) loadMap(maps[index])
         },
         [],
     )
@@ -91,9 +91,9 @@ export const Menu = () => {
                 )}
                 {!mapId &&
                     maps.map(map => (
-                        <button key={map.id} onClick={() => loadMap(map)}>
+                        <LevelButton key={map.id} onClick={() => loadMap(map)}>
                             {map.name}
-                        </button>
+                        </LevelButton>
                     ))}
             </div>
             {mapName && <MapName>Map: {mapName}</MapName>}
@@ -141,6 +141,20 @@ export const Menu = () => {
         </>
     )
 }
+
+const LevelButton = styled.div`
+    cursor: pointer;
+    background: none;
+    color: rgba(205, 236, 255, 0.726);
+    font-size: 30px;
+    border: 1px solid currentColor;
+    padding: 20px 30px;
+    margin: 4px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    display: inline-block;
+    vertical-align: middle;
+`
 
 const MapName = styled.div`
     position: absolute;

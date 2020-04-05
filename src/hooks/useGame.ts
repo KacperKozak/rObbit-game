@@ -23,18 +23,12 @@ export const useGame = () => {
     const state = useSelector((state: GameStateAware) => state.game)
     const dispatch = useDispatch()
     const player = findById(state.objects, PLAYER_ID)!
-    const rdy = state.queueStared && player
-
-    if (!player) console.warn(`Player don't exists`)
+    const rdy = !state.queueStared && !!player
 
     const triggerMove = (vector: Vector2) => {
-        if (rdy) return
+        if (!rdy) return
 
         const actions: Action[] = []
-
-        if (!player) {
-            return console.warn(`Player don't exists`)
-        }
 
         if (!isEqual(player.rotation, vector)) {
             // Hmm it's ok without enqueue?
@@ -47,12 +41,12 @@ export const useGame = () => {
     }
 
     const triggerEquip = () => {
-        if (rdy) return
+        if (!rdy) return
         dispatch(enqueue(equip({ targetId: player.id })))
     }
 
     const triggerGrapple = () => {
-        if (rdy) return
+        if (!rdy) return
 
         if (!player.data.hasGrapple) {
             play('Alert_NO')
@@ -63,7 +57,7 @@ export const useGame = () => {
     }
 
     const triggerFire = () => {
-        if (rdy) return
+        if (!rdy) return
         const { id, xy, rotation, elevation, data } = player
 
         if (!data.hasCannon) {
