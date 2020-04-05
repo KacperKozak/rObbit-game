@@ -1,15 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react'
+import styled from 'styled-components'
+import { getAudio } from '../audio/play'
+import { Button, ButtonBlock } from '../components/Button'
 import { Dialog } from '../components/Dialog'
 import { maps } from '../data/maps'
 import { useEditor } from '../hooks/useEditor'
 import { useGame } from '../hooks/useGame'
 import { useKeyboardEvent } from '../hooks/useKeyboardEvent'
+import { useLocal } from '../hooks/useLocal'
 import { DOWN, LEFT, RIGHT, UP } from '../types/consts'
 import { DebugView } from './DebugView'
-import styled from 'styled-components'
-import { useLocal } from '../hooks/useLocal'
-import { Button, ButtonBlock } from '../components/Button'
-import { getAudio } from '../audio/play'
+import { Intro } from './intro/Intro'
+import { Authors } from './Authors'
 
 export const Menu = () => {
     const {
@@ -29,6 +31,7 @@ export const Menu = () => {
     const { editMode, toggleEditMode } = useEditor()
     const { isCompleted } = useLocal()
 
+    const [introPlayed, setIntroPlayed] = useState(false)
     const [gameStarted, setGameStarted] = useState(false)
 
     const musicRef = useRef(getAudio('Music', 0.3))
@@ -36,7 +39,7 @@ export const Menu = () => {
     const playMusic = !mapId || winDialog
 
     useEffect(() => {
-        if (!gameStarted) return
+        if (!gameStarted || !introPlayed) return
         if (playMusic) {
             droneRef.current.pause()
 
@@ -52,7 +55,7 @@ export const Menu = () => {
             droneRef.current.addEventListener('ended', onEnd)
             return () => droneRef.current.removeEventListener('ended', onEnd)
         }
-    }, [playMusic, gameStarted])
+    }, [playMusic, gameStarted, introPlayed])
 
     const nextMap = () => {
         const currentIndex = maps.findIndex(m => m.id === mapId)
@@ -97,10 +100,10 @@ export const Menu = () => {
 
     return (
         <>
+            {!introPlayed && gameStarted && <Intro onEnded={() => setIntroPlayed(true)} />}
             {!mapId && (
                 <>
                     <Title>Alpha Mechanical</Title>
-
                     {gameStarted ? (
                         <LevelWrapper>
                             {maps.map(map => (
@@ -176,6 +179,7 @@ export const Menu = () => {
                     </Button>
                 </Dialog>
             )}
+            {!mapId && <Authors />}
         </>
     )
 }
@@ -190,7 +194,7 @@ const Completed = styled.span`
 const StartButtonWrapper = styled.div`
     display: flex;
     justify-content: center;
-    padding-top: 200px;
+    padding: 120px 0;
 `
 
 const StartButton = styled(Button)`
