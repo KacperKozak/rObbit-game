@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef, useMemo, useState } from 'react'
 import { useLoader, useFrame } from 'react-three-fiber'
 import { GLTFLoader, GLTF } from 'three/examples/jsm/loaders/GLTFLoader'
 import { RenderComponentProps, Vector2 } from '../../types/types'
@@ -32,29 +32,29 @@ const useMyLoader = () => {
     const pipeUp = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/pipe-down.gltf`)
     const pipeDown = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/pipe-down.gltf`)
     return {
-        // robot: robot.scene.clone(),
-        rocket: rocket.scene.clone(),
-        cannon: cannon.scene.clone(),
-        box: box.scene.clone(),
-        rock: rock.scene.clone(),
-        fence: fence.scene.clone(),
-        arrow: arrow.scene.clone(),
-        crossbow: crossbow.scene.clone(),
-        graund: graund.scene.clone(),
-        wall: wall.scene.clone(),
-        grass: grass.scene.clone(),
-        water: water.scene.clone(),
-        ice: ice.scene.clone(),
-        button: button.scene.clone(),
-        door: door.scene.clone(),
-        wallMetal: wallMetal.scene.clone(),
-        pipe: pipe.scene.clone(),
-        pipeLeft: pipeLeft.scene.clone(),
-        pipeRight: pipeRight.scene.clone(),
-        pipePlace: pipePlace.scene.clone(),
-        pipeElement: pipeElement.scene.clone(),
-        pipeUp: pipeUp.scene.clone(),
-        pipeDown: pipeDown.scene.clone(),
+        // robot: robot.scene,
+        rocket: rocket.scene,
+        cannon: cannon.scene,
+        box: box.scene,
+        rock: rock.scene,
+        fence: fence.scene,
+        arrow: arrow.scene,
+        crossbow: crossbow.scene,
+        graund: graund.scene,
+        wall: wall.scene,
+        grass: grass.scene,
+        water: water.scene,
+        ice: ice.scene,
+        button: button.scene,
+        door: door.scene,
+        wallMetal: wallMetal.scene,
+        pipe: pipe.scene,
+        pipeLeft: pipeLeft.scene,
+        pipeRight: pipeRight.scene,
+        pipePlace: pipePlace.scene,
+        pipeElement: pipeElement.scene,
+        pipeUp: pipeUp.scene,
+        pipeDown: pipeDown.scene,
     }
 }
 const useAnimationLoader = () => {
@@ -68,10 +68,7 @@ const useAnimationLoader = () => {
         boom,
     }
 }
-export const Player = (props: RenderComponentProps) => {
-    // const { robot } = useMyLoader()
-    return <AnimatieAsset {...props} />
-}
+
 export const Box = (props: RenderComponentProps) => {
     const { box } = useMyLoader()
     return <AssetPreload {...props} model={box} />
@@ -196,23 +193,28 @@ const AssetPreload = ({
     receiveShadow = true,
     elevationFix = 0,
 }: PreloadAssetProps) => {
+    const clonedModel = useMemo(() => {
+        const m = model.clone()
+        m.scale.set(0.5, 0.5, 0.5)
+        if (castShadow) m.children.map(el => (el.castShadow = true))
+        if (receiveShadow) m.children.map(el => (el.receiveShadow = true))
+        if (m.children.length > 1) {
+            // data.open && m.children[1].position.setZ(1.5)
+            data.open && m.children[1].position.setY(2)
+            data.active && m.children[1].position.setX(-0.2)
+        }
+        return m
+    }, [model, castShadow, receiveShadow, data])
+
     const anim = useSpring({
         pos: [xy[0], elevation + elevationFix, xy[1]],
         rot: [0, vectorToThree(rotation), 0],
     })
 
-    if (castShadow) model.children.map(el => (el.castShadow = true))
-    if (receiveShadow) model.children.map(el => (el.receiveShadow = true))
-    model.scale.set(0.5, 0.5, 0.5)
-    if (model.children.length > 1) {
-        // data.open && model.children[1].position.setZ(1.5)
-        data.open && model.children[1].position.setY(2)
-        data.active && model.children[1].position.setX(-0.2)
-    }
-    return <animated.primitive object={model} position={anim.pos} rotation={anim.rot} />
+    return <animated.primitive object={clonedModel} position={anim.pos} rotation={anim.rot} />
 }
 
-const AnimatieAsset = ({
+export const Player = ({
     instance: { xy, elevation, rotation, data },
     castShadow = true,
     receiveShadow = true,
@@ -222,31 +224,39 @@ const AnimatieAsset = ({
         rot: [0, vectorToThree(rotation), 0],
     })
 
-    const robot = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/robot_model.gltf`)
-    const model = robot.scene.clone()
-    model.scale.set(0.5, 0.5, 0.5)
-    if (castShadow) model.children.map(el => (el.castShadow = true))
-    if (receiveShadow) model.children.map(el => (el.receiveShadow = true))
+    const models = useMyLoader()
+    const robotModel = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/robot_model.gltf`)
 
-    // const { jump } = useAnimationLoader()
     const { boring } = useAnimationLoader()
-    // const { push } = useAnimationLoader()
 
-    const boringMixer = new AnimationMixer(boring.scene)
-    boring.animations.forEach(clip => {
-        boringMixer.clipAction(clip, model).play()
-    })
+    const { robot, cannon, crossbow, animMixer } = useMemo(() => {
+        const cannon = models.cannon.clone()
+        const crossbow = models.crossbow.clone()
+        const robot = robotModel.scene.clone()
+        const animMixer = new AnimationMixer(boring.scene)
+        robot.scale.set(0.5, 0.5, 0.5)
+        robot.children.map(el => (el.castShadow = true))
+        robot.children.map(el => (el.receiveShadow = true))
+
+        boring.animations.forEach(clip => {
+            animMixer.clipAction(clip, robot).play()
+        })
+
+        return {
+            cannon,
+            crossbow,
+            robot,
+            animMixer,
+        }
+    }, [models.cannon, models.crossbow, castShadow, receiveShadow])
 
     useFrame(() => {
-        boringMixer.update(0.02)
+        animMixer.update(0.02)
     })
-
-    const { cannon } = useMyLoader()
-    const { crossbow } = useMyLoader()
 
     return (
         <animated.group position={anim.pos} rotation={anim.rot}>
-            <primitive object={model}>
+            <primitive object={robot}>
                 <primitive object={cannon} visible={!!data.hasCannon} />
                 <primitive object={crossbow} visible={!!data.hasGrapple} />
             </primitive>
@@ -265,21 +275,23 @@ const AnimateSelfAsset = ({
         rot: [0, vectorToThree(rotation), 0],
     })
 
-    const gltfScene = animateModel.scene.clone()
-    // useEffect(() => {
-    if (castShadow) gltfScene.children[0].castShadow = true
-    if (receiveShadow) gltfScene.children[0].receiveShadow = true
+    const { gltfScene, mixer } = useMemo(() => {
+        const gltfScene = animateModel.scene.clone()
+        gltfScene.scale.set(0.6, 0.6, 0.6)
 
-    gltfScene.scale.set(0.6, 0.6, 0.6)
+        if (castShadow) gltfScene.children[0].castShadow = true
+        if (receiveShadow) gltfScene.children[0].receiveShadow = true
 
-    const mixer = new AnimationMixer(gltfScene)
+        const mixer = new AnimationMixer(gltfScene)
+        animateModel.animations.forEach((clip, index) => {
+            const animation = mixer.clipAction(clip, gltfScene.children[index])
+            animation.setLoop(LoopOnce, 1)
+            animation.play()
+        })
 
-    animateModel.animations.forEach((clip, index) => {
-        const animation = mixer.clipAction(clip, gltfScene.children[index])
-        animation.setLoop(LoopOnce, 1)
-        animation.play()
-    })
-    // }, [xy])
+        return { gltfScene, mixer }
+    }, [castShadow, receiveShadow, animateModel])
+
     useFrame(() => {
         mixer.update(0.03)
     })
