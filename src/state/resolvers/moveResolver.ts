@@ -4,7 +4,7 @@ import { applyVector, asArray, findById, findByXY } from '../../helpers'
 import { getDefinition } from '../../objects/definitions'
 import { PLAYER_ID } from '../../types/consts'
 import { ActionEvent, ObjectInstance, Vector2 } from '../../types/types'
-import { fall, GameState, lose, remove, updateObject } from '../gameReducer'
+import { fall, GameState, lose, removeObject, updateObject } from '../gameReducer'
 import { ResolverResults } from './types'
 
 export const moveResolver = (
@@ -31,7 +31,7 @@ export const moveResolver = (
         addActions([
             updateObject({ targetId, objectValues: { xy: newXY } }, { delay: FALL_TRIGGER_DELAY }),
             fall({ targetId }, { delay: FALL_REMOVE_DELAY }),
-            targetId === PLAYER_ID ? lose() : remove(targetId),
+            targetId === PLAYER_ID ? lose() : removeObject(targetId),
         ])
         return { objects, actions }
     }
