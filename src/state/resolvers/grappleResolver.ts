@@ -36,6 +36,16 @@ export const grappleResolver = (state: GameState, targetId: string): ResolverRes
         data: {},
     }
 
+    const addGrappleAnimation = () => {
+        addActions(tmpSpawn({ instance: projectileInstance }))
+        addActions(
+            updateObject(
+                { targetId: projectileInstance.id, objectValues: { xy } },
+                { delay: GRAPPLE_MOVE_DELAY },
+            ),
+        )
+    }
+
     const vector = target.rotation
     let xy = target.xy
 
@@ -50,13 +60,7 @@ export const grappleResolver = (state: GameState, targetId: string): ResolverRes
 
         for (const obj of newXYObjects) {
             if (isTooHight(obj, target)) {
-                addActions(tmpSpawn({ instance: projectileInstance }))
-                addActions(
-                    updateObject(
-                        { targetId: projectileInstance.id, objectValues: { xy } },
-                        { delay: GRAPPLE_MOVE_DELAY },
-                    ),
-                )
+                addGrappleAnimation()
                 addActions(
                     move({
                         targetId,
@@ -69,7 +73,10 @@ export const grappleResolver = (state: GameState, targetId: string): ResolverRes
         }
     }
 
-    return abortResults
+    // miss
+    addGrappleAnimation()
+
+    return { objects, actions }
 }
 
 const isTooHight = (ontoObj: ObjectInstance, flyer: ObjectInstance) => {
