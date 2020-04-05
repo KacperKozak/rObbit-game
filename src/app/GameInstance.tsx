@@ -1,6 +1,7 @@
 import React, { Suspense, useEffect } from 'react'
 import { Canvas } from 'react-three-fiber'
 import { PCFSoftShadowMap } from 'three'
+import { maps } from '../data/maps'
 import { useEditor } from '../hooks/useEditor'
 import { useGame } from '../hooks/useGame'
 import { useKeyboardEvent } from '../hooks/useKeyboardEvent'
@@ -8,15 +9,9 @@ import { getDefinition } from '../objects/definitions'
 import { DOWN, LEFT, RIGHT, UP } from '../types/consts'
 import { DebugView } from './DebugView'
 import { Environment } from './Environment'
-import map1 from '../data/map1.json'
-import map2 from '../data/map2.json'
-import { ObjectInstance } from '../types/types'
-import { CAMERA_OFFSET } from '../config'
-import { maps } from '../data/maps'
 
 export const GameInstance = () => {
     const { objects, mapId, mapName, move, equip, grapple, fire, loadMap, reset } = useGame()
-    // a ja szukam jakiegos objaect map :(
     const { editMode, toggleEditMode } = useEditor()
 
     useEffect(() => {

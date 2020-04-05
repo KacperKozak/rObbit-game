@@ -12,7 +12,7 @@ export const moveResolver = (
     targetId: string,
     vector: Vector2,
 ): ResolverResults => {
-    let objects = state.objects
+    const { objects } = state
     const actions: Action[] = []
     const addActions = (a: Action | Action[] = []) => actions.push(...asArray(a))
 
@@ -47,20 +47,28 @@ export const moveResolver = (
         }
     }
 
-    // Move target to new location
-    objects = objects.map(obj => {
-        if (obj !== target) return obj
-        return { ...obj, xy: newXY, elevation: maxElevation(newXYObjects) }
-    })
+    const newElevation = maxElevation(newXYObjects)
 
     // Post enter events
     for (const obj of newXYObjects) {
         const objDef = getDefinition(obj.type)
+
+        // skip when we are higher than this object eg. box in water
+        if (newElevation > obj.elevation + objDef.height(obj)) {
+            continue
+        }
+
         const event: ActionEvent = { who: target, vector, state, self: obj }
         addActions(objDef.enter?.(event))
     }
 
-    return { objects, actions }
+    // Move target to new location
+    const newObjects = objects.map(obj => {
+        if (obj !== target) return obj
+        return { ...obj, xy: newXY, elevation: newElevation }
+    })
+
+    return { objects: newObjects, actions }
 }
 
 const maxElevation = (objects: ObjectInstance[]): number =>
