@@ -1,8 +1,9 @@
+import { uniqueId } from 'lodash'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { GameStateAware, updateObject, addObject, removeObject } from '../state/gameReducer'
+import { randomRotation } from '../helpers'
+import { addObject, GameStateAware, removeObject, updateObject } from '../state/gameReducer'
 import { ObjectInstance, ObjectTypes } from '../types/types'
-import { uniqueId } from 'lodash'
 
 export const useEditor = () => {
     const state = useSelector((state: GameStateAware) => state.game)
@@ -24,7 +25,7 @@ export const useEditor = () => {
             type,
             id: partialInstance.id || uniqueId(type + '-'),
             xy: [0, 0],
-            rotation: [0, 0],
+            rotation: randomRotation(),
             zIndex: 0,
             aIndex: 0,
             data: {},

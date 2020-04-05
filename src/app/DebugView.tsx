@@ -75,10 +75,14 @@ export const Cell = ({ objects, xy }: CellProps) => {
                 {objects.map(obj => (
                     <CellObj key={obj.id}>
                         <Remove onClick={() => remove(obj.id)} />
-                        <small>{obj.id}</small>
+                        <TextInput obj={obj} field="id" onChange={update(obj.id)} />
                         <TypeSelect obj={obj} onChange={update(obj.id)} />
                         <ElevationInput obj={obj} onChange={update(obj.id)} />
                         <RotationInput obj={obj} onChange={update(obj.id)} />
+                        zIndex:
+                        <NumberInput obj={obj} field="zIndex" onChange={update(obj.id)} />
+                        aIndex:
+                        <NumberInput obj={obj} field="aIndex" onChange={update(obj.id)} />
                         {!isEmpty(obj.data) && <pre>{JSON.stringify(obj.data, null, 1)}</pre>}
                     </CellObj>
                 ))}
@@ -127,10 +131,45 @@ const Remove = styled.div`
 `
 
 const CellContainer = styled.div`
-    width: ${size * 3}px;
+    width: ${size * 1.5}px;
     min-height: ${size}px;
     border: 1px solid #333;
 `
+
+interface TextInputProps {
+    obj: ObjectInstance
+    field: keyof ObjectInstance
+    onChange(partial: Partial<ObjectInstance>): void
+}
+
+const TextInput = ({ obj, field, onChange }: TextInputProps) => {
+    return (
+        <div>
+            <input
+                value={obj[field] as string}
+                onChange={event => onChange({ [field]: event.target.value })}
+            />
+        </div>
+    )
+}
+
+interface NumberInputProps {
+    obj: ObjectInstance
+    field: keyof ObjectInstance
+    onChange(partial: Partial<ObjectInstance>): void
+}
+
+const NumberInput = ({ obj, field, onChange }: NumberInputProps) => {
+    return (
+        <div>
+            <input
+                type="number"
+                value={obj[field] as string}
+                onChange={event => onChange({ [field]: parseInt(event.target.value, 10) })}
+            />
+        </div>
+    )
+}
 
 interface TypeSelectProps {
     obj: ObjectInstance

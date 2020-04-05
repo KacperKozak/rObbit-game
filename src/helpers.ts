@@ -1,4 +1,6 @@
 import { XY, Vector2 } from './types/types'
+import { sample } from 'lodash'
+import { UP, LEFT, RIGHT, DOWN } from './types/consts'
 
 export const reverseVector = (vector: Vector2) => vector.map(v => v * -1) as Vector2
 
@@ -27,3 +29,7 @@ export const vectorDiff = (v1: Vector2, v2: Vector2) => v1.map((v, i) => v2[i] -
 
 export const createArray = (length: number): number[] =>
     Array.from({ length: length + 1 }, (v, i) => i)
+
+export const randomRotation = () => {
+    return sample([UP, LEFT, RIGHT, DOWN])!
+}
