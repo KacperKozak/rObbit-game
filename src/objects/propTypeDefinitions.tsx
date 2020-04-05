@@ -24,6 +24,7 @@ import {
     Player,
     Rock,
     Rocket,
+    WallMetal,
 } from './models/Items'
 
 export const propTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>> = {
@@ -133,8 +134,13 @@ export const propTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
 
     [ObjectTypes.Door]: {
         name: 'Door',
-        height: instance => (instance.data.open ? 0 : 1.5),
+        height: instance => (instance.data.open ? 0 : 1.2),
         Component3d: Door,
+    },
+    [ObjectTypes.WallMetal]: {
+        name: 'WallMetal',
+        height: () => 1.2,
+        Component3d: WallMetal,
     },
 
     [ObjectTypes.Cannon]: {

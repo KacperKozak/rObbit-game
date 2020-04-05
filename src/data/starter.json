@@ -1,0 +1,32 @@
+[
+    {
+        "type": "Button",
+        "xy": [4, 0],
+        "id": "Button36",
+        "elevation": 0.38810411578245607,
+        "rotation": [-1, 0],
+        "zIndex": 2,
+        "aIndex": 10,
+        "data": { "targetId": "Door" }
+    },
+    {
+        "type": "Player",
+        "xy": [1, 1],
+        "id": "player",
+        "elevation": 0.28558303160312076,
+        "rotation": [0, 0],
+        "zIndex": 2,
+        "aIndex": 10,
+        "data": {}
+    },
+    {
+        "type": "Door",
+        "xy": [5, 2],
+        "id": "Door",
+        "elevation": 0.30377694573934266,
+        "rotation": [0, 0],
+        "zIndex": 2,
+        "aIndex": 10,
+        "data": {}
+    }
+]

@@ -28,6 +28,7 @@ export enum ObjectTypes {
 
     Button = 'Button',
     Door = 'Door',
+    WallMetal = 'WallMetal',
     Ice = 'Ice',
 
     Crossbow = 'Crossbow',

@@ -23,6 +23,7 @@ const useMyLoader = () => {
     const ice = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/ice.gltf`)
     const button = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/button.gltf`)
     const door = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/door.gltf`)
+    const wallMetal = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/wall-metal.gltf`)
     const pipe = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/pipe.gltf`)
     const pipeLeft = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/pipe-left.gltf`)
     const pipeRight = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/pipe-right.gltf`)
@@ -46,6 +47,7 @@ const useMyLoader = () => {
         ice: ice.scene.clone(),
         button: button.scene.clone(),
         door: door.scene.clone(),
+        wallMetal: wallMetal.scene.clone(),
         pipe: pipe.scene.clone(),
         pipeLeft: pipeLeft.scene.clone(),
         pipeRight: pipeRight.scene.clone(),
@@ -130,6 +132,10 @@ export const Door = (props: RenderComponentProps) => {
     const { door } = useMyLoader()
     return <AssetPreload {...props} model={door} castShadow={true} receiveShadow={true} />
 }
+export const WallMetal = (props: RenderComponentProps) => {
+    const { wallMetal } = useMyLoader()
+    return <AssetPreload {...props} model={wallMetal} castShadow={true} receiveShadow={true} />
+}
 export const Pipe = (props: RenderComponentProps) => {
     const { pipe } = useMyLoader()
     return <AssetPreload {...props} model={pipe} castShadow={true} receiveShadow={true} />
@@ -199,6 +205,7 @@ const AssetPreload = ({
     if (receiveShadow) model.children.map(el => (el.receiveShadow = true))
     model.scale.set(0.5, 0.5, 0.5)
     if (model.children.length > 1) {
+        // data.open && model.children[1].position.setZ(1.5)
         data.open && model.children[1].position.setY(2)
         data.active && model.children[1].position.setX(-0.2)
     }
@@ -218,8 +225,8 @@ const AnimatieAsset = ({
     const robot = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/robot_model.gltf`)
     const model = robot.scene
     model.scale.set(0.5, 0.5, 0.5)
-    if (castShadow) model.children[0].castShadow = true
-    if (receiveShadow) model.children[0].receiveShadow = true
+    if (castShadow) model.children.map(el => (el.castShadow = true))
+    if (receiveShadow) model.children.map(el => (el.receiveShadow = true))
 
     // const { jump } = useAnimationLoader()
     const { boring } = useAnimationLoader()
