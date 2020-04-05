@@ -14,9 +14,7 @@ export const tileTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
         name: 'Water',
         height: () => -1,
         enter: ({ who, self }) => {
-            console.log('who.elevation: ' + who.elevation + '; self.elevation: ' + self.elevation)
-            return who.id === PLAYER_ID && self.elevation - 0.2 > who.elevation ? [lose()] : []
-            // return []
+            return who.id === PLAYER_ID ? [lose()] : []
         },
         Component3d: Water,
     },

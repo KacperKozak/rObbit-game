@@ -18,6 +18,20 @@ export const GameInstance = () => {
     const { objects, mapId, mapName, move, equip, grapple, fire, loadMap, reset } = useGame()
     // a ja szukam jakiegos objaect map :(
     const { editMode, toggleEditMode } = useEditor()
+
+    useEffect(() => {
+        const KEY = 'lastMapId'
+        console.log('mapId', mapId)
+        if (mapId) {
+            localStorage.setItem(KEY, mapId)
+        } else {
+            const lastMapId = localStorage.getItem(KEY)
+            console.log('lastMapId', lastMapId)
+            const lastMap = maps.find(map => map.id === lastMapId)
+            lastMap && loadMap(lastMap)
+        }
+    }, [mapId])
+
     useKeyboardEvent('e', toggleEditMode)
 
     const left = () => move(LEFT)
@@ -41,10 +55,6 @@ export const GameInstance = () => {
         if (el.xy[1] > mapCenter[1]) mapCenter[1] = el.xy[0]
     })
     mapCenter = mapCenter.map(el => el / 2)
-    // TODO remove when menu will be added
-    useEffect(() => {
-        loadMap(maps[0])
-    }, [])
 
     return (
         <>
