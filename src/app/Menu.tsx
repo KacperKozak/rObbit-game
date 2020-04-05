@@ -35,7 +35,7 @@ export const Menu = () => {
     //     }
     // }, [mapId])
 
-    useKeyboardEvent('e', toggleEditMode, [editMode])
+    useKeyboardEvent('m', toggleEditMode, [editMode])
 
     const left = () => move(LEFT)
     const up = () => move(UP)
@@ -49,6 +49,12 @@ export const Menu = () => {
     useKeyboardEvent('s', down, [down])
     useKeyboardEvent('a', left, [left])
     useKeyboardEvent('d', right, [right])
+
+    useKeyboardEvent('up', up, [up])
+    useKeyboardEvent('down', down, [down])
+    useKeyboardEvent('left', left, [left])
+    useKeyboardEvent('right', right, [right])
+
     useKeyboardEvent('e', equip, [equip])
     useKeyboardEvent('f', grapple, [grapple])
     useKeyboardEvent('space', fire, [fire])
@@ -134,16 +140,16 @@ export const Menu = () => {
                         <small>{`[D]`}</small>
                     </button>
                     <button onClick={equip}>
-                        Equip <small>{`[enter]`}</small>
+                        Equip <small>{`[E]`}</small>
                     </button>
                     {player.data.hasGrapple && (
                         <button onClick={grapple}>
-                            Grapple <small>{`[shift]`}</small>
+                            Grapple <small>{`[F]`}</small>
                         </button>
                     )}
                     {player.data.hasCannon && (
                         <button onClick={fire}>
-                            Fire <small>{'[space]'}</small>
+                            Fire <small>{'[SPACE]'}</small>
                         </button>
                     )}
                 </div>

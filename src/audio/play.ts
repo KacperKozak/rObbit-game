@@ -53,7 +53,7 @@ export const playEngine = (volume?: number) => {
     //     engineStart.removeEventListener('ended', playEnd)
     // }
     engineStart.play()
-    setTimeout(() => engineStart.pause(), 200)
+    setTimeout(() => engineStart.pause(), 300)
     // engineStart.removeEventListener('ended', playEnd)
     // engineStart.addEventListener('ended', playEnd)
 }

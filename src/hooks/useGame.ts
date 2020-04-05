@@ -23,11 +23,12 @@ export const useGame = () => {
     const state = useSelector((state: GameStateAware) => state.game)
     const dispatch = useDispatch()
     const player = findById(state.objects, PLAYER_ID)!
+    const rdy = state.queueStared && player
 
     if (!player) console.warn(`Player don't exists`)
 
     const triggerMove = (vector: Vector2) => {
-        if (state.queueStared) return
+        if (rdy) return
 
         const actions: Action[] = []
 
@@ -46,12 +47,12 @@ export const useGame = () => {
     }
 
     const triggerEquip = () => {
-        if (state.queueStared) return
+        if (rdy) return
         dispatch(enqueue(equip({ targetId: player.id })))
     }
 
     const triggerGrapple = () => {
-        if (state.queueStared) return
+        if (rdy) return
 
         if (!player.data.hasGrapple) {
             play('Alert_NO')
@@ -62,7 +63,7 @@ export const useGame = () => {
     }
 
     const triggerFire = () => {
-        if (state.queueStared) return
+        if (rdy) return
         const { id, xy, rotation, elevation, data } = player
 
         if (!data.hasCannon) {
@@ -84,15 +85,17 @@ export const useGame = () => {
         dispatch(enqueue(projectile({ byId: id, instance })))
     }
 
+    const triggerReset = () => {
+        if (rdy) return
+        dispatch(reset())
+    }
+
     const triggerLoadMap = (map: MapData) => {
         dispatch(loadMap(map))
     }
+
     const triggerUnloadMap = () => {
         dispatch(unloadMap())
-    }
-
-    const triggerReset = () => {
-        dispatch(reset())
     }
 
     return {
