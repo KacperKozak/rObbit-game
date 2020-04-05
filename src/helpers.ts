@@ -24,3 +24,6 @@ export const limitVector = (vector: Vector2, min: number, max: number) =>
     vector.map(v => limit(v, min, max)) as Vector2
 
 export const vectorDiff = (v1: Vector2, v2: Vector2) => v1.map((v, i) => v2[i] - v) as Vector2
+
+export const createArray = (length: number): number[] =>
+    Array.from({ length: length + 1 }, (v, i) => i)

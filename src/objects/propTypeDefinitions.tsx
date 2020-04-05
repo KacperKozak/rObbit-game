@@ -1,100 +1,73 @@
-import React from 'react'
-import { playEquip, play } from '../audio/play'
-import { move, remove, setObjectData, tmpSpawn, win } from '../state/gameReducer'
+import { uniqueId } from 'lodash'
+import { play, playEquip } from '../audio/play'
+import { reverseVector } from '../helpers'
+import { move, removeObject, setObjectData, tmpSpawn, win } from '../state/gameReducer'
+import { PLAYER_ID } from '../types/consts'
 import { ObjectDefinition, ObjectTypes } from '../types/types'
 import {
+    Arrow,
+    Boom,
+    Box,
+    Button,
     Cannon,
+    createTrigger,
     Crossbow,
+    Door,
+    Fence,
+    Pipe,
+    PipeDown,
+    PipeElement,
+    PipeLeft,
+    PipePlace,
+    PipeRight,
+    PipeUp,
     Player,
     Rock,
     Rocket,
-    Box,
-    Boom,
-    Fence,
-    Arrow,
-    Button,
-    createTrigger,
-    Pipe,
-    PipeLeft,
-    PipeRight,
-    PipePlace,
-    PipeUp,
-    PipeDown,
-    PipeElement,
-    Door,
 } from './models/Items'
-import { reverseVector } from '../helpers'
-import { uniqueId, sample } from 'lodash'
-import { PLAYER_ID } from '../types/consts'
-
-const propDebugComponent = (color: string) => ({ instance, children }: any) => {
-    return (
-        <div
-            style={{
-                margin: '20%',
-                width: '60%',
-                height: '60%',
-                borderRadius: instance.type === ObjectTypes.Player ? 100 : 5,
-                backgroundColor: color,
-                color: 'black',
-                opacity: 0.7,
-            }}
-        >
-            <pre style={{ padding: 2, fontSize: 8 }}>{children}</pre>
-        </div>
-    )
-}
 
 export const propTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>> = {
     [ObjectTypes.Player]: {
         name: 'Player',
         height: () => 2,
-        Component: propDebugComponent('white'),
         Component3d: Player,
     },
 
     [ObjectTypes.BigRock]: {
         name: 'Big rock',
         height: () => 0.55,
-        Component: propDebugComponent('gray'),
         Component3d: Rock,
     },
     [ObjectTypes.Pipe]: {
         name: 'Pipe',
         height: () => 0.75,
-        Component: propDebugComponent('darkgray'),
         Component3d: Pipe,
     },
 
     [ObjectTypes.PipeLeft]: {
         name: 'PipeLeft',
         height: () => 0.75,
-        Component: propDebugComponent('darkgray'),
         Component3d: PipeLeft,
     },
     [ObjectTypes.PipeRight]: {
         name: 'PipeRight',
         height: () => 0.75,
-        Component: propDebugComponent('darkgray'),
         Component3d: PipeRight,
     },
     [ObjectTypes.PipeUp]: {
         name: 'PipeUp',
         height: () => 0.75,
-        Component: propDebugComponent('darkgray'),
         Component3d: PipeUp,
     },
     [ObjectTypes.PipeDown]: {
         name: 'PipeDown',
         height: () => 0.75,
-        Component: propDebugComponent('darkgray'),
         Component3d: PipeDown,
     },
     [ObjectTypes.PipeElement]: {
         name: 'PipeElement',
         height: () => 0.75,
         push: ({ self, vector }) => [move({ targetId: self.id, vector })],
-        Component: propDebugComponent('yellow'),
         Component3d: PipeElement,
     },
     [ObjectTypes.PipePlace]: {
@@ -107,7 +80,6 @@ export const propTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
             }
             return []
         },
-        Component: propDebugComponent('darkgray'),
         Component3d: PipePlace,
     },
 
@@ -115,7 +87,6 @@ export const propTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
         name: 'Box',
         height: () => 1,
         push: ({ self, vector }) => [move({ targetId: self.id, vector })],
-        Component: propDebugComponent('brown'),
         Component3d: Box,
     },
 
@@ -123,10 +94,9 @@ export const propTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
         name: 'Fence',
         height: () => 1.5,
         push: ({ force, self }) => {
-            if (force && force >= 50) return [remove(self.id)]
+            if (force && force >= 50) return [removeObject(self.id)]
             return []
         },
-        Component: propDebugComponent('brown'),
         Component3d: Fence,
     },
 
@@ -145,7 +115,6 @@ export const propTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
                 setObjectData({ targetId: self.data.targetId, data: { open: toggle } }),
             ]
         },
-        Component: propDebugComponent('blue'),
         Component3d: Button,
     },
 
@@ -159,20 +128,12 @@ export const propTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
             }
             return []
         },
-        Component: propDebugComponent('#ABC123'),
         Component3d: createTrigger('#ABC123'),
     },
 
     [ObjectTypes.Door]: {
         name: 'Door',
-        height: instance => {
-            return instance.data.open ? 0 : 1.5
-        },
-        // push: ({ force, self }) => {
-        //     if (force && force >= 50) return [remove(self.id)]
-        //     return []
-        // },
-        Component: propDebugComponent('purple'),
+        height: instance => (instance.data.open ? 0 : 1.5),
         Component3d: Door,
     },
 
@@ -181,16 +142,17 @@ export const propTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
         height: () => 0,
         equip: ({ who, self }) => {
             playEquip(0.8)
-            return [setObjectData({ targetId: who.id, data: { hasCannon: true } }), remove(self.id)]
+            return [
+                setObjectData({ targetId: who.id, data: { hasCannon: true } }),
+                removeObject(self.id),
+            ]
         },
-        Component: propDebugComponent('red'),
         Component3d: Cannon,
     },
 
     [ObjectTypes.Boom]: {
         name: 'Boom',
         height: () => 0,
-        Component: propDebugComponent('yellow'),
         Component3d: Boom,
     },
 
@@ -201,10 +163,9 @@ export const propTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
             playEquip(0.8)
             return [
                 setObjectData({ targetId: who.id, data: { hasGrapple: true } }),
-                remove(self.id),
+                removeObject(self.id),
             ]
         },
-        Component: propDebugComponent('red'),
         Component3d: Crossbow,
     },
 
@@ -222,12 +183,12 @@ export const propTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
         },
         projectileHit: ({ self, what, who }) => {
             if (!what) {
-                return [remove(self.id)]
+                return [removeObject(self.id)]
             }
 
             play('Alert_YES') // TODO Boom!
             return [
-                remove(self.id),
+                removeObject(self.id),
                 tmpSpawn({
                     instance: {
                         type: ObjectTypes.Boom,
@@ -242,7 +203,6 @@ export const propTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
                 }),
             ]
         },
-        Component: propDebugComponent('yellow'),
         Component3d: Rocket,
     },
 
@@ -262,9 +222,8 @@ export const propTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
             if (what) {
                 play('Alert_YES') // TODO Hit!
             }
-            return [remove(self.id)]
+            return [removeObject(self.id)]
         },
-        Component: propDebugComponent('pink'),
         Component3d: Arrow,
     },
 }

@@ -3,7 +3,7 @@ import { Action } from 'redux'
 import actionCreatorFactory from 'typescript-fsa'
 import { reducerWithInitialState } from 'typescript-fsa-reducers'
 import { PROJECTILE_ELEVATION, FALL_ELEVATION } from '../config'
-import { arrMerge, findById, findByXY } from '../helpers'
+import { arrMerge, findById } from '../helpers'
 import { createMap } from '../mocks/mapMock'
 import { getDefinition } from '../objects/definitions'
 import {
@@ -18,8 +18,8 @@ import {
 import { flyResolver } from './resolvers/flyResolver'
 import { moveResolver } from './resolvers/moveResolver'
 import { rotateResolver } from './resolvers/rotateResolver'
-import { ResolverResults } from './resolvers/types'
 import { grappleResolver } from './resolvers/grappleResolver'
+import { equipResolver } from './resolvers/equipResolver'
 
 export interface GameState {
     queueStared: boolean
@@ -76,7 +76,8 @@ export const setObjectData = gameAction<{
     targetId: string
     data: Partial<ObjectInstanceData>
 }>('SET_OBJECT_DATA')
-export const remove = gameAction<string>('REMOVE')
+export const removeObject = gameAction<string>('REMOVE')
+export const addObject = gameAction<ObjectInstance>('ADD')
 export const tmpSpawn = gameAction<{ instance: ObjectInstance }>('TMP_SPAWN')
 
 export const gameReducer = reducerWithInitialState(initialState)
@@ -224,8 +225,15 @@ export const gameReducer = reducerWithInitialState(initialState)
     .case(
         setObjectData,
         (state, { targetId, data }): GameState => {
-            const { actions, objects } = setObjectDataResolver(state, targetId, data)
-            return { ...state, objects, queue: arrMerge(state.queue, actions) }
+            const target = findById(state.objects, targetId)
+
+            return {
+                ...state,
+                objects: state.objects.map(obj => {
+                    if (obj !== target) return obj
+                    return { ...obj, data: { ...obj.data, ...data } }
+                }),
+            }
         },
     )
     .case(
@@ -240,6 +248,27 @@ export const gameReducer = reducerWithInitialState(initialState)
         },
     )
     .case(
+        removeObject,
+        (state, targetId): GameState => ({
+            ...state,
+            objects: state.objects.filter(obj => obj.id !== targetId),
+        }),
+    )
+    .case(
+        addObject,
+        (state, instance): GameState => ({
+            ...state,
+            objects: arrMerge(state.objects, instance),
+        }),
+    )
+    .case(
+        tmpSpawn,
+        (state, { instance }): GameState => ({
+            ...state,
+            objects: [...state.objects, instance],
+        }),
+    )
+    .case(
         fall,
         (state, { targetId }): GameState => {
             return {
@@ -250,52 +279,3 @@ export const gameReducer = reducerWithInitialState(initialState)
             }
         },
     )
-    .case(
-        remove,
-        (state, targetId): GameState => ({
-            ...state,
-            objects: state.objects.filter(obj => obj.id !== targetId),
-        }),
-    )
-    .case(
-        tmpSpawn,
-        (state, { instance }): GameState => ({
-            ...state,
-            objects: [...state.objects, instance],
-        }),
-    )
-
-export const equipResolver = (state: GameState, targetId: string): ResolverResults => {
-    const actions: Action[] = []
-    const target = findById(state.objects, targetId)
-    if (!target) return { objects: state.objects, actions: [] }
-
-    const myObjects = findByXY(state.objects, target.xy).sort((a, b) => b.aIndex - a.aIndex)
-
-    for (const obj of myObjects) {
-        const objDef = getDefinition(obj.type)
-        const event: ActionEvent = { who: target, vector: [0, 0], state, self: obj }
-        actions.push(...(objDef.equip?.(event) || []))
-    }
-
-    return {
-        actions,
-        objects: state.objects,
-    }
-}
-
-export const setObjectDataResolver = (
-    { objects }: GameState,
-    targetId: string,
-    data: Partial<ObjectInstanceData>,
-): ResolverResults => {
-    const target = findById(objects, targetId)
-
-    return {
-        objects: objects.map(obj => {
-            if (obj !== target) return obj
-            return { ...obj, data: { ...obj.data, ...data } }
-        }),
-        actions: [],
-    }
-}

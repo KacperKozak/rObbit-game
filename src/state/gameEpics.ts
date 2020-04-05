@@ -9,7 +9,7 @@ import {
     GameStateAware,
     nextAction,
     queueEnd,
-    remove,
+    removeObject,
     tmpSpawn,
     tryNextAction,
 } from './gameReducer'
@@ -53,7 +53,7 @@ const tmpSpawnEpic = (
     actions$.pipe(
         filter(tmpSpawn.match),
         delay(600),
-        map(action => remove(action.payload.instance.id)),
+        map(action => removeObject(action.payload.instance.id)),
     )
 
 export const gameEpics = combineEpics(enqueueEpic, tryNextEpic, nextActionEpic, tmpSpawnEpic)

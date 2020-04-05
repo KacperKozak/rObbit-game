@@ -1,19 +1,42 @@
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { GameStateAware, updateObject } from '../state/gameReducer'
-import { ObjectInstance } from '../types/types'
+import { GameStateAware, updateObject, addObject, removeObject } from '../state/gameReducer'
+import { ObjectInstance, ObjectTypes } from '../types/types'
+import { uniqueId } from 'lodash'
 
 export const useEditor = () => {
     const state = useSelector((state: GameStateAware) => state.game)
-    const [editMode, setEditMode] = useState(false)
+    const [editMode, setEditMode] = useState(true) // todo false
     const dispatch = useDispatch()
 
     const toggleEditMode = () => {
         setEditMode(!editMode)
     }
 
-    const edit = (targetId: string, objectValues: Partial<ObjectInstance>) => {
+    const update = (targetId: string) => (objectValues: Partial<ObjectInstance>) => {
         dispatch(updateObject({ targetId, objectValues }))
+    }
+
+    const add = (partialInstance: Partial<ObjectInstance>) => {
+        const { type = ObjectTypes.Grass, ...rest } = partialInstance
+
+        const instance: ObjectInstance = {
+            type,
+            id: partialInstance.id || uniqueId(type + '-'),
+            xy: [0, 0],
+            rotation: [0, 0],
+            zIndex: 0,
+            aIndex: 0,
+            data: {},
+            elevation: 0,
+            ...partialInstance,
+        }
+
+        dispatch(addObject(instance))
+    }
+
+    const remove = (targetId: string) => {
+        dispatch(removeObject(targetId))
     }
 
     const copyMap = () => {
@@ -24,5 +47,5 @@ export const useEditor = () => {
         }, console.error)
     }
 
-    return { edit, toggleEditMode, editMode, copyMap }
+    return { update, add, remove, toggleEditMode, editMode, copyMap }
 }
