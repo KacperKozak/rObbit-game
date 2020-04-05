@@ -6,6 +6,7 @@ import { useGame } from '../hooks/useGame'
 import { useKeyboardEvent } from '../hooks/useKeyboardEvent'
 import { DOWN, LEFT, RIGHT, UP } from '../types/consts'
 import { DebugView } from './DebugView'
+import styled from 'styled-components'
 
 export const Menu = () => {
     const {
@@ -21,20 +22,17 @@ export const Menu = () => {
         unloadMap,
         reset,
     } = useGame()
+    const { player } = useGame()
     const { editMode, toggleEditMode } = useEditor()
 
-    // useEffect(() => {
-    //     const KEY = 'lastMapId'
-    //     if (mapId) {
-    //         localStorage.setItem(KEY, mapId)
-    //     } else {
-    //         const lastMapId = localStorage.getItem(KEY)
-    //         const lastMap = maps.find(map => map.id === lastMapId)
-    //         lastMap && loadMap(lastMap)
-    //     }
-    // }, [mapId])
+    const nextMap = () => {
+        const currentIndex = maps.findIndex(m => m.id === mapId)
+        const nextMap = maps[currentIndex + 1]
+        if (nextMap) loadMap(nextMap)
+        else unloadMap()
+    }
 
-    useKeyboardEvent('e', toggleEditMode, [editMode])
+    useKeyboardEvent('m', toggleEditMode, [editMode])
 
     const left = () => move(LEFT)
     const up = () => move(UP)
@@ -42,14 +40,31 @@ export const Menu = () => {
     const right = () => move(RIGHT)
 
     useKeyboardEvent('r', reset)
+    useKeyboardEvent('q', unloadMap)
+    useKeyboardEvent('enter', () => winDialog && nextMap(), [winDialog])
 
-    useKeyboardEvent('left', left, [left])
+    useKeyboardEvent('w', up, [up])
+    useKeyboardEvent('s', down, [down])
+    useKeyboardEvent('a', left, [left])
+    useKeyboardEvent('d', right, [right])
+
     useKeyboardEvent('up', up, [up])
     useKeyboardEvent('down', down, [down])
+    useKeyboardEvent('left', left, [left])
     useKeyboardEvent('right', right, [right])
-    useKeyboardEvent('enter', equip, [equip])
-    useKeyboardEvent('shift', grapple, [grapple])
+
+    useKeyboardEvent('e', equip, [equip])
+    useKeyboardEvent('f', grapple, [grapple])
     useKeyboardEvent('space', fire, [fire])
+
+    useKeyboardEvent(
+        '*',
+        event => {
+            const index = +event.key
+            if (!Number.isNaN(index) && maps[index]) loadMap(maps[index])
+        },
+        [],
+    )
 
     return (
         <>
@@ -64,72 +79,83 @@ export const Menu = () => {
                 }}
             >
                 {mapId && (
-                    <button onClick={unloadMap}>
-                        <strong>Exit</strong>
-                    </button>
+                    <>
+                        <button onClick={unloadMap}>
+                            Exit
+                            <small>{`[Q]`}</small>
+                        </button>
+                        <button onClick={reset}>
+                            Restart <small>{`[R]`}</small>
+                        </button>
+                    </>
                 )}
                 {!mapId &&
                     maps.map(map => (
                         <button key={map.id} onClick={() => loadMap(map)}>
-                            Map {map.name}
+                            {map.name}
                         </button>
                     ))}
             </div>
-            {mapName && (
-                <div
-                    style={{
-                        position: 'absolute',
-                        zIndex: 5,
-                        top: 0,
-                        right: 10,
-                    }}
-                >
-                    <h1>Map: {mapName}</h1>
-                </div>
-            )}
-            {mapId && (
-                <div
-                    style={{
-                        position: 'absolute',
-                        zIndex: 5,
-                        bottom: 0,
-                        left: 0,
-                        right: 0,
-                        textAlign: 'center',
-                    }}
-                >
+            {mapName && <MapName>Map: {mapName}</MapName>}
+            {mapId && player && (
+                <ControlsWrapper>
                     <button onClick={left}>
                         <strong>←</strong>
+                        <small>{`[A]`}</small>
                     </button>
                     <button onClick={up}>
                         <strong>↑</strong>
+                        <small>{`[W]`}</small>
                     </button>
                     <button onClick={down}>
                         <strong>↓</strong>
+                        <small>{`[S]`}</small>
                     </button>
                     <button onClick={right}>
                         <strong>→</strong>
+                        <small>{`[D]`}</small>
                     </button>
                     <button onClick={equip}>
-                        Equip <small>{`[enter]`}</small>
+                        Equip <small>{`[E]`}</small>
                     </button>
-                    <button onClick={grapple}>
-                        Grapple <small>{`[shift]`}</small>
-                    </button>
-                    <button onClick={fire}>
-                        Fire <small>{'[space]'}</small>
-                    </button>
-                    <button onClick={reset}>
-                        Restart <small>{`[R]`}</small>
-                    </button>
-                </div>
+                    {player.data.hasGrapple && (
+                        <button onClick={grapple}>
+                            Grapple <small>{`[F]`}</small>
+                        </button>
+                    )}
+                    {player.data.hasCannon && (
+                        <button onClick={fire}>
+                            Fire <small>{'[SPACE]'}</small>
+                        </button>
+                    )}
+                </ControlsWrapper>
             )}
             {winDialog && (
                 <Dialog>
                     <h1>Win!</h1>
-                    <button onClick={reset}>Next map</button>
+                    <button onClick={nextMap}>
+                        Next map <small>[enter]</small>
+                    </button>
                 </Dialog>
             )}
         </>
     )
 }
+
+const MapName = styled.div`
+    position: absolute;
+    z-index: 5;
+    top: 0;
+    right: 0;
+    padding: 5px 5px 0 0;
+    font-size: 18px;
+`
+
+const ControlsWrapper = styled.div`
+    position: absolute;
+    z-index: 5;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+`
