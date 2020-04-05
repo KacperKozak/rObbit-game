@@ -158,16 +158,17 @@ interface ElevationInputProps {
 }
 
 const ElevationInput = ({ obj, onChange }: ElevationInputProps) => {
+    const f = 100
     return (
         <div>
             <input
                 type="range"
-                min={-10}
-                max={100}
-                value={obj.elevation}
-                onChange={event => onChange({ elevation: parseInt(event.target.value, 10) / 10 })}
+                min={-1 * f}
+                max={10 * f}
+                value={obj.elevation * f}
+                onChange={event => onChange({ elevation: parseInt(event.target.value, 10) / f })}
             />
-            {Math.round(obj.elevation * 2) / 2}
+            {Math.round(obj.elevation * 10) / 10}
         </div>
     )
 }
