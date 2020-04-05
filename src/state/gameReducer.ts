@@ -51,6 +51,7 @@ const gameAction = actionCreatorFactory('GG')
 const queueAction = actionCreatorFactory('QUEUE')
 
 export const loadMap = gameAction<MapData>('LOAD_MAP')
+export const unloadMap = gameAction('UNLOAD_MAP')
 export const reset = gameAction('RESET')
 export const win = gameAction('WIN')
 export const showWinDialog = gameAction('SHOW_WIN_DIALOG')
@@ -97,6 +98,7 @@ export const gameReducer = reducerWithInitialState(initialState)
             cleanObjectsState: objects,
         }),
     )
+    .case(unloadMap, (): GameState => initialState)
     .case(
         reset,
         (state): GameState => ({
