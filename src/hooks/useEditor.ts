@@ -6,7 +6,7 @@ import { uniqueId } from 'lodash'
 
 export const useEditor = () => {
     const state = useSelector((state: GameStateAware) => state.game)
-    const [editMode, setEditMode] = useState(true) // todo false
+    const [editMode, setEditMode] = useState(false)
     const dispatch = useDispatch()
 
     const toggleEditMode = () => {
