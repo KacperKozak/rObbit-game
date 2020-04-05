@@ -74,6 +74,7 @@ export const grappleResolver = (state: GameState, targetId: string): ResolverRes
     }
 
     // miss
+    xy = applyVector(xy, vector)
     addGrappleAnimation()
 
     return { objects, actions }

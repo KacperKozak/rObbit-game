@@ -2,7 +2,13 @@ import { uniqueId } from 'lodash'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { randomRotation } from '../helpers'
-import { addObject, GameStateAware, removeObject, updateObject } from '../state/gameReducer'
+import {
+    addObject,
+    GameStateAware,
+    removeObject,
+    updateObject,
+    updateCleanObjectsState,
+} from '../state/gameReducer'
 import { ObjectInstance, ObjectTypes } from '../types/types'
 
 export const useEditor = () => {
@@ -10,12 +16,15 @@ export const useEditor = () => {
     const [editMode, setEditMode] = useState(false)
     const dispatch = useDispatch()
 
+    const updateCleanState = () => dispatch(updateCleanObjectsState())
+
     const toggleEditMode = () => {
         setEditMode(!editMode)
     }
 
     const update = (targetId: string) => (objectValues: Partial<ObjectInstance>) => {
         dispatch(updateObject({ targetId, objectValues }))
+        updateCleanState()
     }
 
     const add = (partialInstance: Partial<ObjectInstance>) => {
@@ -34,10 +43,12 @@ export const useEditor = () => {
         }
 
         dispatch(addObject(instance))
+        updateCleanState()
     }
 
     const remove = (targetId: string) => {
         dispatch(removeObject(targetId))
+        updateCleanState()
     }
 
     const copyMap = () => {

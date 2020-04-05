@@ -72,6 +72,7 @@ export const setObjectData = gameAction<{
 }>('SET_OBJECT_DATA')
 export const removeObject = gameAction<string>('REMOVE')
 export const addObject = gameAction<ObjectInstance>('ADD')
+export const updateCleanObjectsState = gameAction('UPDATE_CLEAN_OBJECTS_STATE')
 export const tmpSpawn = gameAction<{ instance: ObjectInstance }>('TMP_SPAWN')
 
 export const gameReducer = reducerWithInitialState(initialState)
@@ -256,6 +257,13 @@ export const gameReducer = reducerWithInitialState(initialState)
         (state, instance): GameState => ({
             ...state,
             objects: arrMerge(state.objects, instance),
+        }),
+    )
+    .case(
+        updateCleanObjectsState,
+        (state): GameState => ({
+            ...state,
+            cleanObjectsState: state.objects,
         }),
     )
     .case(

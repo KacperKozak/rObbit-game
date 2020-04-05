@@ -30,6 +30,9 @@ import level9img from './images/9.png'
 import map0 from './map0.json'
 import map1 from './map1.json'
 import map2 from './map2.json'
+
+import test1 from './test1.json'
+
 import mapStarter from './starter.json'
 
 export const maps: MapData[] = [
@@ -42,6 +45,7 @@ export const maps: MapData[] = [
     { id: 'level7', name: 'level7', image: level7img, objects: level7 as any },
     { id: 'level8', name: 'level8', image: level8img, objects: level8 as any },
     { id: 'level9', name: 'level9', image: level9img, objects: level9 as any },
+    { id: 'test-1', name: 'Test lvl 1', objects: test1 as any },
     { id: 'map-0', name: 'Test 0', objects: map0 as any },
     { id: 'map-1', name: 'Test 1', objects: map1 as any },
     { id: 'map-2', name: 'Test 2', objects: map2 as any },

@@ -1,0 +1,192 @@
+[
+    {
+        "type": "Player",
+        "xy": [1, 1],
+        "id": "player",
+        "elevation": 2,
+        "rotation": [0, 0],
+        "zIndex": 2,
+        "aIndex": 10,
+        "data": { "hasGrapple": true, "hasCannon": true }
+    },
+    {
+        "type": "Ice",
+        "id": "RockFloor-37-1",
+        "xy": [2, 1],
+        "rotation": [0, -1],
+        "zIndex": 0,
+        "aIndex": 0,
+        "data": {},
+        "elevation": -1
+    },
+    {
+        "type": "RockFloor",
+        "id": "RockFloor-38-2",
+        "xy": [1, 1],
+        "rotation": [0, -1],
+        "zIndex": 0,
+        "aIndex": 0,
+        "data": {},
+        "elevation": 2
+    },
+    {
+        "type": "RockFloor",
+        "id": "RockFloor-40-3",
+        "xy": [1, 1],
+        "rotation": [0, 1],
+        "zIndex": 0,
+        "aIndex": 0,
+        "data": {},
+        "elevation": 0
+    },
+    {
+        "type": "Ice",
+        "id": "RockFloor-41-4",
+        "xy": [3, 1],
+        "rotation": [0, 1],
+        "zIndex": 0,
+        "aIndex": 0,
+        "data": {},
+        "elevation": -1
+    },
+    {
+        "type": "Ice",
+        "id": "RockFloor-42-5",
+        "xy": [4, 1],
+        "rotation": [0, -1],
+        "zIndex": 0,
+        "aIndex": 0,
+        "data": {},
+        "elevation": -1
+    },
+    {
+        "type": "RockFloor",
+        "id": "RockFloor-43-6",
+        "xy": [5, 1],
+        "rotation": [0, -1],
+        "zIndex": 0,
+        "aIndex": 0,
+        "data": {},
+        "elevation": 0
+    },
+    {
+        "type": "RockFloor",
+        "id": "RockFloor-44-7",
+        "xy": [5, 1],
+        "rotation": [1, 0],
+        "zIndex": 0,
+        "aIndex": 0,
+        "data": {},
+        "elevation": 2
+    },
+    {
+        "type": "RockFloor",
+        "id": "RockFloor-46-9",
+        "xy": [6, 1],
+        "rotation": [0, 1],
+        "zIndex": 0,
+        "aIndex": 0,
+        "data": {},
+        "elevation": 3.16
+    },
+    {
+        "type": "Ice",
+        "id": "RockFloor-2-10",
+        "xy": [2, 0],
+        "rotation": [-1, 0],
+        "zIndex": 0,
+        "aIndex": 0,
+        "data": {},
+        "elevation": -1
+    },
+    {
+        "type": "Ice",
+        "id": "RockFloor-3-11",
+        "xy": [3, 0],
+        "rotation": [0, 1],
+        "zIndex": 0,
+        "aIndex": 0,
+        "data": {},
+        "elevation": -1
+    },
+    {
+        "type": "Ice",
+        "id": "RockFloor-4-12",
+        "xy": [4, 0],
+        "rotation": [0, 1],
+        "zIndex": 0,
+        "aIndex": 0,
+        "data": {},
+        "elevation": -1
+    },
+    {
+        "type": "RockFloor",
+        "id": "RockFloor-5-12",
+        "xy": [6, 1],
+        "rotation": [0, -1],
+        "zIndex": 0,
+        "aIndex": 0,
+        "data": {},
+        "elevation": 0
+    },
+    {
+        "type": "Water",
+        "id": "RockFloor-6-13",
+        "xy": [6, 2],
+        "rotation": [1, 0],
+        "zIndex": 0,
+        "aIndex": 0,
+        "data": {},
+        "elevation": -1
+    },
+    {
+        "type": "Pipe",
+        "id": "RockFloor-4-14",
+        "xy": [5, 0],
+        "rotation": [0, 1],
+        "zIndex": 0,
+        "aIndex": 0,
+        "data": {},
+        "elevation": -0.06
+    },
+    {
+        "type": "Water",
+        "id": "RockFloor-5-15",
+        "xy": [5, 0],
+        "rotation": [0, -1],
+        "zIndex": 0,
+        "aIndex": 0,
+        "data": {},
+        "elevation": -1
+    },
+    {
+        "type": "Pipe",
+        "id": "RockFloor-6-16",
+        "xy": [4, 0],
+        "rotation": [0, -1],
+        "zIndex": 0,
+        "aIndex": 0,
+        "data": {},
+        "elevation": -0.04
+    },
+    {
+        "type": "Pipe",
+        "id": "RockFloor-7-17",
+        "xy": [3, 0],
+        "rotation": [0, -1],
+        "zIndex": 0,
+        "aIndex": 0,
+        "data": {},
+        "elevation": 0
+    },
+    {
+        "type": "PipeDown",
+        "id": "RockFloor-8-18",
+        "xy": [2, 0],
+        "rotation": [0, -1],
+        "zIndex": 0,
+        "aIndex": 0,
+        "data": {},
+        "elevation": 0
+    }
+]
