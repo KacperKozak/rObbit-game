@@ -74,8 +74,8 @@ export const propTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
     [ObjectTypes.PipePlace]: {
         name: 'PipePlace',
         height: () => 0.14,
-        enter: ({ who, state, self }) => {
-            if (who.type === 'PipeElement') {
+        enter: ({ who }) => {
+            if (who.type === ObjectTypes.PipeElement) {
                 play('Engine_start')
                 return [win()]
             }

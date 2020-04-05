@@ -17,6 +17,7 @@ import {
     lose,
     showWinDialog,
 } from './gameReducer'
+import { addCompletedMap } from './localReducer'
 
 const enqueueEpic = (
     actions$: Observable<Action>,
@@ -67,7 +68,7 @@ const winEpic = (
     actions$.pipe(
         filter(win.match),
         delay(600),
-        map(() => showWinDialog()),
+        flatMap(() => concat(of(showWinDialog()), of(addCompletedMap(state$.value.game.mapId!)))),
     )
 
 const loseEpic = (

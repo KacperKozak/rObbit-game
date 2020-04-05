@@ -7,6 +7,7 @@ import { useKeyboardEvent } from '../hooks/useKeyboardEvent'
 import { DOWN, LEFT, RIGHT, UP } from '../types/consts'
 import { DebugView } from './DebugView'
 import styled from 'styled-components'
+import { useLocal } from '../hooks/useLocal'
 
 export const Menu = () => {
     const {
@@ -24,6 +25,7 @@ export const Menu = () => {
     } = useGame()
     const { player } = useGame()
     const { editMode, toggleEditMode } = useEditor()
+    const { isCompleted } = useLocal()
 
     const nextMap = () => {
         const currentIndex = maps.findIndex(m => m.id === mapId)
@@ -74,7 +76,7 @@ export const Menu = () => {
                     <LevelWrapper>
                         {maps.map(map => (
                             <LevelButton key={map.id} onClick={() => loadMap(map)}>
-                                {map.name}
+                                {map.name} {isCompleted(map.id) && <Completed />}
                                 {map.image && <img src={map.image} width="200" alt="" />}
                             </LevelButton>
                         ))}
@@ -141,6 +143,13 @@ export const Menu = () => {
     )
 }
 
+const Completed = styled.span`
+    &::after {
+        content: '✓';
+        color: #8fe34f;
+    }
+`
+
 const Button = styled.button`
     background: none;
     color: rgba(205, 236, 255, 0.726);
@@ -205,6 +214,8 @@ const LevelButton = styled.button`
         display: block;
         margin: auto;
         margin-top: 20px;
+        height: 200px;
+        object-fit: contain;
     }
 `
 
