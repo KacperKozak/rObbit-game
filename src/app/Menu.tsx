@@ -21,6 +21,7 @@ export const Menu = () => {
         unloadMap,
         reset,
     } = useGame()
+    const { player } = useGame()
     const { editMode, toggleEditMode } = useEditor()
 
     // useEffect(() => {
@@ -42,14 +43,26 @@ export const Menu = () => {
     const right = () => move(RIGHT)
 
     useKeyboardEvent('r', reset)
+    useKeyboardEvent('q', unloadMap)
 
-    useKeyboardEvent('left', left, [left])
-    useKeyboardEvent('up', up, [up])
-    useKeyboardEvent('down', down, [down])
-    useKeyboardEvent('right', right, [right])
-    useKeyboardEvent('enter', equip, [equip])
-    useKeyboardEvent('shift', grapple, [grapple])
+    useKeyboardEvent('w', up, [up])
+    useKeyboardEvent('s', down, [down])
+    useKeyboardEvent('a', left, [left])
+    useKeyboardEvent('d', right, [right])
+    useKeyboardEvent('e', equip, [equip])
+    useKeyboardEvent('f', grapple, [grapple])
     useKeyboardEvent('space', fire, [fire])
+
+    useKeyboardEvent(
+        '*',
+        event => {
+            const index = +event.key
+            if (!Number.isNaN(index) && maps[index]) {
+                loadMap(maps[index])
+            }
+        },
+        [],
+    )
 
     return (
         <>
@@ -64,14 +77,20 @@ export const Menu = () => {
                 }}
             >
                 {mapId && (
-                    <button onClick={unloadMap}>
-                        <strong>Exit</strong>
-                    </button>
+                    <>
+                        <button onClick={unloadMap}>
+                            Exit
+                            <small>{`[Q]`}</small>
+                        </button>
+                        <button onClick={reset}>
+                            Restart <small>{`[R]`}</small>
+                        </button>
+                    </>
                 )}
                 {!mapId &&
                     maps.map(map => (
                         <button key={map.id} onClick={() => loadMap(map)}>
-                            Map {map.name}
+                            {map.name}
                         </button>
                     ))}
             </div>
@@ -87,7 +106,7 @@ export const Menu = () => {
                     <h1>Map: {mapName}</h1>
                 </div>
             )}
-            {mapId && (
+            {mapId && player && (
                 <div
                     style={{
                         position: 'absolute',
@@ -100,28 +119,33 @@ export const Menu = () => {
                 >
                     <button onClick={left}>
                         <strong>←</strong>
+                        <small>{`[A]`}</small>
                     </button>
                     <button onClick={up}>
                         <strong>↑</strong>
+                        <small>{`[W]`}</small>
                     </button>
                     <button onClick={down}>
                         <strong>↓</strong>
+                        <small>{`[S]`}</small>
                     </button>
                     <button onClick={right}>
                         <strong>→</strong>
+                        <small>{`[D]`}</small>
                     </button>
                     <button onClick={equip}>
                         Equip <small>{`[enter]`}</small>
                     </button>
-                    <button onClick={grapple}>
-                        Grapple <small>{`[shift]`}</small>
-                    </button>
-                    <button onClick={fire}>
-                        Fire <small>{'[space]'}</small>
-                    </button>
-                    <button onClick={reset}>
-                        Restart <small>{`[R]`}</small>
-                    </button>
+                    {player.data.hasGrapple && (
+                        <button onClick={grapple}>
+                            Grapple <small>{`[shift]`}</small>
+                        </button>
+                    )}
+                    {player.data.hasCannon && (
+                        <button onClick={fire}>
+                            Fire <small>{'[space]'}</small>
+                        </button>
+                    )}
                 </div>
             )}
             {winDialog && (

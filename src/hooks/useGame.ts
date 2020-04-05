@@ -36,7 +36,8 @@ export const useGame = () => {
         }
 
         if (!isEqual(player.rotation, vector)) {
-            actions.push(rotate({ targetId: player.id, rotation: vector }))
+            // Hmm it's ok without enqueue?
+            dispatch(rotate({ targetId: player.id, rotation: vector }))
         } else {
             actions.push(move({ targetId: player.id, vector }))
         }
