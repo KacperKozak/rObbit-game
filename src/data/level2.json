@@ -20,7 +20,7 @@
         "elevation": 0.36
     },
     {
-        "type": "RockFloor",
+        "type": "Grass",
         "id": "RockFloor-2-2",
         "xy": [1, 1],
         "rotation": [0, 1],
@@ -40,7 +40,7 @@
         "elevation": 0.78
     },
     {
-        "type": "RockFloor",
+        "type": "Grass",
         "id": "RockFloor-4-4",
         "xy": [3, 2],
         "rotation": [0, 1],
@@ -110,7 +110,7 @@
         "elevation": 0
     },
     {
-        "type": "RockFloor",
+        "type": "Grass",
         "id": "RockFloor-11-11",
         "xy": [3, 1],
         "rotation": [-1, 0],
@@ -120,7 +120,7 @@
         "elevation": 0
     },
     {
-        "type": "RockFloor",
+        "type": "Grass",
         "id": "RockFloor-12-12",
         "xy": [2, 1],
         "rotation": [0, -1],
@@ -180,7 +180,7 @@
         "elevation": 0
     },
     {
-        "type": "RockFloor",
+        "type": "Grass",
         "id": "RockFloor-19-19",
         "xy": [1, 0],
         "rotation": [-1, 0],
@@ -190,7 +190,7 @@
         "elevation": 0
     },
     {
-        "type": "RockFloor",
+        "type": "Grass",
         "id": "RockFloor-20-20",
         "xy": [0, 1],
         "rotation": [0, 1],
@@ -474,6 +474,16 @@
         "id": "RockFloor-15-47",
         "xy": [7, 4],
         "rotation": [-1, 0],
+        "zIndex": 0,
+        "aIndex": 0,
+        "data": {},
+        "elevation": 0
+    },
+    {
+        "type": "Grass",
+        "id": "RockFloor-1-48",
+        "xy": [2, 0],
+        "rotation": [1, 0],
         "zIndex": 0,
         "aIndex": 0,
         "data": {},
