@@ -14,6 +14,40 @@ interface DebugViewProps {
 const size = 150
 const grid = 10
 
+const color: Record<ObjectTypes, string> = {
+    [ObjectTypes.Player]: 'white',
+    [ObjectTypes.WinTrigger]: 'white',
+
+    [ObjectTypes.Grass]: 'white',
+    [ObjectTypes.Water]: 'white',
+    [ObjectTypes.RockFloor]: 'white',
+    [ObjectTypes.Wall]: 'white',
+    [ObjectTypes.Box]: 'white',
+    [ObjectTypes.BigRock]: 'white',
+
+    [ObjectTypes.Pipe]: 'white',
+    [ObjectTypes.PipeLeft]: 'white',
+    [ObjectTypes.PipeRight]: 'white',
+    [ObjectTypes.PipePlace]: 'white',
+    [ObjectTypes.PipeUp]: 'white',
+    [ObjectTypes.PipeDown]: 'white',
+    [ObjectTypes.PipeElement]: 'white',
+
+    [ObjectTypes.Fence]: 'white',
+
+    [ObjectTypes.Button]: 'white',
+    [ObjectTypes.Door]: 'white',
+    [ObjectTypes.WallMetal]: 'white',
+    [ObjectTypes.Ice]: 'white',
+
+    [ObjectTypes.Crossbow]: 'white',
+    [ObjectTypes.Cannon]: 'white',
+    [ObjectTypes.Boom]: 'white',
+
+    [ObjectTypes.CrossbowProjectile]: 'white',
+    [ObjectTypes.RocketProjectile]: 'white',
+}
+
 export const DebugView = ({ objects }: DebugViewProps) => {
     const { copyMap } = useEditor()
 
@@ -69,6 +103,11 @@ export const Cell = ({ objects, xy }: CellProps) => {
         if (!objects.length) addEmpty()
     }
 
+    const getHeight = (obj: ObjectInstance) => {
+        const def = getDefinition(obj.type)
+        return def.height(obj)
+    }
+
     if (open) {
         return (
             <CellContainer>
@@ -77,12 +116,17 @@ export const Cell = ({ objects, xy }: CellProps) => {
                         <Remove onClick={() => remove(obj.id)} />
                         <TextInput obj={obj} field="id" onChange={update(obj.id)} />
                         <TypeSelect obj={obj} onChange={update(obj.id)} />
-                        <ElevationInput obj={obj} onChange={update(obj.id)} />
+                        elevation:
+                        <NumberInput obj={obj} field="elevation" onChange={update(obj.id)} />
+                        rotation:
                         <RotationInput obj={obj} onChange={update(obj.id)} />
                         zIndex:
                         <NumberInput obj={obj} field="zIndex" onChange={update(obj.id)} />
                         aIndex:
                         <NumberInput obj={obj} field="aIndex" onChange={update(obj.id)} />
+                        <div>
+                            h: {getHeight(obj)} e: {obj.elevation}
+                        </div>
                         {!isEmpty(obj.data) && <pre>{JSON.stringify(obj.data, null, 1)}</pre>}
                     </CellObj>
                 ))}
@@ -96,8 +140,13 @@ export const Cell = ({ objects, xy }: CellProps) => {
         <CellInfoContainer onClick={openAndAdd}>
             {objects.map(obj => (
                 <CellObj key={obj.id}>
-                    <strong>{obj.type}</strong> - <small>{obj.id}</small>
+                    <div>
+                        <strong>{obj.type}</strong> <br /> <small>{obj.id}</small>
+                    </div>
                     {!isEmpty(obj.data) && <pre>{JSON.stringify(obj.data, null, 1)}</pre>}
+                    <small>
+                        h: {getHeight(obj)} e: {obj.elevation}
+                    </small>
                 </CellObj>
             ))}
         </CellInfoContainer>
@@ -115,6 +164,8 @@ const CellObj = styled.div`
     background: #333;
     padding: 7px 10px;
     margin: 4px;
+    line-height: 1;
+    font-size: 12px;
     pre {
         font-size: 10px;
     }
@@ -164,7 +215,7 @@ const NumberInput = ({ obj, field, onChange }: NumberInputProps) => {
         <div>
             <input
                 type="number"
-                value={obj[field] as string}
+                defaultValue={obj[field] as string}
                 onChange={event => onChange({ [field]: parseInt(event.target.value, 10) })}
             />
         </div>
