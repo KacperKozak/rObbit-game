@@ -12,6 +12,10 @@ import {
     removeObject,
     tmpSpawn,
     tryNextAction,
+    win,
+    reset,
+    lose,
+    showWinDialog,
 } from './gameReducer'
 
 const enqueueEpic = (
@@ -56,4 +60,31 @@ const tmpSpawnEpic = (
         map(action => removeObject(action.payload.instance.id)),
     )
 
-export const gameEpics = combineEpics(enqueueEpic, tryNextEpic, nextActionEpic, tmpSpawnEpic)
+const winEpic = (
+    actions$: Observable<Action>,
+    state$: StateObservable<GameStateAware>,
+): Observable<Action> =>
+    actions$.pipe(
+        filter(win.match),
+        delay(600),
+        map(() => showWinDialog()),
+    )
+
+const loseEpic = (
+    actions$: Observable<Action>,
+    state$: StateObservable<GameStateAware>,
+): Observable<Action> =>
+    actions$.pipe(
+        filter(lose.match),
+        delay(600),
+        map(() => reset()),
+    )
+
+export const gameEpics = combineEpics(
+    enqueueEpic,
+    tryNextEpic,
+    nextActionEpic,
+    tmpSpawnEpic,
+    winEpic,
+    loseEpic,
+)

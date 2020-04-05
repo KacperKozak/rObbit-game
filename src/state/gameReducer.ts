@@ -28,6 +28,7 @@ export interface GameState {
     mapName: string | null
     objects: ObjectInstance[]
     cleanObjectsState: ObjectInstance[]
+    winDialog: boolean
 }
 
 export interface GameStateAware {
@@ -43,6 +44,7 @@ export const initialState: GameState = {
     mapName: null,
     objects: [],
     cleanObjectsState: [],
+    winDialog: false,
 }
 
 const gameAction = actionCreatorFactory('GG')
@@ -51,6 +53,7 @@ const queueAction = actionCreatorFactory('QUEUE')
 export const loadMap = gameAction<MapData>('LOAD_MAP')
 export const reset = gameAction('RESET')
 export const win = gameAction('WIN')
+export const showWinDialog = gameAction('SHOW_WIN_DIALOG')
 export const lose = gameAction('LOSE')
 
 export const enqueue = queueAction<Action | Action[]>('ENQUEUE')
@@ -94,20 +97,22 @@ export const gameReducer = reducerWithInitialState(initialState)
             cleanObjectsState: objects,
         }),
     )
-    .cases(
-        [reset, lose],
+    .case(
+        reset,
         (state): GameState => ({
             ...state,
             queue: [],
             queueStared: false,
             objects: state.cleanObjectsState,
             cleanObjectsState: state.cleanObjectsState,
+            winDialog: false,
         }),
     )
     .case(
-        win,
+        showWinDialog,
         (state): GameState => ({
-            ...initialState,
+            ...state,
+            winDialog: true,
         }),
     )
 

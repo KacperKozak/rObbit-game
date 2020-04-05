@@ -10,7 +10,7 @@ const moveSoundEpic = (actions$: Observable<Action>): Observable<Action> =>
     actions$.pipe(
         filter(move.match),
         filter(action => action.payload.targetId === PLAYER_ID),
-        tap(() => playEngine(0.1)),
+        tap(() => playEngine(0.05)),
         ignoreElements(),
     )
 
