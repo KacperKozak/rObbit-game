@@ -112,19 +112,19 @@ export const Wall = (props: RenderComponentProps) => {
 }
 export const Grass = (props: RenderComponentProps) => {
     const { grass } = useMyLoader()
-    return <AssetPreload {...props} model={grass} castShadow={true} receiveShadow={true} />
+    return <AssetPreload {...props} model={grass} castShadow={false} receiveShadow={true} />
 }
 export const Water = (props: RenderComponentProps) => {
     const { water } = useMyLoader()
-    return <AssetPreload {...props} model={water} castShadow={true} receiveShadow={true} />
+    return <AssetPreload {...props} model={water} castShadow={false} receiveShadow={true} />
 }
 export const Ice = (props: RenderComponentProps) => {
     const { ice } = useMyLoader()
-    return <AssetPreload {...props} model={ice} castShadow={false} receiveShadow={true} />
+    return <AssetPreload {...props} model={ice} castShadow={true} receiveShadow={true} />
 }
 export const Button = (props: RenderComponentProps) => {
     const { button } = useMyLoader()
-    return <AssetPreload {...props} model={button} castShadow={false} receiveShadow={true} />
+    return <AssetPreload {...props} model={button} castShadow={true} receiveShadow={true} />
 }
 export const Door = (props: RenderComponentProps) => {
     const { door } = useMyLoader()
@@ -132,31 +132,31 @@ export const Door = (props: RenderComponentProps) => {
 }
 export const Pipe = (props: RenderComponentProps) => {
     const { pipe } = useMyLoader()
-    return <AssetPreload {...props} model={pipe} castShadow={false} receiveShadow={true} />
+    return <AssetPreload {...props} model={pipe} castShadow={true} receiveShadow={true} />
 }
 export const PipeLeft = (props: RenderComponentProps) => {
     const { pipeLeft } = useMyLoader()
-    return <AssetPreload {...props} model={pipeLeft} castShadow={false} receiveShadow={true} />
+    return <AssetPreload {...props} model={pipeLeft} castShadow={true} receiveShadow={true} />
 }
 export const PipeRight = (props: RenderComponentProps) => {
     const { pipeRight } = useMyLoader()
-    return <AssetPreload {...props} model={pipeRight} castShadow={false} receiveShadow={true} />
+    return <AssetPreload {...props} model={pipeRight} castShadow={true} receiveShadow={true} />
 }
 export const PipeDown = (props: RenderComponentProps) => {
     const { pipeDown } = useMyLoader()
-    return <AssetPreload {...props} model={pipeDown} castShadow={false} receiveShadow={true} />
+    return <AssetPreload {...props} model={pipeDown} castShadow={true} receiveShadow={true} />
 }
 export const PipeUp = (props: RenderComponentProps) => {
     const { pipeUp } = useMyLoader()
-    return <AssetPreload {...props} model={pipeUp} castShadow={false} receiveShadow={true} />
+    return <AssetPreload {...props} model={pipeUp} castShadow={true} receiveShadow={true} />
 }
 export const PipePlace = (props: RenderComponentProps) => {
     const { pipePlace } = useMyLoader()
-    return <AssetPreload {...props} model={pipePlace} castShadow={false} receiveShadow={true} />
+    return <AssetPreload {...props} model={pipePlace} castShadow={true} receiveShadow={true} />
 }
 export const PipeElement = (props: RenderComponentProps) => {
     const { pipeElement } = useMyLoader()
-    return <AssetPreload {...props} model={pipeElement} castShadow={false} receiveShadow={true} />
+    return <AssetPreload {...props} model={pipeElement} castShadow={true} receiveShadow={true} />
 }
 export const createTrigger = (color: string) => ({ instance }: RenderComponentProps) => {
     const { xy, elevation, rotation } = instance
