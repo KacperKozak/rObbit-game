@@ -104,14 +104,16 @@ export const Menu = () => {
                         <strong>←</strong>
                         <small>{`[A]`}</small>
                     </Button>
-                    <Button onClick={up}>
-                        <strong>↑</strong>
-                        <small>{`[W]`}</small>
-                    </Button>
-                    <Button onClick={down}>
-                        <strong>↓</strong>
-                        <small>{`[S]`}</small>
-                    </Button>
+                    <ButtonBlock>
+                        <Button onClick={up}>
+                            <strong>↑</strong>
+                            <small>{`[W]`}</small>
+                        </Button>
+                        <Button onClick={down}>
+                            <strong>↓</strong>
+                            <small>{`[S]`}</small>
+                        </Button>
+                    </ButtonBlock>
                     <Button onClick={right}>
                         <strong>→</strong>
                         <small>{`[D]`}</small>
@@ -152,7 +154,7 @@ const Completed = styled.span`
 
 const Button = styled.button`
     background: none;
-    color: rgba(205, 236, 255, 0.726);
+    color: rgba(205, 236, 255, 0.7);
     font-size: 14px;
     border: 1px solid currentColor;
     padding: 10px 20px;
@@ -160,7 +162,6 @@ const Button = styled.button`
     border-radius: 4px;
     text-transform: uppercase;
     display: inline-block;
-    vertical-align: middle;
     cursor: pointer;
 
     &:hover {
@@ -175,6 +176,14 @@ const Button = styled.button`
     }
     strong {
         font-size: 27px;
+    }
+`
+
+const ButtonBlock = styled.div`
+    display: inline-block;
+    ${Button} {
+        display: block;
+        margin-top: 6px;
     }
 `
 
