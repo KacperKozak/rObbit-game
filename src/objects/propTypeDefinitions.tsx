@@ -1,5 +1,5 @@
 import { uniqueId } from 'lodash'
-import { play, playEquip } from '../audio/play'
+import { play, playEquip, playExplosion } from '../audio/play'
 import { reverseVector } from '../helpers'
 import { move, removeObject, setObjectData, tmpSpawn, win } from '../state/gameReducer'
 import { PLAYER_ID } from '../types/consts'
@@ -192,7 +192,7 @@ export const propTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
                 return [removeObject(self.id)]
             }
 
-            play('Alert_YES') // TODO Boom!
+            playExplosion(1)
             return [
                 removeObject(self.id),
                 tmpSpawn({

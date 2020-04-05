@@ -17,6 +17,8 @@ const soundList = {
     Hero_1: `${process.env.PUBLIC_URL}/sounds/Hero_1.mp3`,
     Hero_2: `${process.env.PUBLIC_URL}/sounds/Hero_2.mp3`,
     Jump: `${process.env.PUBLIC_URL}/sounds/Jump.mp3`,
+    Explosion_1: `${process.env.PUBLIC_URL}/sounds/Explosion_1.mp3`,
+    Explosion_2: `${process.env.PUBLIC_URL}/sounds/Explosion_2.mp3`,
 }
 
 export type SoundName = keyof typeof soundList
@@ -33,6 +35,13 @@ export const play = (name: SoundName, volume?: number) => {
 export const playEquip = (volume?: number) => {
     const list = ['Equip_1', 'Equip_2', 'Equip_3', 'Equip_4']
     play(list[Math.round(Math.random() * 4)] as SoundName, volume)
+}
+let explosionIndex = 0
+export const playExplosion = (volume?: number) => {
+    const list = ['Explosion_1', 'Explosion_2']
+    play(list[explosionIndex] as SoundName, volume)
+    explosionIndex += 1
+    if (explosionIndex > list.length - 1) explosionIndex = 0
 }
 
 const engineStart = new Audio(soundList['Engine_LOOP_128'])
