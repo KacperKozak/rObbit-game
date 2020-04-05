@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "ba88cb7de47eacfc496b2b318c84dbb1",
+    "revision": "58a3d130eea3cc98fcd40e6c4ed6f22b",
     "url": "/alpha-mechanical/index.html"
   },
   {
-    "revision": "177de9506b3499d8b04c",
+    "revision": "c6223cb764a894fc0f0d",
     "url": "/alpha-mechanical/static/css/main.b21fe41e.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/alpha-mechanical/static/js/2.9217e0ce.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "177de9506b3499d8b04c",
-    "url": "/alpha-mechanical/static/js/main.9979262a.chunk.js"
+    "revision": "c6223cb764a894fc0f0d",
+    "url": "/alpha-mechanical/static/js/main.9db26d2f.chunk.js"
   },
   {
     "revision": "0ccceb8c98682c4ea16b",
