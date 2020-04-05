@@ -80,7 +80,7 @@ export const useGame = () => {
     }
 
     const triggerReset = () => {
-        if (rdy) return
+        if (!rdy) return
         dispatch(reset())
     }
 

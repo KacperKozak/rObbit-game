@@ -68,7 +68,7 @@ export const Menu = () => {
     const down = () => move(DOWN)
     const right = () => move(RIGHT)
 
-    useKeyboardEvent('r', reset)
+    useKeyboardEvent('r', reset, [mapId])
     useKeyboardEvent('q', unloadMap)
     useKeyboardEvent(winDialog && 'enter', nextMap, [winDialog])
 
