@@ -16,7 +16,6 @@ export const GameInstance = () => {
 
     useEffect(() => {
         const KEY = 'lastMapId'
-        console.log('mapId', mapId)
         if (mapId) {
             localStorage.setItem(KEY, mapId)
         } else {
@@ -27,7 +26,7 @@ export const GameInstance = () => {
         }
     }, [mapId])
 
-    useKeyboardEvent('e', toggleEditMode)
+    useKeyboardEvent('e', toggleEditMode, [editMode])
 
     const left = () => move(LEFT)
     const up = () => move(UP)
@@ -36,13 +35,13 @@ export const GameInstance = () => {
 
     useKeyboardEvent('r', reset)
 
-    useKeyboardEvent('ArrowLeft', left)
-    useKeyboardEvent('ArrowUp', up)
-    useKeyboardEvent('ArrowDown', down)
-    useKeyboardEvent('ArrowRight', right)
-    useKeyboardEvent('Enter', equip)
-    useKeyboardEvent('Shift', grapple)
-    useKeyboardEvent(' ', fire)
+    useKeyboardEvent('left', left, [left])
+    useKeyboardEvent('up', up, [up])
+    useKeyboardEvent('down', down, [down])
+    useKeyboardEvent('right', right, [right])
+    useKeyboardEvent('enter', equip, [equip])
+    useKeyboardEvent('shift', grapple, [grapple])
+    useKeyboardEvent('space', fire, [fire])
 
     let mapCenter = [0, 0]
     objects.forEach(el => {
