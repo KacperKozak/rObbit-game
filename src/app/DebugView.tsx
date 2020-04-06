@@ -14,7 +14,7 @@ interface DebugViewProps {
 const size = 150
 const grid = 10
 
-const color: Record<ObjectTypes, string> = {
+const color: Partial<Record<ObjectTypes, string>> = {
     [ObjectTypes.Player]: 'red',
     [ObjectTypes.WinTrigger]: 'green',
 

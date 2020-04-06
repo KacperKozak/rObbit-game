@@ -176,7 +176,7 @@ export const createTrigger = (color: string) => ({ instance }: RenderComponentPr
 
     return (
         <mesh position={[xy[0], elevation, xy[1]]} rotation={[0, vectorToThree(rotation), 0]}>
-            <boxBufferGeometry attach="geometry" args={[0.5, 1, 0.5]} />
+            <sphereGeometry attach="geometry" args={[1, 5, 16]} />
             <meshStandardMaterial attach="material" color={color} />
         </mesh>
     )
