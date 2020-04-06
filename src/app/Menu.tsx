@@ -27,6 +27,8 @@ import { Authors } from './Authors'
 import { DebugView } from './DebugView'
 import { Video } from './intro/Video'
 
+import logo from './assets/logo.png'
+
 export const Menu = () => {
     const {
         objects,
@@ -139,7 +141,9 @@ export const Menu = () => {
             {playingOutro && <Video video="outro" onEnded={() => setPlayingOutro(false)} />}
             {!mapId && (
                 <>
-                    <Title>{GAME_NAME}</Title>
+                    <Title>
+                        <img src={logo} alt={GAME_NAME} />
+                    </Title>
                     {gameStarted ? (
                         <LevelWrapper>
                             {maps.map((map, index) => (
