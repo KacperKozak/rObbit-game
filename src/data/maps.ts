@@ -43,7 +43,7 @@ import mountains from './jsons/mountains.json'
 import mountainsImg from './images/mountains.png'
 
 import iceworld from './jsons/iceworld.json'
-// import iceworldImg from './images/iceworld.png'
+import iceworldImg from './images/iceworld.png'
 
 import lake from './jsons/lake.json'
 import lakeImg from './images/lake.png'
@@ -83,7 +83,7 @@ export const maps: MapData[] = [
     { id: 'crossbow', name: 'crossbow', image: crossbowImg, objects: crossbow as any },
     { id: 'mountains', name: 'mountains', image: mountainsImg, objects: mountains as any },
 
-    { id: 'iceworld', name: 'iceworld', objects: iceworld as any },
+    { id: 'iceworld', name: 'iceworld', image: iceworldImg, objects: iceworld as any },
 
     { id: 'lake', name: 'lake', image: lakeImg, objects: lake as any },
 ]
