@@ -420,14 +420,14 @@
         "elevation": -1
     },
     {
-        "type": "Water",
+        "type": "RockFloor",
         "id": "RockFloor-38-42",
         "xy": [0, 1],
         "rotation": [-1, 0],
         "zIndex": 0,
         "aIndex": 0,
         "data": {},
-        "elevation": -1
+        "elevation": 0.55
     },
     {
         "type": "Water",
@@ -658,5 +658,25 @@
         "aIndex": 0,
         "data": {},
         "elevation": 0
+    },
+    {
+        "type": "Tree2",
+        "id": "3-66",
+        "xy": [0, 1],
+        "rotation": [-1, 0],
+        "elevation": 0.73,
+        "zIndex": 0,
+        "aIndex": 0,
+        "data": {}
+    },
+    {
+        "type": "Tree",
+        "id": "4-67",
+        "xy": [0, 1],
+        "rotation": [0, 1],
+        "elevation": 0.67,
+        "zIndex": 0,
+        "aIndex": 0,
+        "data": {}
     }
 ]
