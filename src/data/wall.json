@@ -197,7 +197,7 @@
         "zIndex": 0,
         "aIndex": 0,
         "data": {},
-        "elevation": 0.02
+        "elevation": 0.16
     },
     {
         "type": "BigRock",
@@ -380,16 +380,6 @@
         "elevation": -0.4
     },
     {
-        "type": "BigRock",
-        "id": "RockFloor-40",
-        "xy": [4, 4],
-        "rotation": [-1, 0],
-        "zIndex": 0,
-        "aIndex": 0,
-        "data": {},
-        "elevation": -0.11
-    },
-    {
         "type": "Wall",
         "id": "RockFloor-41",
         "xy": [6, 2],
@@ -537,7 +527,7 @@
         "zIndex": 0,
         "aIndex": 0,
         "data": {},
-        "elevation": -0.11
+        "elevation": 0.33
     },
     {
         "type": "Box",
