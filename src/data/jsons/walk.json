@@ -323,11 +323,11 @@
         "type": "WinTrigger",
         "id": "1-32",
         "xy": [7, 2],
-        "rotation": [0, 1],
+        "rotation": [1, 0],
         "zIndex": 0,
         "aIndex": 0,
         "data": {},
-        "elevation": 0.45
+        "elevation": 0
     },
     {
         "type": "Pipe",

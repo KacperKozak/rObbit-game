@@ -10,7 +10,7 @@ import {
     Box,
     Button,
     Cannon,
-    createTrigger,
+    Trigger,
     Crossbow,
     Door,
     Fence,
@@ -159,7 +159,7 @@ export const propTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
             }
             return []
         },
-        Component3d: createTrigger('#22FF22'),
+        Component3d: Trigger,
     },
 
     [ObjectTypes.Door]: {

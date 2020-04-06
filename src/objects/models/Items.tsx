@@ -34,6 +34,7 @@ const useMyLoader = () => {
     const tree2 = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/tree2.gltf`)
     const metal = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/metal1.gltf`)
     const metal2 = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/metal2.gltf`)
+    const end = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/end.gltf`)
     return {
         // robot: robot.scene,
         rocket: rocket.scene,
@@ -63,6 +64,7 @@ const useMyLoader = () => {
         tree2: tree2.scene,
         metal: metal.scene,
         metal2: metal2.scene,
+        end: end.scene,
     }
 }
 const useAnimationLoader = () => {
@@ -189,15 +191,9 @@ export const Metal2 = (props: RenderComponentProps) => {
     const { metal2 } = useMyLoader()
     return <AssetPreload {...props} model={metal2} castShadow={true} receiveShadow={true} />
 }
-export const createTrigger = (color: string) => ({ instance }: RenderComponentProps) => {
-    const { xy, elevation, rotation } = instance
-
-    return (
-        <mesh position={[xy[0], elevation + 0.5, xy[1]]} rotation={[0, vectorToThree(rotation), 0]}>
-            <sphereGeometry attach="geometry" args={[0.4, 6, 6]} />
-            <meshStandardMaterial attach="material" color={color} />
-        </mesh>
-    )
+export const Trigger = (props: RenderComponentProps) => {
+    const { end } = useMyLoader()
+    return <AssetPreload {...props} model={end} castShadow={true} receiveShadow={true} />
 }
 
 interface AssetsProps extends RenderComponentProps {

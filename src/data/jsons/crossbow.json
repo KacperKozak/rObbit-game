@@ -413,8 +413,8 @@
         "type": "WinTrigger",
         "id": "49-41",
         "xy": [7, 3],
-        "rotation": [0, 1],
-        "elevation": 0.33,
+        "rotation": [1, 0],
+        "elevation": 0.16,
         "zIndex": 0,
         "aIndex": 0,
         "data": {}
