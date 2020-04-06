@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useRef } from 'react'
 import { animated, useSpring } from 'react-spring/three'
 import { useFrame, useLoader } from 'react-three-fiber'
 import { AnimationMixer, LoopOnce } from 'three'

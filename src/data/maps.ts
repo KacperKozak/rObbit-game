@@ -30,6 +30,9 @@ import greenRiverImg from './images/greenRiver.png'
 import lake from './lake.json'
 import lakeImg from './images/lake.png'
 
+import crossbow from './crossbow.json'
+// import crossbowImg from './images/crossbow.png'
+
 import map0 from './map0.json'
 import map1 from './map1.json'
 import map2 from './map2.json'
@@ -58,7 +61,7 @@ export const maps: MapData[] = [
     { id: 'green-river', name: 'green-river', image: greenRiverImg, objects: greenRiver as any },
 
     // Crossbow ↓
-    { id: 'crossbow', name: 'crossbow', objects: [] }, // TODO
+    { id: 'crossbow', name: 'crossbow', objects: crossbow as any }, // TODO
     { id: 'mountains', name: 'mountains', objects: mountains as any }, // TODO
     { id: 'lake', name: 'lake', image: lakeImg, objects: lake as any },
 
