@@ -440,7 +440,7 @@
         "elevation": 0
     },
     {
-        "type": "tree",
+        "type": "Tree",
         "id": "1-44",
         "xy": [5, 0],
         "rotation": [0, -1],
@@ -450,7 +450,7 @@
         "elevation": 0
     },
     {
-        "type": "tree2",
+        "type": "Tree2",
         "id": "2-45",
         "xy": [0, 4],
         "rotation": [-1, 0],
