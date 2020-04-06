@@ -19,7 +19,7 @@ import cliff from './jsons/cliff.json'
 import cliffImg from './images/cliff.png'
 
 import cannon from './jsons/cannon.json'
-import cannonImg from './images/cannonRecoil.png'
+import cannonImg from './images/cannon.png'
 
 import cannonRecoil from './jsons/cannonRecoil.json'
 import cannonRecoilImg from './images/cannonRecoil.png'
