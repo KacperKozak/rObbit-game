@@ -75,8 +75,8 @@ export const maps: MapData[] = [
     { id: 'lake', name: 'lake', image: lakeImg, objects: lake as any },
 
     // TODO remove
-    { id: 'map-0', name: 'Test 0', objects: map0 as any },
-    { id: 'map-1', name: 'Test 1', objects: map1 as any },
-    { id: 'map-2', name: 'Test 2', objects: map2 as any },
+    // { id: 'map-0', name: 'Test 0', objects: map0 as any },
+    // { id: 'map-1', name: 'Test 1', objects: map1 as any },
+    // { id: 'map-2', name: 'Test 2', objects: map2 as any },
     { id: 'starter', name: 'Editor', objects: mapStarter as any },
 ]

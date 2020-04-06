@@ -978,5 +978,25 @@
         "aIndex": 0,
         "data": {},
         "elevation": 0
+    },
+    {
+        "type": "Tree2",
+        "id": "27-98",
+        "xy": [5, 0],
+        "rotation": [0, 1],
+        "elevation": -0.1,
+        "zIndex": 0,
+        "aIndex": 0,
+        "data": {}
+    },
+    {
+        "type": "BigRock2",
+        "id": "28-99",
+        "xy": [6, 0],
+        "rotation": [0, 1],
+        "elevation": 1.27,
+        "zIndex": 0,
+        "aIndex": 0,
+        "data": {}
     }
 ]
