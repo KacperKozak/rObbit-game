@@ -1,9 +1,9 @@
 [
     {
         "type": "Player",
-        "xy": [2, 1],
+        "xy": [2, 2],
         "id": "player",
-        "elevation": 0,
+        "elevation": -0.1,
         "rotation": [0, 1],
         "zIndex": 2,
         "aIndex": 10,
@@ -397,7 +397,7 @@
         "zIndex": 0,
         "aIndex": 0,
         "data": {},
-        "elevation": -0.55
+        "elevation": -0.36
     },
     {
         "type": "RockFloor",
@@ -678,5 +678,15 @@
         "aIndex": 0,
         "data": {},
         "elevation": -1
+    },
+    {
+        "type": "Tree2",
+        "id": "1-68",
+        "xy": [5, 5],
+        "rotation": [1, 0],
+        "elevation": 0.07,
+        "zIndex": 0,
+        "aIndex": 0,
+        "data": {}
     }
 ]

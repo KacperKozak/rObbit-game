@@ -4,7 +4,7 @@
         "xy": [1, 2],
         "id": "player",
         "elevation": 0,
-        "rotation": [1, 0],
+        "rotation": [0, 1],
         "zIndex": 2,
         "aIndex": 10,
         "data": { "hasCannon": true }
@@ -197,7 +197,7 @@
         "zIndex": 0,
         "aIndex": 0,
         "data": {},
-        "elevation": 0.2
+        "elevation": -0.1
     },
     {
         "type": "RockFloor",
@@ -427,7 +427,7 @@
         "zIndex": 0,
         "aIndex": 0,
         "data": {},
-        "elevation": 0
+        "elevation": 0.25
     },
     {
         "type": "PipeUp",
