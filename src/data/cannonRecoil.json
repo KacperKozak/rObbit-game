@@ -7,7 +7,7 @@
         "rotation": [1, 0],
         "zIndex": 2,
         "aIndex": 10,
-        "data": {}
+        "data": { "hasCannon": true }
     },
     {
         "type": "RockFloor",
@@ -202,16 +202,6 @@
     {
         "type": "RockFloor",
         "id": "RockFloor-20-24",
-        "xy": [1, 4],
-        "rotation": [0, -1],
-        "zIndex": 0,
-        "aIndex": 0,
-        "data": {},
-        "elevation": 0
-    },
-    {
-        "type": "Cannon",
-        "id": "RockFloor-21-25",
         "xy": [1, 4],
         "rotation": [0, -1],
         "zIndex": 0,

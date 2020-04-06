@@ -18,6 +18,9 @@ import wallImg from './images/wall.png'
 import cliff from './cliff.json'
 import cliffImg from './images/cliff.png'
 
+import cannon from './cannon.json'
+// import cannonImg from './images/cannonRecoil.png'
+
 import cannonRecoil from './cannonRecoil.json'
 import cannonRecoilImg from './images/cannonRecoil.png'
 
@@ -55,7 +58,7 @@ export const maps: MapData[] = [
     { id: 'wall', name: 'wall', image: wallImg, objects: wall as any },
 
     // Cannon ↓
-    { id: 'cannon', name: 'cannon', objects: [] }, // TODO
+    { id: 'cannon', name: 'cannon', objects: cannon }, // TODO
     {
         id: 'cannon-recoil',
         name: 'cannon-recoil',
