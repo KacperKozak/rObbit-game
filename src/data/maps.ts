@@ -52,7 +52,7 @@ import mapStarter from './starter.json'
 import { IS_DEV } from '../config'
 
 export const maps: MapData[] = [
-    { id: 'walk', name: 'walk', objects: walk },
+    { id: 'walk', name: 'walk', objects: walk as any },
     { id: 'button', name: 'button', image: buttonImg, objects: button as any },
 
     { id: 'box', name: 'box', objects: box as any },

@@ -9,6 +9,7 @@ import {
     BTN_FIRE,
     BTN_GRAPPLE,
     BTN_LEVEL,
+    BTN_PLAY,
     BTN_RESTART,
     CONGRATULATIONS,
     GAME_NAME,
@@ -24,7 +25,9 @@ import { useLocal } from '../hooks/useLocal'
 import { DOWN, LEFT, RIGHT, UP } from '../types/consts'
 import { Authors } from './Authors'
 import { DebugView } from './DebugView'
-import { Intro } from './intro/Intro'
+import { Video } from './intro/Video'
+
+import logo from './assets/logo.png'
 
 export const Menu = () => {
     const {
@@ -42,17 +45,36 @@ export const Menu = () => {
     } = useGame()
     const { player } = useGame()
     const { editMode, toggleEditMode } = useEditor()
-    const { isCompleted } = useLocal()
+    const { isCompleted, allCompeted } = useLocal()
 
-    const [introPlayed, setIntroPlayed] = useState(true) // TODO false
-    const [gameStarted, setGameStarted] = useState(true) // TODO false
+    const [introPlayed, setIntroPlayed] = useState(false)
+    const [gameStarted, setGameStarted] = useState(false)
+
+    const [outroPlayed, setOutroPlayed] = useState(false)
+    const [playingOutro, setPlayingOutro] = useState(false)
+
+    useEffect(() => {
+        if (allCompeted && !outroPlayed) {
+            if (gameStarted) {
+                setPlayingOutro(true)
+                setOutroPlayed(true)
+                unloadMap()
+            } else {
+                setOutroPlayed(true)
+            }
+        }
+    }, [outroPlayed, playingOutro, allCompeted])
 
     const musicRef = useRef(getAudio('Music', 0.3))
     const droneRef = useRef(getAudio('Drone', 1))
     const playMusic = !mapId || winDialog
 
     useEffect(() => {
-        if (!gameStarted || !introPlayed) return
+        if (!gameStarted || !introPlayed || playingOutro) {
+            droneRef.current.pause()
+            musicRef.current.pause()
+            return
+        }
         if (playMusic) {
             droneRef.current.pause()
 
@@ -68,7 +90,7 @@ export const Menu = () => {
             droneRef.current.addEventListener('ended', onEnd)
             return () => droneRef.current.removeEventListener('ended', onEnd)
         }
-    }, [playMusic, gameStarted, introPlayed])
+    }, [playMusic, gameStarted, introPlayed, playingOutro])
 
     const nextMap = () => {
         const currentIndex = maps.findIndex(m => m.id === mapId)
@@ -113,10 +135,15 @@ export const Menu = () => {
 
     return (
         <>
-            {!introPlayed && gameStarted && <Intro onEnded={() => setIntroPlayed(true)} />}
+            {!introPlayed && gameStarted && (
+                <Video video="intro" onEnded={() => setIntroPlayed(true)} />
+            )}
+            {playingOutro && <Video video="outro" onEnded={() => setPlayingOutro(false)} />}
             {!mapId && (
                 <>
-                    <Title>{GAME_NAME}</Title>
+                    <Title>
+                        <img src={logo} alt={GAME_NAME} />
+                    </Title>
                     {gameStarted ? (
                         <LevelWrapper>
                             {maps.map((map, index) => (
@@ -134,7 +161,9 @@ export const Menu = () => {
                         </LevelWrapper>
                     ) : (
                         <StartButtonWrapper>
-                            <StartButton onClick={() => setGameStarted(true)}>Play</StartButton>
+                            <StartButton onClick={() => setGameStarted(true)}>
+                                {BTN_PLAY}
+                            </StartButton>
                         </StartButtonWrapper>
                     )}
                 </>
@@ -193,7 +222,7 @@ export const Menu = () => {
                     )}
                 </ControlsWrapper>
             )}
-            {winDialog && (
+            {winDialog && mapId && (
                 <Dialog>
                     <h1>{CONGRATULATIONS}</h1>
                     <p>{LEVEL_COMPLETE}</p> <br />
@@ -231,6 +260,12 @@ const Title = styled.h1`
     text-align: center;
     font-weight: normal;
     color: #fff;
+    padding: 0 20px;
+    img {
+        max-width: 100%;
+        display: block;
+        margin: auto;
+    }
 `
 
 const LevelWrapper = styled.div`
