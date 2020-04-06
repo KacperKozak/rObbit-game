@@ -46,6 +46,7 @@ import map2 from './map2.json'
 import mountains from './mountains.json'
 
 import mapStarter from './starter.json'
+import { IS_DEV } from '../config'
 
 export const maps: MapData[] = [
     { id: 'walk', name: 'walk', objects: walk },
@@ -58,7 +59,7 @@ export const maps: MapData[] = [
     { id: 'wall', name: 'wall', image: wallImg, objects: wall as any },
 
     // Cannon ↓
-    { id: 'cannon', name: 'cannon', objects: cannon }, // TODO
+    { id: 'cannon', name: 'cannon', objects: cannon },
     {
         id: 'cannon-recoil',
         name: 'cannon-recoil',
@@ -70,13 +71,16 @@ export const maps: MapData[] = [
     { id: 'green-river', name: 'green-river', image: greenRiverImg, objects: greenRiver as any },
 
     // Crossbow ↓
-    { id: 'crossbow', name: 'crossbow', objects: crossbow as any }, // TODO
-    { id: 'mountains', name: 'mountains', objects: mountains as any }, // TODO
+    { id: 'crossbow', name: 'crossbow', objects: crossbow as any },
+    { id: 'mountains', name: 'mountains', objects: mountains as any },
     { id: 'lake', name: 'lake', image: lakeImg, objects: lake as any },
-
-    // TODO remove
-    // { id: 'map-0', name: 'Test 0', objects: map0 as any },
-    // { id: 'map-1', name: 'Test 1', objects: map1 as any },
-    // { id: 'map-2', name: 'Test 2', objects: map2 as any },
-    { id: 'starter', name: 'Editor', objects: mapStarter as any },
 ]
+
+if (IS_DEV) {
+    maps.push(
+        { id: 'map-0', name: 'Test 0', objects: map0 as any },
+        { id: 'map-1', name: 'Test 1', objects: map1 as any },
+        { id: 'map-2', name: 'Test 2', objects: map2 as any },
+        { id: 'starter', name: 'Editor', objects: mapStarter as any },
+    )
+}

@@ -3,15 +3,28 @@ import styled from 'styled-components'
 import { getAudio } from '../audio/play'
 import { Button, ButtonBlock } from '../components/Button'
 import { Dialog } from '../components/Dialog'
+import {
+    BTN_EQUIP,
+    BTN_EXIT,
+    BTN_FIRE,
+    BTN_GRAPPLE,
+    BTN_LEVEL,
+    BTN_RESTART,
+    CONGRATULATIONS,
+    GAME_NAME,
+    IS_DEV,
+    LEVEL_COMPLETE,
+    NEXT_LEVEL,
+} from '../config'
 import { maps } from '../data/maps'
 import { useEditor } from '../hooks/useEditor'
 import { useGame } from '../hooks/useGame'
 import { useKeyboardEvent } from '../hooks/useKeyboardEvent'
 import { useLocal } from '../hooks/useLocal'
 import { DOWN, LEFT, RIGHT, UP } from '../types/consts'
+import { Authors } from './Authors'
 import { DebugView } from './DebugView'
 import { Intro } from './intro/Intro'
-import { Authors } from './Authors'
 
 export const Menu = () => {
     const {
@@ -103,12 +116,18 @@ export const Menu = () => {
             {!introPlayed && gameStarted && <Intro onEnded={() => setIntroPlayed(true)} />}
             {!mapId && (
                 <>
-                    <Title>rObbit</Title>
+                    <Title>{GAME_NAME}</Title>
                     {gameStarted ? (
                         <LevelWrapper>
-                            {maps.map(map => (
+                            {maps.map((map, index) => (
                                 <LevelButton key={map.id} onClick={() => loadMap(map)}>
-                                    {map.name} {isCompleted(map.id) && <Completed />}
+                                    {BTN_LEVEL} {index} {isCompleted(map.id) && <Completed />}
+                                    {IS_DEV && (
+                                        <small style={{ fontSize: 11 }}>
+                                            <br />
+                                            {map.name}
+                                        </small>
+                                    )}
                                     {map.image && <img src={map.image} width="200" alt="" />}
                                 </LevelButton>
                             ))}
@@ -126,15 +145,19 @@ export const Menu = () => {
             {mapId && (
                 <SmallMenuWrapper>
                     <Button onClick={unloadMap}>
-                        Exit
+                        {BTN_EXIT}
                         <small>{`[Q]`}</small>
                     </Button>
                     <Button onClick={reset}>
-                        Restart <small>{`[R]`}</small>
+                        {BTN_RESTART} <small>{`[R]`}</small>
                     </Button>
                 </SmallMenuWrapper>
             )}
-            {mapName && <MapName>Map: {mapName}</MapName>}
+            {mapName && (
+                <MapName>
+                    {BTN_LEVEL} {maps.findIndex(m => m.id === mapId)}
+                </MapName>
+            )}
             {mapId && player && (
                 <ControlsWrapper>
                     <Button onClick={left}>
@@ -156,26 +179,26 @@ export const Menu = () => {
                         <small>{`[D]`}</small>
                     </Button>
                     <Button onClick={equip}>
-                        Equip <small>{`[E]`}</small>
+                        {BTN_EQUIP} <small>{`[E]`}</small>
                     </Button>
                     {player.data.hasGrapple && (
                         <Button onClick={grapple}>
-                            Grapple <small>{`[F]`}</small>
+                            {BTN_GRAPPLE} <small>{`[F]`}</small>
                         </Button>
                     )}
                     {player.data.hasCannon && (
                         <Button onClick={fire}>
-                            Fire <small>{'[SPACE]'}</small>
+                            {BTN_FIRE} <small>{'[SPACE]'}</small>
                         </Button>
                     )}
                 </ControlsWrapper>
             )}
             {winDialog && (
                 <Dialog>
-                    <h1>Congratulations!</h1>
-                    <p>Level complete</p> <br />
+                    <h1>{CONGRATULATIONS}</h1>
+                    <p>{LEVEL_COMPLETE}</p> <br />
                     <Button onClick={nextMap}>
-                        Next level <small>[enter]</small>
+                        {NEXT_LEVEL} <small>[enter]</small>
                     </Button>
                 </Dialog>
             )}
@@ -203,10 +226,11 @@ const StartButton = styled(Button)`
 `
 
 const Title = styled.h1`
-    font-family: 'Megrim', sans-serif;
-    font-size: 80px;
+    font-family: 'Gugi', cursive;
+    font-size: 85px;
     text-align: center;
     font-weight: normal;
+    color: #fff;
 `
 
 const LevelWrapper = styled.div`
@@ -244,12 +268,14 @@ const LevelButton = styled.button`
 `
 
 const MapName = styled.div`
+    font-weight: bold;
     position: absolute;
     z-index: 5;
     top: 0;
     right: 0;
-    padding: 5px 5px 0 0;
-    font-size: 18px;
+    padding: 10px 20px 0 0;
+    font-size: 24px;
+    text-transform: uppercase;
 `
 
 const ControlsWrapper = styled.div`
