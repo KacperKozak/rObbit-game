@@ -15,6 +15,7 @@ export enum ObjectTypes {
     Wall = 'Wall',
     Box = 'Box',
     BigRock = 'BigRock',
+    BigRock2 = 'BigRock2',
 
     Pipe = 'Pipe',
     PipeLeft = 'PipeLeft',
@@ -24,8 +25,10 @@ export enum ObjectTypes {
     PipeDown = 'PipeDown',
     PipeElement = 'PipeElement',
 
-    Tree = 'tree',
-    Tree2 = 'tree2',
+    Tree = 'Tree',
+    Tree2 = 'Tree2',
+    Metal = 'Metal',
+    Metal2 = 'Metal2',
 
     Fence = 'Fence',
 

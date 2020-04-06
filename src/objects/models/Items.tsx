@@ -11,6 +11,7 @@ const useMyLoader = () => {
     const cannon = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/cannon.gltf`)
     const box = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/box.gltf`)
     const rock = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/rock1.gltf`)
+    const rock2 = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/rock2.gltf`)
     const fence = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/fence.gltf`)
     const arrow = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/arrow.gltf`)
     const crossbow = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/crossbow.gltf`)
@@ -31,12 +32,15 @@ const useMyLoader = () => {
     const pipeDown = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/pipe-down.gltf`)
     const tree = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/tree.gltf`)
     const tree2 = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/tree2.gltf`)
+    const metal = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/metal1.gltf`)
+    const metal2 = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/metal2.gltf`)
     return {
         // robot: robot.scene,
         rocket: rocket.scene,
         cannon: cannon.scene,
         box: box.scene,
         rock: rock.scene,
+        rock2: rock2.scene,
         fence: fence.scene,
         arrow: arrow.scene,
         crossbow: crossbow.scene,
@@ -57,6 +61,8 @@ const useMyLoader = () => {
         pipeDown: pipeDown.scene,
         tree: tree.scene,
         tree2: tree2.scene,
+        metal: metal.scene,
+        metal2: metal2.scene,
     }
 }
 const useAnimationLoader = () => {
@@ -78,6 +84,10 @@ export const Box = (props: RenderComponentProps) => {
 export const Rock = (props: RenderComponentProps) => {
     const { rock } = useMyLoader()
     return <AssetPreload {...props} model={rock} />
+}
+export const Rock2 = (props: RenderComponentProps) => {
+    const { rock2 } = useMyLoader()
+    return <AssetPreload {...props} model={rock2} />
 }
 export const Fence = (props: RenderComponentProps) => {
     const { fence } = useMyLoader()
@@ -170,6 +180,14 @@ export const Tree = (props: RenderComponentProps) => {
 export const Tree2 = (props: RenderComponentProps) => {
     const { tree2 } = useMyLoader()
     return <AssetPreload {...props} model={tree2} castShadow={true} receiveShadow={true} />
+}
+export const Metal = (props: RenderComponentProps) => {
+    const { metal } = useMyLoader()
+    return <AssetPreload {...props} model={metal} castShadow={true} receiveShadow={true} />
+}
+export const Metal2 = (props: RenderComponentProps) => {
+    const { metal2 } = useMyLoader()
+    return <AssetPreload {...props} model={metal2} castShadow={true} receiveShadow={true} />
 }
 export const createTrigger = (color: string) => ({ instance }: RenderComponentProps) => {
     const { xy, elevation, rotation } = instance

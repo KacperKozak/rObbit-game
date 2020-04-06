@@ -24,6 +24,7 @@ const color: Partial<Record<ObjectTypes, string>> = {
     [ObjectTypes.Wall]: 'white',
     [ObjectTypes.Box]: 'brown',
     [ObjectTypes.BigRock]: 'silver',
+    [ObjectTypes.BigRock2]: 'silver',
 
     [ObjectTypes.Pipe]: 'lightblue',
     [ObjectTypes.PipeLeft]: 'lightblue',
@@ -49,6 +50,8 @@ const color: Partial<Record<ObjectTypes, string>> = {
 
     [ObjectTypes.Tree]: 'green',
     [ObjectTypes.Tree2]: 'green',
+    [ObjectTypes.Metal]: '#ccc',
+    [ObjectTypes.Metal2]: '#ccc',
 }
 
 export const DebugView = ({ objects }: DebugViewProps) => {

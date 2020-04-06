@@ -27,6 +27,9 @@ import {
     WallMetal,
     Tree,
     Tree2,
+    Metal,
+    Metal2,
+    Rock2,
 } from './models/Items'
 
 export const propTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>> = {
@@ -40,6 +43,11 @@ export const propTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
         name: 'Big rock',
         height: () => 0.55,
         Component3d: Rock,
+    },
+    [ObjectTypes.BigRock2]: {
+        name: 'Big rock2',
+        height: () => 0.55,
+        Component3d: Rock2,
     },
     [ObjectTypes.Pipe]: {
         name: 'Pipe',
@@ -86,14 +94,24 @@ export const propTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
         Component3d: PipePlace,
     },
     [ObjectTypes.Tree]: {
-        name: 'PipeDown',
+        name: 'Tree',
         height: () => 2,
         Component3d: Tree,
     },
     [ObjectTypes.Tree2]: {
-        name: 'Tree',
+        name: 'Tree2',
         height: () => 2,
         Component3d: Tree2,
+    },
+    [ObjectTypes.Metal]: {
+        name: 'Metal',
+        height: () => 2,
+        Component3d: Metal,
+    },
+    [ObjectTypes.Metal2]: {
+        name: 'Metal2',
+        height: () => 2,
+        Component3d: Metal2,
     },
 
     [ObjectTypes.Box]: {
