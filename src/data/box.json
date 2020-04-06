@@ -4,7 +4,7 @@
         "xy": [1, 2],
         "id": "player",
         "elevation": 0,
-        "rotation": [1, 0],
+        "rotation": [-1, 0],
         "zIndex": 2,
         "aIndex": 10,
         "data": {}
@@ -17,7 +17,7 @@
         "zIndex": 0,
         "aIndex": 0,
         "data": {},
-        "elevation": 0
+        "elevation": 0.12
     },
     {
         "type": "Grass",
@@ -27,7 +27,7 @@
         "zIndex": 0,
         "aIndex": 0,
         "data": {},
-        "elevation": 0
+        "elevation": 0.12
     },
     {
         "type": "RockFloor",
@@ -47,7 +47,7 @@
         "zIndex": 0,
         "aIndex": 0,
         "data": {},
-        "elevation": 0
+        "elevation": 0.12
     },
     {
         "type": "RockFloor",
@@ -117,7 +117,7 @@
         "zIndex": 0,
         "aIndex": 0,
         "data": {},
-        "elevation": 0
+        "elevation": 0.12
     },
     {
         "type": "Metal2",
@@ -197,7 +197,7 @@
         "zIndex": 0,
         "aIndex": 0,
         "data": {},
-        "elevation": 0
+        "elevation": 0.12
     },
     {
         "type": "Grass",
@@ -207,7 +207,7 @@
         "zIndex": 0,
         "aIndex": 0,
         "data": {},
-        "elevation": 0
+        "elevation": -0.13
     },
     {
         "type": "RockFloor",
@@ -287,7 +287,7 @@
         "zIndex": 0,
         "aIndex": 0,
         "data": {},
-        "elevation": 0
+        "elevation": -0.21
     },
     {
         "type": "RockFloor",
@@ -467,7 +467,7 @@
         "zIndex": 0,
         "aIndex": 0,
         "data": {},
-        "elevation": 0
+        "elevation": -0.13
     },
     {
         "type": "Grass",
@@ -477,7 +477,7 @@
         "zIndex": 0,
         "aIndex": 0,
         "data": {},
-        "elevation": 0
+        "elevation": -0.21
     },
     {
         "type": "Pipe",
@@ -507,7 +507,7 @@
         "zIndex": 0,
         "aIndex": 0,
         "data": {},
-        "elevation": 0
+        "elevation": -0.55
     },
     {
         "type": "RockFloor",
@@ -567,7 +567,7 @@
         "zIndex": 0,
         "aIndex": 0,
         "data": {},
-        "elevation": 0
+        "elevation": 0.2
     },
     {
         "type": "Grass",
