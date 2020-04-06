@@ -129,7 +129,7 @@ export const propTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
             }
             return []
         },
-        Component3d: createTrigger('#ABC123'),
+        Component3d: createTrigger('#00FF00'),
     },
 
     [ObjectTypes.Door]: {
