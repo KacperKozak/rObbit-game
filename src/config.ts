@@ -18,8 +18,10 @@ export const FALL_ELEVATION = -5
 
 export const GAME_NAME = 'rObbit'
 
-export const BTN_LEVEL = 'Level'
+export const BTN_PLAY = 'Play'
 
+export const BTN_SKIP = 'Skip'
+export const BTN_LEVEL = 'Level'
 export const BTN_EXIT = 'Exit'
 export const BTN_RESTART = 'Restart'
 
