@@ -17,7 +17,7 @@
         "rotation": [1, 0],
         "zIndex": 2,
         "aIndex": 10,
-        "data": {}
+        "data": { "hasGrapple": true, "hasCannon": true }
     },
     {
         "type": "Door",
