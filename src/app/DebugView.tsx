@@ -313,10 +313,10 @@ interface RotationInputProps {
 const RotationInput = ({ obj, onChange }: RotationInputProps) => {
     return (
         <div>
-            <RotationInputButton obj={obj} label={'UP'} rotation={UP} onChange={onChange} />
-            <RotationInputButton obj={obj} label={'RIGHT'} rotation={RIGHT} onChange={onChange} />
-            <RotationInputButton obj={obj} label={'DOWN'} rotation={DOWN} onChange={onChange} />
             <RotationInputButton obj={obj} label={'LEFT'} rotation={LEFT} onChange={onChange} />
+            <RotationInputButton obj={obj} label={'UP'} rotation={UP} onChange={onChange} />
+            <RotationInputButton obj={obj} label={'DOWN'} rotation={DOWN} onChange={onChange} />
+            <RotationInputButton obj={obj} label={'RIGHT'} rotation={RIGHT} onChange={onChange} />
         </div>
     )
 }
@@ -350,13 +350,13 @@ const MoveInput = ({ obj, onChange }: RotationInputProps) => {
         <div>
             <RotationInputButton
                 obj={obj}
-                label={'UP'}
-                onChange={() => onChange({ xy: applyVector(obj.xy, UP) })}
+                label={'LEFT'}
+                onChange={() => onChange({ xy: applyVector(obj.xy, LEFT) })}
             />
             <RotationInputButton
                 obj={obj}
-                label={'RIGHT'}
-                onChange={() => onChange({ xy: applyVector(obj.xy, RIGHT) })}
+                label={'UP'}
+                onChange={() => onChange({ xy: applyVector(obj.xy, UP) })}
             />
             <RotationInputButton
                 obj={obj}
@@ -365,8 +365,8 @@ const MoveInput = ({ obj, onChange }: RotationInputProps) => {
             />
             <RotationInputButton
                 obj={obj}
-                label={'LEFT'}
-                onChange={() => onChange({ xy: applyVector(obj.xy, LEFT) })}
+                label={'RIGHT'}
+                onChange={() => onChange({ xy: applyVector(obj.xy, RIGHT) })}
             />
         </div>
     )
