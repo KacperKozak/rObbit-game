@@ -2,6 +2,7 @@ import React, { Suspense } from 'react'
 import { Canvas, Dom } from 'react-three-fiber'
 import styled from 'styled-components'
 import { PCFSoftShadowMap } from 'three'
+import { LOADING } from '../config'
 import { useGame } from '../hooks/useGame'
 import { getDefinition } from '../objects/definitions'
 import { Environment } from './Environment'
@@ -32,7 +33,7 @@ export const GameInstance = () => {
                             fallback={
                                 <Dom>
                                     <Loading>
-                                        <span>Loading</span>
+                                        <span>{LOADING}</span>
                                     </Loading>
                                 </Dom>
                             }

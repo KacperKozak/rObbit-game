@@ -33,6 +33,8 @@ export const CONGRATULATIONS = 'Congratulations!'
 export const LEVEL_COMPLETE = 'Level complete'
 export const NEXT_LEVEL = 'Next level'
 
+export const LOADING = 'Loading…'
+
 export const AUTHORS = [
     { name: 'Kacper Kozak', tech: '(silnik gry)' },
     { name: 'Bartosz Kozak', tech: '(renderer gry, level design, grafika 3D)' },
