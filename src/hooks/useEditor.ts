@@ -17,6 +17,9 @@ export const useEditor = () => {
     const [editMode, setEditMode] = useState(false)
     const dispatch = useDispatch()
 
+    const [lastType, setLastType] = useState(ObjectTypes.RockFloor)
+    const [lastElevation, setLastElevation] = useState(0)
+
     const updateCleanState = () => dispatch(updateCleanObjectsState())
 
     const toggleEditMode = () => {
@@ -24,6 +27,9 @@ export const useEditor = () => {
     }
 
     const update = (targetId: string) => (objectValues: Partial<ObjectInstance>) => {
+        objectValues.type && setLastType(objectValues.type)
+        objectValues.elevation && setLastElevation(objectValues.elevation)
+
         dispatch(updateObject({ targetId, objectValues }))
         updateCleanState()
     }
@@ -39,17 +45,17 @@ export const useEditor = () => {
         )
     }
 
-    const add = (partialInstance: Partial<ObjectInstance>) => {
+    const add = (objectValues: Partial<ObjectInstance>) => {
         const instance: ObjectInstance = {
-            type: ObjectTypes.RockFloor,
+            type: lastType,
             id: `${uniqueId()}-${state.objects.length}`,
             xy: [0, 0],
             rotation: randomRotation(),
+            elevation: lastElevation,
             zIndex: 0,
             aIndex: 0,
             data: {},
-            elevation: 0,
-            ...partialInstance,
+            ...objectValues,
         }
 
         dispatch(addObject(instance))
