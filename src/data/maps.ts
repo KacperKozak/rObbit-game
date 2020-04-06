@@ -31,7 +31,7 @@ import dustPipe from './jsons/dustPipe.json'
 import dustPipeImg from './images/dustPipe.png'
 
 import columns from './jsons/columns.json'
-// import dustPipeImg from './images/dustPipe.png'
+import columnsImg from './images/columns.png'
 
 import greenRiver from './jsons/greenRiver.json'
 import greenRiverImg from './images/greenRiver.png'
@@ -71,7 +71,7 @@ export const maps: MapData[] = [
         objects: cannonRecoil as any,
     },
     { id: 'dust-river', name: 'dust-river', image: dustRiverImg, objects: dustRiver as any },
-    { id: 'columns', name: 'columns', objects: columns as any },
+    { id: 'columns', name: 'columns', image: columnsImg, objects: columns as any },
     { id: 'dust-pipe', name: 'dust-pipe', image: dustPipeImg, objects: dustPipe as any },
 
     { id: 'green-river', name: 'green-river', image: greenRiverImg, objects: greenRiver as any },
