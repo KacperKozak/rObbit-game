@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/alpha-mechanical/static/css/main.8ed76ac2.chunk.css",
-    "main.js": "/alpha-mechanical/static/js/main.a55a8c42.chunk.js",
-    "main.js.map": "/alpha-mechanical/static/js/main.a55a8c42.chunk.js.map",
+    "main.css": "/alpha-mechanical/static/css/main.b21fe41e.chunk.css",
+    "main.js": "/alpha-mechanical/static/js/main.20f4106f.chunk.js",
+    "main.js.map": "/alpha-mechanical/static/js/main.20f4106f.chunk.js.map",
     "runtime-main.js": "/alpha-mechanical/static/js/runtime-main.0fb3ba15.js",
     "runtime-main.js.map": "/alpha-mechanical/static/js/runtime-main.0fb3ba15.js.map",
-    "static/js/2.e343be6c.chunk.js": "/alpha-mechanical/static/js/2.e343be6c.chunk.js",
-    "static/js/2.e343be6c.chunk.js.map": "/alpha-mechanical/static/js/2.e343be6c.chunk.js.map",
+    "static/js/2.cec845c9.chunk.js": "/alpha-mechanical/static/js/2.cec845c9.chunk.js",
+    "static/js/2.cec845c9.chunk.js.map": "/alpha-mechanical/static/js/2.cec845c9.chunk.js.map",
     "index.html": "/alpha-mechanical/index.html",
-    "precache-manifest.af9aa6b85d1037d0b2cc7052ce372ccf.js": "/alpha-mechanical/precache-manifest.af9aa6b85d1037d0b2cc7052ce372ccf.js",
+    "precache-manifest.bf44b5327cd978c84592610ba3c7152e.js": "/alpha-mechanical/precache-manifest.bf44b5327cd978c84592610ba3c7152e.js",
     "service-worker.js": "/alpha-mechanical/service-worker.js",
-    "static/css/main.8ed76ac2.chunk.css.map": "/alpha-mechanical/static/css/main.8ed76ac2.chunk.css.map",
-    "static/js/2.e343be6c.chunk.js.LICENSE.txt": "/alpha-mechanical/static/js/2.e343be6c.chunk.js.LICENSE.txt",
+    "static/css/main.b21fe41e.chunk.css.map": "/alpha-mechanical/static/css/main.b21fe41e.chunk.css.map",
+    "static/js/2.cec845c9.chunk.js.LICENSE.txt": "/alpha-mechanical/static/js/2.cec845c9.chunk.js.LICENSE.txt",
     "static/media/button.png": "/alpha-mechanical/static/media/button.95cda525.png",
     "static/media/cannonRecoil.png": "/alpha-mechanical/static/media/cannonRecoil.04c35559.png",
     "static/media/cliff.png": "/alpha-mechanical/static/media/cliff.6206b09f.png",
@@ -25,8 +25,8 @@
   },
   "entrypoints": [
     "static/js/runtime-main.0fb3ba15.js",
-    "static/js/2.e343be6c.chunk.js",
-    "static/css/main.8ed76ac2.chunk.css",
-    "static/js/main.a55a8c42.chunk.js"
+    "static/js/2.cec845c9.chunk.js",
+    "static/css/main.b21fe41e.chunk.css",
+    "static/js/main.20f4106f.chunk.js"
   ]
 }
