@@ -55,21 +55,26 @@ const color: Partial<Record<ObjectTypes, string>> = {
 }
 
 export const DebugView = ({ objects }: DebugViewProps) => {
-    const { copyMap, moveMap } = useEditor()
+    const editor = useEditor()
 
     return (
         <Container>
-            <button onClick={copyMap}>Copy map</button>
+            <button onClick={editor.copyMap}>Copy map</button>
             Move map:
-            <button onClick={() => moveMap(UP)}>UP</button>
-            <button onClick={() => moveMap(DOWN)}>DOWN</button>
-            <button onClick={() => moveMap(LEFT)}>LEFT</button>
-            <button onClick={() => moveMap(RIGHT)}>RIGHT</button>
+            <button onClick={() => editor.moveMap(UP)}>UP</button>
+            <button onClick={() => editor.moveMap(DOWN)}>DOWN</button>
+            <button onClick={() => editor.moveMap(LEFT)}>LEFT</button>
+            <button onClick={() => editor.moveMap(RIGHT)}>RIGHT</button>
             <MapGrid>
                 {createArray(grid).map(y => (
                     <Row key={y}>
                         {createArray(grid).map(x => (
-                            <Cell key={x} objects={findByXY(objects, [x, y])} xy={[x, y]} />
+                            <Cell
+                                key={x}
+                                objects={findByXY(objects, [x, y])}
+                                editor={editor}
+                                xy={[x, y]}
+                            />
                         ))}
                     </Row>
                 ))}
@@ -109,13 +114,13 @@ const Cols = styled.div`
 interface CellProps {
     xy: XY
     objects: ObjectInstance[]
+    editor: ReturnType<typeof useEditor>
 }
 
-export const Cell = ({ objects, xy }: CellProps) => {
+export const Cell = ({ objects, xy, editor: { update, add, remove } }: CellProps) => {
     const [open, setOpen] = useState(false)
-    const { update, add, remove, copyMap } = useEditor()
 
-    const addEmpty = () => add({ type: ObjectTypes.RockFloor, xy })
+    const addEmpty = () => add({ xy })
     const openAndAdd = () => {
         setOpen(true)
         if (!objects.length) addEmpty()
@@ -246,7 +251,7 @@ const NumberInput = ({ obj, field, onChange, style }: NumberInputProps) => {
                 type="number"
                 step="0.1"
                 value={obj[field] as string}
-                style={style || { width: 30 }}
+                style={style || { width: 40 }}
                 onChange={event => {
                     const value = parseFloat(event.target.value)
                     if (Number.isNaN(value)) return

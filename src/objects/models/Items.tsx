@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useRef } from 'react'
 import { animated, useSpring } from 'react-spring/three'
 import { useFrame, useLoader } from 'react-three-fiber'
 import { AnimationMixer, LoopOnce } from 'three'
@@ -193,8 +193,8 @@ export const createTrigger = (color: string) => ({ instance }: RenderComponentPr
     const { xy, elevation, rotation } = instance
 
     return (
-        <mesh position={[xy[0], elevation, xy[1]]} rotation={[0, vectorToThree(rotation), 0]}>
-            <sphereGeometry attach="geometry" args={[1, 5, 16]} />
+        <mesh position={[xy[0], elevation + 0.5, xy[1]]} rotation={[0, vectorToThree(rotation), 0]}>
+            <sphereGeometry attach="geometry" args={[0.4, 6, 6]} />
             <meshStandardMaterial attach="material" color={color} />
         </mesh>
     )
