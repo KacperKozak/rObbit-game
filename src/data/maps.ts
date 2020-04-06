@@ -1,51 +1,65 @@
 import { MapData } from '../types/types'
 
-import level1 from './level1.json'
-import level1img from './images/1.png'
+import button from './button.json'
+import buttonImg from './images/button.png'
 
-import level2 from './level2.json'
-import level2img from './images/2.png'
+import stairs from './stairs.json'
+import stairsImg from './images/stairs.png'
 
-import level3 from './level3.json'
-import level3img from './images/3.png'
+import wall from './wall.json'
+import wallImg from './images/wall.png'
 
-import level4 from './level4.json'
-import level4img from './images/4.png'
+import cliff from './cliff.json'
+import cliffImg from './images/cliff.png'
 
-import level5 from './level5.json'
-import level5img from './images/5.png'
+import cannonRecoil from './cannonRecoil.json'
+import cannonRecoilImg from './images/cannonRecoil.png'
 
-import level6 from './level6.json'
-import level6img from './images/6.png'
+import dustRiver from './dustRiver.json'
+import dustRiverImg from './images/dustRiver.png'
 
-import level7 from './level7.json'
-import level7img from './images/7.png'
+import dustPipe from './dustPipe.json'
+import dustPipeImg from './images/dustPipe.png'
 
-import level8 from './level8.json'
-import level8img from './images/8.png'
+import greenRiver from './greenRiver.json'
+import greenRiverImg from './images/greenRiver.png'
 
-import level9 from './level9.json'
-import level9img from './images/9.png'
+import lake from './lake.json'
+import lakeImg from './images/lake.png'
 
 import map0 from './map0.json'
 import map1 from './map1.json'
 import map2 from './map2.json'
 
-import test1 from './test1.json'
+import mountains from './mountains.json'
 
 import mapStarter from './starter.json'
 
 export const maps: MapData[] = [
-    { id: 'level1', name: 'level1', image: level1img, objects: level1 as any },
-    { id: 'level2', name: 'level2', image: level2img, objects: level2 as any },
-    { id: 'level3', name: 'level3', image: level3img, objects: level3 as any },
-    { id: 'level4', name: 'level4', image: level4img, objects: level4 as any },
-    { id: 'level5', name: 'level5', image: level5img, objects: level5 as any },
-    { id: 'level6', name: 'level6', image: level6img, objects: level6 as any },
-    { id: 'level7', name: 'level7', image: level7img, objects: level7 as any },
-    { id: 'level8', name: 'level8', image: level8img, objects: level8 as any },
-    { id: 'level9', name: 'level9', image: level9img, objects: level9 as any },
-    { id: 'test-1', name: 'Test lvl 1', objects: test1 as any },
+    { id: 'walk', name: 'walk', objects: [] },
+    { id: 'button', name: 'button', image: buttonImg, objects: button as any },
+    { id: 'stairs', name: 'stairs', image: stairsImg, objects: stairs as any },
+    { id: 'cliff', name: 'cliff', image: cliffImg, objects: cliff as any },
+    { id: 'wall', name: 'wall', image: wallImg, objects: wall as any },
+
+    // Cannon ↓
+    { id: 'cannon', name: 'cannon', objects: [] }, // TODO
+    {
+        id: 'cannon-recoil',
+        name: 'cannon-recoil',
+        image: cannonRecoilImg,
+        objects: cannonRecoil as any,
+    },
+    { id: 'dust-river', name: 'dust-river', image: dustRiverImg, objects: dustRiver as any },
+    { id: 'dust-pipe', name: 'dust-pipe', image: dustPipeImg, objects: dustPipe as any },
+    { id: 'green-river', name: 'green-river', image: greenRiverImg, objects: greenRiver as any },
+
+    // Crossbow ↓
+    { id: 'crossbow', name: 'crossbow', objects: [] }, // TODO
+    { id: 'mountains', name: 'mountains', objects: mountains as any }, // TODO
+    { id: 'lake', name: 'lake', image: lakeImg, objects: lake as any },
+
+    // TODO remove
     { id: 'map-0', name: 'Test 0', objects: map0 as any },
     { id: 'map-1', name: 'Test 1', objects: map1 as any },
     { id: 'map-2', name: 'Test 2', objects: map2 as any },

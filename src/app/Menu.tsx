@@ -31,8 +31,8 @@ export const Menu = () => {
     const { editMode, toggleEditMode } = useEditor()
     const { isCompleted } = useLocal()
 
-    const [introPlayed, setIntroPlayed] = useState(false)
-    const [gameStarted, setGameStarted] = useState(false)
+    const [introPlayed, setIntroPlayed] = useState(true) // TODO false
+    const [gameStarted, setGameStarted] = useState(true) // TODO false
 
     const musicRef = useRef(getAudio('Music', 0.3))
     const droneRef = useRef(getAudio('Drone', 1))
@@ -103,7 +103,7 @@ export const Menu = () => {
             {!introPlayed && gameStarted && <Intro onEnded={() => setIntroPlayed(true)} />}
             {!mapId && (
                 <>
-                    <Title>Alpha Mechanical</Title>
+                    <Title>rObbit</Title>
                     {gameStarted ? (
                         <LevelWrapper>
                             {maps.map(map => (

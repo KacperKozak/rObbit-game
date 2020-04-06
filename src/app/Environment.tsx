@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Color } from 'three'
 import { useGame } from '../hooks/useGame'
-import { useThree } from 'react-three-fiber'
+import { useThree, useFrame } from 'react-three-fiber'
 import { ObjectInstance } from '../types/types'
 import { CAMERA_OFFSET } from '../config'
 
