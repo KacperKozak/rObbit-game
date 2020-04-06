@@ -1,8 +1,7 @@
 import React, { Suspense } from 'react'
-import { Canvas } from 'react-three-fiber'
+import { Canvas, Dom } from 'react-three-fiber'
+import styled from 'styled-components'
 import { PCFSoftShadowMap } from 'three'
-import { Dialog } from '../components/Dialog'
-import { maps } from '../data/maps'
 import { useGame } from '../hooks/useGame'
 import { getDefinition } from '../objects/definitions'
 import { Environment } from './Environment'
@@ -31,10 +30,11 @@ export const GameInstance = () => {
                         <Environment objectsList={objects} mapId={mapId} />
                         <Suspense
                             fallback={
-                                <mesh>
-                                    <boxBufferGeometry attach="geometry" args={[0.5, 0.5, 0.5]} />
-                                    <meshStandardMaterial attach="material" color="red" />
-                                </mesh>
+                                <Dom>
+                                    <Loading>
+                                        <span>Loading</span>
+                                    </Loading>
+                                </Dom>
                             }
                         >
                             {objects.map(obj => {
@@ -48,3 +48,12 @@ export const GameInstance = () => {
         </>
     )
 }
+
+const Loading = styled.div`
+    width: 50vw;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-weight: bold;
+    font-size: 34px;
+`
