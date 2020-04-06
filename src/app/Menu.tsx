@@ -260,6 +260,12 @@ const Title = styled.h1`
     text-align: center;
     font-weight: normal;
     color: #fff;
+    padding: 0 20px;
+    img {
+        max-width: 100%;
+        display: block;
+        margin: auto;
+    }
 `
 
 const LevelWrapper = styled.div`

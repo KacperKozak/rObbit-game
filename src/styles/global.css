@@ -14,7 +14,7 @@ body {
         radial-gradient(circle at 41% 23%, rgba(94, 179, 220, 1), rgba(94, 179, 220, 0) 70%),
         radial-gradient(circle at 71% 79%, rgba(58, 141, 194, 1), rgba(58, 141, 194, 1) 70%),
         radial-gradient(circle at 22% 81%, rgba(200, 106, 111, 1), rgba(200, 107, 111, 1) 70%);
-    color: rgb(181, 200, 219);
+    color: rgb(202, 223, 243);
     background-attachment: fixed;
     background-size: 100% 100%;
 }
