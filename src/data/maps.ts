@@ -1,5 +1,8 @@
 import { MapData } from '../types/types'
 
+import walk from './walk.json'
+// import buttonImg from './images/button.png'
+
 import button from './button.json'
 import buttonImg from './images/button.png'
 
@@ -36,7 +39,7 @@ import mountains from './mountains.json'
 import mapStarter from './starter.json'
 
 export const maps: MapData[] = [
-    { id: 'walk', name: 'walk', objects: [] },
+    { id: 'walk', name: 'walk', objects: walk },
     { id: 'button', name: 'button', image: buttonImg, objects: button as any },
     { id: 'stairs', name: 'stairs', image: stairsImg, objects: stairs as any },
     { id: 'cliff', name: 'cliff', image: cliffImg, objects: cliff as any },

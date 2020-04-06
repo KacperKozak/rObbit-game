@@ -25,6 +25,8 @@ import {
     Rock,
     Rocket,
     WallMetal,
+    Tree,
+    Tree2,
 } from './models/Items'
 
 export const propTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>> = {
@@ -82,6 +84,16 @@ export const propTypeDefinitions: Partial<Record<ObjectTypes, ObjectDefinition>>
             return []
         },
         Component3d: PipePlace,
+    },
+    [ObjectTypes.Tree]: {
+        name: 'PipeDown',
+        height: () => 2,
+        Component3d: Tree,
+    },
+    [ObjectTypes.Tree2]: {
+        name: 'Tree',
+        height: () => 2,
+        Component3d: Tree2,
     },
 
     [ObjectTypes.Box]: {

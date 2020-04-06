@@ -29,6 +29,8 @@ const useMyLoader = () => {
     const pipeElement = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/pipe-element.gltf`)
     const pipeUp = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/pipe-down.gltf`)
     const pipeDown = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/pipe-down.gltf`)
+    const tree = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/tree.gltf`)
+    const tree2 = useLoader(GLTFLoader, `${process.env.PUBLIC_URL}/assets/tree2.gltf`)
     return {
         // robot: robot.scene,
         rocket: rocket.scene,
@@ -53,6 +55,8 @@ const useMyLoader = () => {
         pipeElement: pipeElement.scene,
         pipeUp: pipeUp.scene,
         pipeDown: pipeDown.scene,
+        tree: tree.scene,
+        tree2: tree2.scene,
     }
 }
 const useAnimationLoader = () => {
@@ -158,6 +162,14 @@ export const PipePlace = (props: RenderComponentProps) => {
 export const PipeElement = (props: RenderComponentProps) => {
     const { pipeElement } = useMyLoader()
     return <AssetPreload {...props} model={pipeElement} castShadow={true} receiveShadow={true} />
+}
+export const Tree = (props: RenderComponentProps) => {
+    const { tree } = useMyLoader()
+    return <AssetPreload {...props} model={tree} castShadow={true} receiveShadow={true} />
+}
+export const Tree2 = (props: RenderComponentProps) => {
+    const { tree2 } = useMyLoader()
+    return <AssetPreload {...props} model={tree2} castShadow={true} receiveShadow={true} />
 }
 export const createTrigger = (color: string) => ({ instance }: RenderComponentProps) => {
     const { xy, elevation, rotation } = instance

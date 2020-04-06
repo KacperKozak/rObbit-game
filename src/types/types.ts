@@ -24,6 +24,9 @@ export enum ObjectTypes {
     PipeDown = 'PipeDown',
     PipeElement = 'PipeElement',
 
+    Tree = 'tree',
+    Tree2 = 'tree2',
+
     Fence = 'Fence',
 
     Button = 'Button',

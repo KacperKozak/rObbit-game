@@ -46,6 +46,9 @@ const color: Record<ObjectTypes, string> = {
 
     [ObjectTypes.CrossbowProjectile]: 'white',
     [ObjectTypes.RocketProjectile]: 'white',
+
+    [ObjectTypes.Tree]: 'green',
+    [ObjectTypes.Tree2]: 'green',
 }
 
 export const DebugView = ({ objects }: DebugViewProps) => {
