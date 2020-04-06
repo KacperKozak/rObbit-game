@@ -1,68 +1,69 @@
 import { MapData } from '../types/types'
 
-import walk from './walk.json'
-// import buttonImg from './images/walk.png'
+import walk from './jsons/walk.json'
+import walkImg from './images/walk.png'
 
-import button from './button.json'
+import button from './jsons/button.json'
 import buttonImg from './images/button.png'
 
-import box from './box.json'
-// import stairsImg from './images/box.png'
+import box from './jsons/box.json'
+import boxImg from './images/box.png'
 
-import stairs from './stairs.json'
+import stairs from './jsons/stairs.json'
 import stairsImg from './images/stairs.png'
 
-import wall from './wall.json'
+import wall from './jsons/wall.json'
 import wallImg from './images/wall.png'
 
-import cliff from './cliff.json'
+import cliff from './jsons/cliff.json'
 import cliffImg from './images/cliff.png'
 
-import cannon from './cannon.json'
-// import cannonImg from './images/cannonRecoil.png'
+import cannon from './jsons/cannon.json'
+import cannonImg from './images/cannonRecoil.png'
 
-import cannonRecoil from './cannonRecoil.json'
+import cannonRecoil from './jsons/cannonRecoil.json'
 import cannonRecoilImg from './images/cannonRecoil.png'
 
-import dustRiver from './dustRiver.json'
+import dustRiver from './jsons/dustRiver.json'
 import dustRiverImg from './images/dustRiver.png'
 
-import dustPipe from './dustPipe.json'
+import dustPipe from './jsons/dustPipe.json'
 import dustPipeImg from './images/dustPipe.png'
 
-import columns from './columns.json'
+import columns from './jsons/columns.json'
 // import dustPipeImg from './images/dustPipe.png'
 
-import greenRiver from './greenRiver.json'
+import greenRiver from './jsons/greenRiver.json'
 import greenRiverImg from './images/greenRiver.png'
 
-import lake from './lake.json'
+import crossbow from './jsons/crossbow.json'
+import crossbowImg from './images/crossbow.png'
+
+import mountains from './jsons/mountains.json'
+import mountainsImg from './images/mountains.png'
+
+import lake from './jsons/lake.json'
 import lakeImg from './images/lake.png'
 
-import crossbow from './crossbow.json'
-// import crossbowImg from './images/crossbow.png'
+import map0 from './jsons/map0.json'
+import map1 from './jsons/map1.json'
+import map2 from './jsons/map2.json'
 
-import map0 from './map0.json'
-import map1 from './map1.json'
-import map2 from './map2.json'
-
-import mountains from './mountains.json'
-
-import mapStarter from './starter.json'
+import mapStarter from './jsons/starter.json'
 import { IS_DEV } from '../config'
 
 export const maps: MapData[] = [
-    { id: 'walk', name: 'walk', objects: walk as any },
+    { id: 'walk', name: 'walk', image: walkImg, objects: walk as any },
     { id: 'button', name: 'button', image: buttonImg, objects: button as any },
 
-    { id: 'box', name: 'box', objects: box as any },
+    { id: 'box', name: 'box', image: boxImg, objects: box as any },
 
     { id: 'stairs', name: 'stairs', image: stairsImg, objects: stairs as any },
     { id: 'cliff', name: 'cliff', image: cliffImg, objects: cliff as any },
     { id: 'wall', name: 'wall', image: wallImg, objects: wall as any },
 
     // Cannon ↓
-    { id: 'cannon', name: 'cannon', objects: cannon },
+    { id: 'cannon', name: 'cannon', image: cannonImg, objects: cannon },
     {
         id: 'cannon-recoil',
         name: 'cannon-recoil',
@@ -76,9 +77,9 @@ export const maps: MapData[] = [
     { id: 'green-river', name: 'green-river', image: greenRiverImg, objects: greenRiver as any },
 
     // Crossbow ↓
-    { id: 'crossbow', name: 'crossbow', objects: crossbow as any },
+    { id: 'crossbow', name: 'crossbow', image: crossbowImg, objects: crossbow as any },
+    { id: 'mountains', name: 'mountains', image: mountainsImg, objects: mountains as any },
     { id: 'lake', name: 'lake', image: lakeImg, objects: lake as any },
-    { id: 'mountains', name: 'mountains', objects: mountains as any },
 ]
 
 if (IS_DEV) {
