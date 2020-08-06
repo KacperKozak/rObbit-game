@@ -1,8 +1,8 @@
 {
-  "name": "alpha-mechanical",
+  "name": "robbit",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://kacperkozak.github.io/alpha-mechanical",
+  "homepage": "https://kacperkozak.github.io/rObbit-game/",
   "scripts": {
     "start": "PUBLIC_URL='./' react-scripts start",
     "build": "react-scripts build",
