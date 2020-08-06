@@ -1,6 +1,6 @@
-[![rObbit](./logo-inverted.png)](https://kacperkozak.github.io/rObbit-game/)
+[![rObbit](./logo-inverted.png)](https://robbit.9px.pl/)
 
-# [Play rObbit ▶](https://kacperkozak.github.io/rObbit-game/)
+# [Play rObbit ▶](https://robbit.9px.pl/)
 
 Game created as part of Game Jam [ZostanWDomuRobGry.pl](https://zostanwdomurobgry.pl/)
 

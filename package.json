@@ -2,7 +2,7 @@
   "name": "robbit",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://kacperkozak.github.io/rObbit-game/",
+  "homepage": "https://robbit.9px.pl/",
   "scripts": {
     "start": "PUBLIC_URL='./' react-scripts start",
     "build": "react-scripts build",
